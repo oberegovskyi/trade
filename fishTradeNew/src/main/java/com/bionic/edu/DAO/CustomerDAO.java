@@ -1,7 +1,5 @@
 package com.bionic.edu.DAO;
 
-import java.sql.Date;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -27,12 +25,18 @@ public class CustomerDAO {
 			//Date cc = new java.sql.Date(c.getTime().getTime());
 						
 			OutParcel parct =  em.find(OutParcel.class, 2);
-			FishItem itemf =  em.find(FishItem.class, 2);
+			FishItem itemf =  em.find(FishItem.class, 1);
+			OutParcelItem outParcelItemT = em.find(OutParcelItem.class, 1);
 			//Customer cust =  em.find(Customer.class, 2);
 			OutParcelItem temp = new OutParcelItem(parct,itemf,56);
-
-			addFishToParcelItem(em, temp);
-			System.out.println(temp);
+			
+			outParcelItemT.setWeight(200);
+			outParcelItemT.setFishItem(itemf);
+			
+			//saveOutParcelItem(em, outParcelItemT);
+			//deleteFishItem(em,outParcelItemT);
+			//addFishToParcelItem(em, temp);
+			System.out.println(getPriceOfParcel(em,parct));
 
 	}
 	
@@ -43,13 +47,9 @@ public class CustomerDAO {
 	public static List<FishItem> getAllAvailableFishItems (EntityManager em) {
 		TypedQuery<FishItem> query = em.createQuery("SELECT f FROM FishItem as f WHERE f.status<=2", FishItem.class);
 		List<FishItem> listI = null;
-		try{ 
+	
 			listI=query.getResultList();
-		}
 
-		finally{ 
-			em.close();
-		}
 		
 		return listI;	
 	}
@@ -59,27 +59,76 @@ public class CustomerDAO {
 	 * додає новий вид риби до даної посилки
 	 */
 	public static void addFishToParcelItem (EntityManager em, OutParcelItem temp) {
-		try {
+	
 			em.getTransaction().begin();
 			em.persist(temp);
 			em.getTransaction().commit();
-		}
-		finally {
-			em.close();
-		}
+
 	}
 	/**
 	 * 
 	 * додає нового клієнта
 	 */
 	public static void addCustomer (EntityManager em, Customer temp) {
-		try {
+
 			em.getTransaction().begin();
 			em.persist(temp);
 			em.getTransaction().commit();
-		}
-		finally {
-			em.close();
-		}
+
+	}
+	
+	/**
+	 * 
+	 * ставить статус риби як видалений
+	 */
+	public static void deleteFishItem (EntityManager em,OutParcelItem temp) {
+	
+			temp.setIsDeleted(1);
+			em.getTransaction().begin();
+			em.merge(temp);
+			em.getTransaction().commit();
+
+	}
+	
+	/**
+	 * 
+	 * зберігає OutParcelItem 
+	 */
+	public static void saveOutParcelItem (EntityManager em, OutParcelItem temp) {
+		
+		em.getTransaction().begin();
+		em.merge(temp);
+		em.getTransaction().commit();
+
+	}
+	
+	/**
+	 * 
+	 * @return загальну вагу конкертної посилки 
+	 */
+	public static double getAllWeightOfParcel (EntityManager em, OutParcelItem temp) {
+		TypedQuery<Double> query = em.createQuery("SELECT sum(o.weight) FROM OutParcelItem o WHERE o.outParcel.outParcelId=:id", Double.class);
+		query.setParameter("id", temp.getOutParcel().getOutParcelId());
+		double totalWeight;
+		totalWeight= query.getSingleResult(); 
+		return totalWeight;	
+
+	}
+	
+	/**
+	 * @return ціну всієї посилки
+	 */
+	public static double getPriceOfParcel (EntityManager em, OutParcel temp) {
+		TypedQuery<OutParcelItem> query = em.createQuery("SELECT o FROM OutParcelItem o WHERE o.outParcel.outParcelId=:id", OutParcelItem.class);
+		query.setParameter("id", temp.getOutParcelId());
+		List<OutParcelItem> weightPrice=null;
+		double result=0; 
+			weightPrice = query.getResultList();
+			System.out.println(weightPrice);
+			for (OutParcelItem in: weightPrice) {
+				result+=in.getWeight()*in.getFishItem().getSellPrice();
+			}
+
+		return result;
 	}
 }

@@ -19,6 +19,7 @@ public class OutParcelItem {
 	@JoinColumn(name="fishItemId")
 	private FishItem fishItem;
 	private double weight;
+	private int isDeleted;
 	
 	public OutParcelItem () {
 		
@@ -28,6 +29,7 @@ public class OutParcelItem {
 		this.outParcel = outParcel;
 		this.fishItem = fishItem;
 		this.weight = weight;
+		this.isDeleted=0;
 	}
 
 	public int getOutParcelItemId() {
@@ -62,11 +64,19 @@ public class OutParcelItem {
 		this.weight = weight;
 	}
 
+	public int getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(int isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
 	@Override
 	public String toString() {
 		return "OutParcelItem [outParcelItemId=" + outParcelItemId
 				+ ", outParcelId=" + outParcel.getOutParcelId() + ", fishItemId=" + fishItem.getFishItemId()
-				+ ", weight=" + weight + "]";
+				+ ", weight=" + weight + ", isDeleted=" + isDeleted + "]";
 	}
 
 }

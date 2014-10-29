@@ -37,7 +37,7 @@ public class FishItem {
 
 	public FishItem(String fishName, String description, int status,
 			double weight, double buyPrice, double sellPrice,
-			InParcel inParcel) {
+			InParcel inParcel, int deleted) {
 		super();
 		this.fishName = fishName;
 		this.description = description;
@@ -120,12 +120,20 @@ public class FishItem {
 		this.cameWeight = cameWeight;
 	}
 
+	public Collection<OutParcel> getOutParcels() {
+		return outParcels;
+	}
+
+	public void setOutParcels(Collection<OutParcel> outParcels) {
+		this.outParcels = outParcels;
+	}
+
 	@Override
 	public String toString() {
 		return "FishItem [fishItemId=" + fishItemId + ", fishName=" + fishName
 				+ ", description=" + description + ", status=" + status
 				+ ", weight=" + weight + ", buyPrice=" + buyPrice
-				+ ", sellPrice=" + sellPrice + ", inParcelId=" + inParcel.getInParcelId()
+				+ ", sellPrice=" + sellPrice + ", inParcel=" + inParcel
 				+ ", cameWeight=" + cameWeight + "]";
 	}
 
