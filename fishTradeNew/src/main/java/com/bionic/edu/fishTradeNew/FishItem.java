@@ -38,7 +38,6 @@ public class FishItem {
 	public FishItem(String fishName, String description, int status,
 			double weight, double buyPrice, double sellPrice,
 			InParcel inParcel, int deleted) {
-		super();
 		this.fishName = fishName;
 		this.description = description;
 		this.status = status;

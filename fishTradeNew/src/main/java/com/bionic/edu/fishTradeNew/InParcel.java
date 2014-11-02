@@ -26,10 +26,8 @@ public class InParcel {
 		
 	}
 
-	public InParcel(Date dateIncome, Date realDate) {
-		super();
+	public InParcel(Date dateIncome) {
 		this.dateIncome = dateIncome;
-		this.realDate = realDate;
 	}
 
 	public int getInParcelId() {
