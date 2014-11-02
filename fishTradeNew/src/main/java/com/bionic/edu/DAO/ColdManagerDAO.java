@@ -55,7 +55,7 @@ public class ColdManagerDAO {
 	}
 	
 	/**
-	 * реєструє продаж партії
+	 * списує рибу
 	 */
 	public static void setWriteOffFishItem (EntityManager em, FishItem fishItem) {
 			fishItem.setStatus(3);
