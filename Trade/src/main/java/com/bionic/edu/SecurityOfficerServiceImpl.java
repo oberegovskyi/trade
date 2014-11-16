@@ -1,5 +1,7 @@
 package com.bionic.edu;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -33,5 +35,9 @@ public class SecurityOfficerServiceImpl implements SecurityOfficerService {
 
 	public void blockCustomer(Customer customer) {
 		securityOfficerDAO.blockCustomer(customer);
+	}
+	
+	public List<Customer> getAllCustomers() {
+		return securityOfficerDAO.getAllCustomers();
 	}
 }

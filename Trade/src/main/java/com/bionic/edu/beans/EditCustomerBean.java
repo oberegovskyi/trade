@@ -1,16 +1,34 @@
 package com.bionic.edu.beans;
 
+import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.bionic.edu.Customer;
+import com.bionic.edu.SecurityOfficerService;
 
+@SuppressWarnings("serial")
 @Named("editCustomer")
-public class EditCustomerBean {
-	private Customer temp;
-	private List<Customer> list;
+public class EditCustomerBean implements Serializable {
+	
+	@Inject
+	private SecurityOfficerService securityOfficerService;
 
+	private Customer temp;
+	
+	private List<Customer> list ;
+	
+	public EditCustomerBean () {
+		
+	}
+
+	@PostConstruct
+	public void init() {
+        this.list = securityOfficerService.getAllCustomers();
+    }
 	public List<Customer> getList() {
 		return list;
 	}

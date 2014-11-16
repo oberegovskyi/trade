@@ -1,7 +1,10 @@
 package com.bionic.edu;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
@@ -68,5 +71,14 @@ public class SecurityOfficerDAOImpl implements SecurityOfficerDAO {
 		em.getTransaction().begin();
 		em.merge(customer);
 		em.getTransaction().commit();
+	}
+
+
+	public List<Customer> getAllCustomers() {
+		TypedQuery<Customer> query = em.createQuery("SELECT c FROM Customer as c",Customer.class);
+		List<Customer> listI = null;
+
+		listI = query.getResultList();
+		return listI;
 	}
 }

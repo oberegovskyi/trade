@@ -1,5 +1,7 @@
 package com.bionic.edu;
 
+import java.util.List;
+
 public interface SecurityOfficerDAO {
 	public void addNewEmployee(Employee employee);
 
@@ -12,4 +14,6 @@ public interface SecurityOfficerDAO {
 	public void saveCustomer(Customer customer);
 
 	public void blockCustomer(Customer customer);
+	
+	public List<Customer> getAllCustomers();
 }
