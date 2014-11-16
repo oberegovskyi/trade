@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:dataTable id="data" value="#{fishItem.list}" var="fish"
+				styleClass="fishItemTable">
+				<p:column headerText="Назва">
+					<p:outputLabel value="#{fish.fishName}" />
+				</p:column>
+				<p:column headerText="Опис">
+					<p:outputLabel value="#{fish.description}" />
+				</p:column>
+				<p:column headerText="Доступна вага">
+					<p:outputLabel value="#{fish.weight}" />
+				</p:column>
+				<p:column headerText="Ціна">
+					<p:outputLabel value="#{fish.sellPrice}" />
+				</p:column>
+				<p:column>
+					<p:commandButton update=":form:fishDetail"
+						oncomplete="PF('fishDialog').show()" icon="ui-icon-plus"
+						title="View">
+						<f:setPropertyActionListener value="#{fish}"
+							target="#{fishItem.selectedFish}" />
+					</p:commandButton>
+
+				</p:column>
+
+			</p:dataTable>
+
+
+			<p:dialog header="Деталі" widgetVar="fishDialog" modal="true"
+				showEffect="explode" hideEffect="explode" resizable="false">
+				<p:outputPanel id="fishDetail" style="text-align:center;">
+					<p:panelGrid columns="2"
+						rendered="#{not empty fishItem.selectedFish}"
+						columnClasses="label,value">
+
+						<h:outputText value="Назва:" />
+						<h:outputText value="#{fishItem.selectedFish.fishName}" />
+
+						<h:outputText value="Ціна:" />
+						<h:outputText value="#{fishItem.selectedFish.sellPrice}" />
+
+						<h:outputText value="Вага замовлення" />
+						<p:inputText id="errorWeight"
+							value="#{fishItem.selectedFish.weight}" required="true"
+							requiredMessage="Введіть вагу">
+						</p:inputText>
+
+					</p:panelGrid>
+					<p:commandButton value="Додати"
+						action="#{orderBean.addFishItemToList()}"
+						oncomplete="PF('fishDialog').hide();" update="dataOrder">
+						<f:setPropertyActionListener value="#{fishItem.selectedFish}"
+							target="#{orderBean.temp}" />
+					</p:commandButton>
+					<p:message for="errorWeight" display="text" />
+				</p:outputPanel>
+			</p:dialog>
+
+
+			<p:separator />
+
+			<p:dataTable id="dataOrder" value="#{orderBean.list}" var="item"
+				styleClass="fishItemTable">
+				<p:column headerText="Назва">
+					<p:outputLabel value="#{item.fishName}" />
+				</p:column>
+				<p:column headerText="Вага">
+					<p:outputLabel value="#{item.weight}" />
+				</p:column>
+				<p:column headerText="Вартість">
+					<p:outputLabel value="#{item.sellPrice}" />
+				</p:column>
+
+				<p:column>
+					<p:commandButton update=":form:fishEdit"
+						oncomplete="PF('fishDialogEdit').show()" icon="ui-icon-pencil"
+						title="View">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{orderBean.temp}" />
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-close" title="View"
+						action="#{orderBean.deleteFishItem(item)}" update="dataOrder">
+					</p:commandButton>
+				</p:column>
+				<p:columnGroup type="footer">
+					<p:row>
+						<p:column footerText="Загалом:" />
+						<p:column footerText="#{orderBean.totalWeight}" />
+						<p:column footerText="#{orderBean.total}" />
+						<p:column />
+					</p:row>
+				</p:columnGroup>
+			</p:dataTable>
+
+			<p:dialog header="Редагувати" widgetVar="fishDialogEdit" modal="true"
+				showEffect="explode" hideEffect="explode" resizable="false">
+				<p:outputPanel id="fishEdit" style="text-align:center;">
+					<p:panelGrid columns="2" rendered="#{not empty orderBean.temp}"
+						columnClasses="label,value">
+
+						<h:outputText value="Назва:" />
+						<h:outputText value="#{orderBean.temp.fishName}" />
+
+						<h:outputText value="Ціна:" />
+						<h:outputText value="#{orderBean.temp.sellPrice}" />
+
+						<h:outputText value="Вага замовлення" />
+						<p:inputText id="errorEdit" value="#{orderBean.temp.weight}"
+							required="true" requiredMessage="Введіть вагу">
+						</p:inputText>
+
+					</p:panelGrid>
+					<p:commandButton value="OK" action="fishView"
+						oncomplete="PF('fishDialogEdit').hide();" update="dataOrder">
+						<f:setPropertyActionListener value="#{orderBean.temp}"
+							target="#{orderBean.temp}" />
+					</p:commandButton>
+					<p:message for="errorEdit" display="text" />
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+		<p:commandButton value="Прийняти" id="submit" action="resultFish" />
+	</ui:define>
+</ui:composition>
+</html>

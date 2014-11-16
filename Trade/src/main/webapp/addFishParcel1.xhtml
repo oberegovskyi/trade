@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+		<h:form id="formAddFishParcel">
+			<p:dataTable id="tableAddFishParcel" var="in" value="#{inParcel.list}">
+				<p:column style="width:16px">
+					<p:rowToggler />
+				</p:column>
+				<p:column headerText="Id партії">
+					<h:outputText value="#{in.inParcelId}" />
+				</p:column>
+				<p:column headerText="Дата прибуття">
+					<h:outputText value="#{in.dateIncome}" />
+				</p:column>
+
+				<p:rowExpansion>
+					<p:dataTable id="dataLi" value="#{fishItem.list}" var="fish">
+						<c:if test="#{in.inParcelId eq fish.inParcelId}">
+							<p:column headerText="Назва">
+
+								<p:outputLabel value="#{fish.fishName}"
+									rendered="#{in.inParcelId == fish.inParcelId}" />
+							</p:column>
+							<p:column headerText="Опис">
+
+								<p:outputLabel value="#{fish.description}"
+									rendered="#{in.inParcelId == fish.inParcelId}" />
+							</p:column>
+							<p:column headerText="Статус">
+
+								<p:outputLabel value="#{fish.status}"
+									rendered="#{in.inParcelId == fish.inParcelId}" />
+							</p:column>
+							<p:column headerText="Вага">
+
+								<p:outputLabel value="#{fish.weight}"
+									rendered="#{in.inParcelId == fish.inParcelId}" />
+							</p:column>
+
+							<p:column headerText="Ціна купівлі">
+
+								<p:outputLabel value="#{fish.buyPrice}"
+									rendered="#{in.inParcelId == fish.inParcelId}" />
+							</p:column>
+							<p:column headerText="Ціна продажу">
+
+								<p:outputLabel value="#{fish.sellPrice}"
+									rendered="#{in.inParcelId == fish.inParcelId}" />
+							</p:column>
+							<p:column headerText="Id партії">
+
+								<p:outputLabel value="#{fish.inParcelId}"
+									rendered="#{in.inParcelId == fish.inParcelId}" />
+							</p:column>
+							<p:column headerText="Реальна вага">
+
+								<p:outputLabel value="#{fish.cameWeight}"
+									rendered="#{in.inParcelId == fish.inParcelId}" />
+							</p:column>
+
+							<p:column>
+								<p:commandButton update=":formAddFishParcel:fishEdit"
+									oncomplete="PF('fishDialogEdit').show()" icon="ui-icon-pencil"
+									title="View" rendered="#{in.inParcelId == fish.inParcelId}">
+									<f:setPropertyActionListener value="#{fish}"
+										target="#{fishItem.selectedFish}" />
+								</p:commandButton>
+							</p:column>
+						</c:if>
+					</p:dataTable>
+				</p:rowExpansion>
+			</p:dataTable>
+			<p:dialog header="Редагувати" widgetVar="fishDialogEdit" modal="true"
+				showEffect="explode" hideEffect="explode" resizable="false">
+				<p:outputPanel id="fishEdit" style="text-align:center;">
+					<p:panelGrid columns="2"
+						rendered="#{not empty fishItem.selectedFish}"
+						columnClasses="label,value">
+
+						<h:outputText value="Назва:" />
+						<p:inputText id="errorEdit1"
+							value="#{fishItem.selectedFish.fishName}" required="true"
+							requiredMessage="Введіть" />
+
+						<h:outputText value="Опис:" />
+						<p:inputTextarea rows="6" cols="25" id="errorEdit2"
+							value="#{fishItem.selectedFish.description}" required="true"
+							requiredMessage="Введіть" />
+
+						<h:outputText value="Статус:" />
+						<p:inputText id="errorEdit3"
+							value="#{fishItem.selectedFish.status}" required="true"
+							requiredMessage="Введіть вагу" />
+
+						<h:outputText value="Вага:" />
+						<p:inputText id="errorEdit4"
+							value="#{fishItem.selectedFish.weight}" required="true"
+							requiredMessage="Введіть" />
+
+						<h:outputText value="Ціна купівлі:" />
+						<p:inputText id="errorEdit5"
+							value="#{fishItem.selectedFish.buyPrice}" required="true"
+							requiredMessage="Введіть" />
+
+						<h:outputText value="Ціна продажу:" />
+						<p:inputText id="errorEdit6"
+							value="#{fishItem.selectedFish.sellPrice}" required="true"
+							requiredMessage="Введіть" />
+
+						<h:outputText value="Id партії:" />
+						<p:inputText id="errorEdit7"
+							value="#{fishItem.selectedFish.inParcelId}" required="true"
+							requiredMessage="Введіть" />
+
+						<h:outputText value="Реальна вага:" />
+						<p:inputText id="errorEdit8"
+							value="#{fishItem.selectedFish.cameWeight}" required="true"
+							requiredMessage="Введіть" />
+
+
+					</p:panelGrid>
+					<p:commandButton value="OK" action="addFishParcel1"
+						oncomplete="PF('fishDialogEdit').hide();"
+						update=":formAddFishParcel">
+
+					</p:commandButton>
+					<p:message for="errorEdit1" display="text" />
+					<p:message for="errorEdit2" display="text" />
+					<p:message for="errorEdit3" display="text" />
+					<p:message for="errorEdit4" display="text" />
+					<p:message for="errorEdit5" display="text" />
+					<p:message for="errorEdit6" display="text" />
+					<p:message for="errorEdit7" display="text" />
+					<p:message for="errorEdit8" display="text" />
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+		
+	</ui:define>
+</ui:composition>
+</html>

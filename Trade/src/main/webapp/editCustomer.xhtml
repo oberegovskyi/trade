@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Додати партію риби</title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+<h:body>
+
+	<h:form id="formEditCustomer">
+		<p:dataTable id="editCustomer"  value="#{editCustomer.list}" var="cust" styleClass="fishItemTable" > 
+		<p:column headerText="Логін"> 
+			<p:outputLabel  value="#{cust.login}"/>
+		</p:column>
+		<p:column headerText="Пароль"> 
+			<p:outputLabel value="#{cust.password}"/>
+		</p:column> 
+		<p:column headerText="Ім'я"> 
+			<p:outputLabel  value="#{cust.fName}"/>
+		</p:column> 
+		<p:column headerText="Прізвище"> 
+			<p:outputLabel value="#{cust.sName}"/>
+		</p:column>
+		<p:column headerText="Email"> 
+			<p:outputLabel value="#{cust.email}"/>
+		</p:column>
+		<p:column headerText="Передоплата"> 
+			<p:outputLabel value="#{cust.payment}"/>
+		</p:column>
+		
+		<p:column headerText="Заблокований"> 
+			<p:outputLabel value="#{cust.blocked}"/>
+		</p:column>
+		<p:column>
+             <p:commandButton update=":formEditCustomer:custDetail" oncomplete="PF('custDialog').show()" icon="ui-icon-pencil" title="View">
+                <f:setPropertyActionListener value="#{cust}" target="#{editCustomer.temp}"/>
+            </p:commandButton>
+            
+        </p:column>
+        
+	    </p:dataTable>
+              
+
+    <p:dialog header="Деталі" widgetVar="custDialog" modal="true" showEffect="explode" hideEffect="explode" resizable="false">
+        <p:outputPanel id="custDetail" style="text-align:center;">
+            <p:panelGrid  columns="2" rendered="#{not empty editCustomer.temp}" columnClasses="label,value">
+ 
+                <h:outputText value="Логін:" />
+                <p:inputText value="#{editCustomer.temp.login}" />
+ 
+                <h:outputText value="Пароль:" />
+                <p:inputText  value="#{editCustomer.temp.password}" />
+                
+                <h:outputText value="Ім'я:" />
+                <p:inputText  value="#{editCustomer.temp.fName}" />
+                
+                <h:outputText value="Прізвище:" />
+                <p:inputText  value="#{editCustomer.temp.sName}" />
+                
+                <h:outputText value="Email:" />
+                <p:inputText  value="#{editCustomer.temp.email}" />
+                
+                <h:outputText value="Передоплата:" />
+                <p:inputText  value="#{editCustomer.temp.payment}" />
+                
+                 <h:outputText value="Заблокований:" />
+                <p:inputText  value="#{editCustomer.temp.blocked}" />
+        
+            </p:panelGrid>
+            <p:commandButton value="Зберегти" action="editCustomer" oncomplete="PF('custDialog').hide();" >
+            </p:commandButton>
+        </p:outputPanel>
+    </p:dialog>
+	</h:form>
+</h:body>
+</html>
