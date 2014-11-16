@@ -4,16 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
 
-import com.bionic.edu.entity.FishItem;
+import org.springframework.context.annotation.Scope;
+
+import com.bionic.edu.FishItem;
 
 
 @SuppressWarnings("serial")
-@ManagedBean(name="orderBean")
-@ViewScoped
+@Named("orderBean")
+@Scope("session")
 public class OrderBean implements Serializable {
 	private List <FishItem> list= new ArrayList<FishItem>();
 	private FishItem temp=null;

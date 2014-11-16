@@ -1,10 +1,11 @@
 package com.bionic.edu.beans;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.inject.Named;
 
-@ManagedBean(name = "addCustomerMessagesBean", eager = true)
-@RequestScoped
+import org.springframework.context.annotation.Scope;
+
+@Named
+@Scope("request")
 public class AddCustomerMessagesBean {
 	private String loginReq ="Введіть логін";
 	private String loginVal ="Лише латиниця та цифри від 3 до 20 символів";

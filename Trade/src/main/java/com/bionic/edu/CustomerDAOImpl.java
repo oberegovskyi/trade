@@ -9,7 +9,7 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CustomerDAOImpl {
+public class CustomerDAOImpl implements CustomerDAO{
 	@PersistenceContext
 	private EntityManager em;
 	

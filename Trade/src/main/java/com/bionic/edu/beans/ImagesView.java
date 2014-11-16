@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
+import javax.inject.Named;
 
-@ManagedBean(name="imagesView")
+
+@Named("imagesView")
 public class ImagesView {
      
     private List<String> images = new ArrayList<String>(Arrays.asList("for.jpg","okun.jpg","semga.jpg"));

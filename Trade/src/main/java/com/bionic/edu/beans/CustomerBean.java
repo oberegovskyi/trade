@@ -1,10 +1,11 @@
 package com.bionic.edu.beans;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.inject.Named;
 
-@ManagedBean(name="customer")
-@RequestScoped
+import org.springframework.context.annotation.Scope;
+
+@Named("customer")
+@Scope("request")
 public class CustomerBean
 {
 	private String login;

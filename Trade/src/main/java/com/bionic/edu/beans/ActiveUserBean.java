@@ -2,12 +2,13 @@ package com.bionic.edu.beans;
 
 import java.io.Serializable;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.inject.Named;
+
+import org.springframework.context.annotation.Scope;
 
 @SuppressWarnings("serial")
-@ManagedBean(name = "userBean")
-@SessionScoped
+@Named(value = "userBean")
+@Scope("session")
 public class ActiveUserBean implements Serializable{
 	private String login=null;
 	private String password=null;

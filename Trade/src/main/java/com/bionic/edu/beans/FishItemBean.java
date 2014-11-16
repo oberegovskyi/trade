@@ -1,32 +1,17 @@
 package com.bionic.edu.beans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import javax.inject.Named;
+
+import org.springframework.context.annotation.Scope;
+
+import com.bionic.edu.FishItem;
 
 
-
-
-
-
-
-
-import javax.faces.bean.ManagedBean;
-
-
-
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
-
-import org.omnifaces.cdi.Eager;
-
-import com.bionic.edu.entity.FishItem;
-
-@ManagedBean (name="fishItem")
-@SessionScoped
+@Named("fishItem")
+@Scope("session")
 public class FishItemBean implements Serializable {
 	/**
 	 * 
@@ -37,11 +22,7 @@ public class FishItemBean implements Serializable {
 	private String description;
 	private String weight;
 	private String sellPrice;
-	private List <FishItem> list = new ArrayList<FishItem>(
-			Arrays.asList(new FishItem(1,"Карась", "північного моря",1, 3000, 1200, 1222,1,900),
-				    new FishItem(2,"Карась2", " північнd2",0, 1466, 12002, 1333,1,300),
-				    new FishItem(3,"Карась3", " північного моря3",1, 1200, 12003, 1333,1,30002),
-				    new FishItem(4,"Карась4", "північного моря4",2, 2300, 1204, 533,2,30004)));
+	private List <FishItem> list ;
 	
 	private FishItem selectedFish;
 	private FishItem tempFish;
@@ -84,7 +65,7 @@ public class FishItemBean implements Serializable {
 	}
 	public void setSelectedFish(FishItem selectedFish) {
 		this.selectedFish = selectedFish;
-		tempFish=selectedFish;
+		setTempFish(selectedFish);
 	}
 	
 	@Override
@@ -110,6 +91,12 @@ public class FishItemBean implements Serializable {
 		//temp.setWeight(fi.getWeight());
 		//list.add(temp);
 		System.out.println(list);
+	}
+	public FishItem getTempFish() {
+		return tempFish;
+	}
+	public void setTempFish(FishItem tempFish) {
+		this.tempFish = tempFish;
 	}
 	
 }

@@ -1,19 +1,15 @@
 package com.bionic.edu.beans;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
+import javax.inject.Named;
 
-import com.bionic.edu.entity.Customer;
+import com.bionic.edu.Customer;
 
-@ManagedBean(name = "editCustomer")
+@Named("editCustomer")
 public class EditCustomerBean {
 	private Customer temp;
-	private List<Customer> list = new ArrayList<>(Arrays.asList(
-			new Customer(1, "ffdgfdgfdg", "fdgfdgfdgfd", "fdgfdg", "fdgfdg","fgdfgfdg", 90, 0), 
-			new Customer(2, "gt5t", "4er", "dsfsdf", "fgfgfdg", "sdfdsfds", 10, 0)));
+	private List<Customer> list;
 
 	public List<Customer> getList() {
 		return list;
