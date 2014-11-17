@@ -12,10 +12,13 @@
 	<ui:define name="content">
 		<h:form id="formEditCustomer">
 			<p:growl id="growl" showDetail="true" sticky="true" />
+			 <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
+        <p:columnToggler datasource="editCustomer" trigger="toggler" />
 			<p:dataTable id="editCustomer" value="#{editCustomer.list}"
 				var="cust" styleClass="fishItemTable" rows="10" paginator="true"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="10,20,50">
+ 				
 				<p:column headerText="Логін">
 					<p:outputLabel value="#{cust.login}" />
 				</p:column>
@@ -38,10 +41,10 @@
 				<p:column headerText="Блок.">
 					<p:outputLabel value="#{cust.blocked}" />
 				</p:column>
-				<p:column>
+				<p:column headerText="Дії">
 					<p:commandButton update=":formEditCustomer:custDetail"
 						oncomplete="PF('custDialog').show()" icon="ui-icon-pencil"
-						title="View">
+						title="Редагувати">
 						<f:setPropertyActionListener value="#{cust}"
 							target="#{editCustomer.temp}" />
 					</p:commandButton>
@@ -52,7 +55,7 @@
 					</p:commandButton>
 
 				</p:column>
-
+      
 			</p:dataTable>
 
 

@@ -53,7 +53,7 @@ public class EditCustomerBean implements Serializable {
 	public String saveCustomer () {
 		securityOfficerService.saveCustomer(temp);
 		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage("Успішно", "Клієнт "+ temp.getLogin()+" збережений."));
+		context.addMessage(null, new FacesMessage("Успішно", "Клієнт id:"+ temp.getCustomerId()+" "+ temp.getLogin()+" збережений."));
 		return "editCustomer";
 	}
 	
