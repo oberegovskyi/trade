@@ -11,8 +11,11 @@
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
 		<h:form id="formEditCustomer">
+			<p:growl id="growl" showDetail="true" sticky="true" />
 			<p:dataTable id="editCustomer" value="#{editCustomer.list}"
-				var="cust" styleClass="fishItemTable">
+				var="cust" styleClass="fishItemTable" rows="10" paginator="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="10,20,50">
 				<p:column headerText="Логін">
 					<p:outputLabel value="#{cust.login}" />
 				</p:column>
@@ -28,11 +31,11 @@
 				<p:column headerText="Email">
 					<p:outputLabel value="#{cust.email}" />
 				</p:column>
-				<p:column headerText="Передоплата">
+				<p:column headerText="Перед.">
 					<p:outputLabel value="#{cust.payment}" />
 				</p:column>
 
-				<p:column headerText="Заблокований">
+				<p:column headerText="Блок.">
 					<p:outputLabel value="#{cust.blocked}" />
 				</p:column>
 				<p:column>
@@ -41,6 +44,11 @@
 						title="View">
 						<f:setPropertyActionListener value="#{cust}"
 							target="#{editCustomer.temp}" />
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-circle-minus" title="Блокувати"
+						action="#{editCustomer.blockCustomer(cust)}"
+						update=":formEditCustomer">
 					</p:commandButton>
 
 				</p:column>
@@ -69,15 +77,13 @@
 						<h:outputText value="Email:" />
 						<p:inputText value="#{editCustomer.temp.email}" />
 
-						<h:outputText value="Передоплата:" />
-						<p:inputText value="#{editCustomer.temp.payment}" />
-
-						<h:outputText value="Заблокований:" />
-						<p:inputText value="#{editCustomer.temp.blocked}" />
+						<h:outputText value="Перед.:" />
+						<p:inputText value="#{editCustomer.temp.payment}" required="true" />
 
 					</p:panelGrid>
-					<p:commandButton value="Зберегти" action="editCustomer.saveCustomer()"
-						oncomplete="PF('custDialog').hide();">
+					<p:commandButton value="Зберегти"
+						action="#{editCustomer.saveCustomer()}"
+						oncomplete="PF('custDialog').hide();" update=":formEditCustomer">
 					</p:commandButton>
 				</p:outputPanel>
 			</p:dialog>

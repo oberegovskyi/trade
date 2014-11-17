@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Scope;
 @Named(value = "userBean")
 @Scope("session")
 public class ActiveUserBean implements Serializable{
-	private String login=null;
-	private String password=null;
+	private String login;
+	private String password;
 
 	public String getLogin() {
 		return login;
@@ -38,6 +38,6 @@ public class ActiveUserBean implements Serializable{
 	public String logOut() {
 		login=null;
 		password=null;
-		return "addCustomer";
+		return "index";
 	}
 }

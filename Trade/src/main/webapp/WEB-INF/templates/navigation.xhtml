@@ -8,15 +8,16 @@
 <body>
 	<ui:composition>
 		<h:form id="formNavigator">
+			<p:growl id="growl" showDetail="true" sticky="true" />  
 			<p:toolbar>
 				<f:facet name="left">
 					<p:outputLabel id="welcome"
-						value="Ласкаво просимо, #{userBean.login}" rendered="#{userBean.logged}"/>
+						value="Ласкаво просимо, #{userBean.login}" />
 				</f:facet>
 
 				<f:facet name="right">
 					<p:commandButton value="Реєстрація"
-						icon="ui-icon-arrowthickstop-1-s" oncomplete="PF('regDialog').show()" title="View" rendered="not #{userBean.logged}"/>
+						icon="ui-icon-arrowthickstop-1-s" oncomplete="PF('regDialog').show()" title="View" />
 
 					<p:commandButton value="Ввійти" icon="ui-icon-person"
 						oncomplete="PF('enterDialog').show()" title="View"

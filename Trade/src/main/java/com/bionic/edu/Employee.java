@@ -1,9 +1,12 @@
 package com.bionic.edu;
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 
+@SuppressWarnings("serial")
 @Entity
-public class Employee {
+public class Employee  implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int employeeId;

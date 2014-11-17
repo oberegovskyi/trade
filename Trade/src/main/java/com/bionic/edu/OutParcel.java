@@ -1,5 +1,6 @@
 package com.bionic.edu;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,8 +16,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 
+@SuppressWarnings("serial")
 @Entity
-public class OutParcel
+public class OutParcel implements Serializable
 {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

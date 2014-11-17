@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -17,7 +19,7 @@ public class EditCustomerBean implements Serializable {
 	@Inject
 	private SecurityOfficerService securityOfficerService;
 
-	private Customer temp;
+	private Customer temp ;
 	
 	private List<Customer> list ;
 	
@@ -42,6 +44,7 @@ public class EditCustomerBean implements Serializable {
 		this.temp = temp;
 	}
 	
+
 	@PostConstruct
 	public void init() {
         this.list = securityOfficerService.getAllCustomers();
@@ -49,6 +52,15 @@ public class EditCustomerBean implements Serializable {
 	
 	public String saveCustomer () {
 		securityOfficerService.saveCustomer(temp);
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage("Успішно", "Клієнт "+ temp.getLogin()+" збережений."));
+		return "editCustomer";
+	}
+	
+	public String blockCustomer (Customer tempBlock) {
+		securityOfficerService.blockCustomer(tempBlock);
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage("Успішно", "Клієнт "+ tempBlock.getLogin()+" заблокований."));
 		return "editCustomer";
 	}
 

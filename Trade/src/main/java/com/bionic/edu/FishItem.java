@@ -1,5 +1,6 @@
 package com.bionic.edu;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import javax.persistence.Entity;
@@ -11,8 +12,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+@SuppressWarnings("serial")
 @Entity
-public class FishItem {
+public class FishItem implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int fishItemId;

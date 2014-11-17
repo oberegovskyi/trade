@@ -147,6 +147,11 @@ This project is a minimal jar utility with Spring configuration.
 			<artifactId>el-impl</artifactId>
 			<version>2.2</version>
 		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.9</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
