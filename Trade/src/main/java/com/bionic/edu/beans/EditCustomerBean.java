@@ -25,10 +25,7 @@ public class EditCustomerBean implements Serializable {
 		
 	}
 
-	@PostConstruct
-	public void init() {
-        this.list = securityOfficerService.getAllCustomers();
-    }
+	
 	public List<Customer> getList() {
 		return list;
 	}
@@ -43,6 +40,16 @@ public class EditCustomerBean implements Serializable {
 
 	public void setTemp(Customer temp) {
 		this.temp = temp;
+	}
+	
+	@PostConstruct
+	public void init() {
+        this.list = securityOfficerService.getAllCustomers();
+    }
+	
+	public String saveCustomer () {
+		securityOfficerService.saveCustomer(temp);
+		return "editCustomer";
 	}
 
 }
