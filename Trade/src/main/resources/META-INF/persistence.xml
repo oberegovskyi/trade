@@ -5,12 +5,12 @@
                 version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
     <persistence-unit name="FishM" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>com.bionic.edu.Customer</class>
-    <class>com.bionic.edu.OutParcel</class>
-    <class>com.bionic.edu.InParcel</class>
-    <class>com.bionic.edu.FishItem</class>
-    <class>com.bionic.edu.OutParcelItem</class>
-    <class>com.bionic.edu.Employee</class>
+    <class>com.bionic.edu.entities.Customer</class>
+    <class>com.bionic.edu.entities.OutParcel</class>
+    <class>com.bionic.edu.entities.InParcel</class>
+    <class>com.bionic.edu.entities.FishItem</class>
+    <class>com.bionic.edu.entities.OutParcelItem</class>
+    <class>com.bionic.edu.entities.Employee</class>
     <properties>
      		<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/fishTrade" />

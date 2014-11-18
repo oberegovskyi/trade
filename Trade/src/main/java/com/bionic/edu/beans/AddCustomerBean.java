@@ -8,8 +8,8 @@ import javax.inject.Named;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.context.annotation.Scope;
 
-import com.bionic.edu.Customer;
-import com.bionic.edu.SecurityOfficerService;
+import com.bionic.edu.entities.Customer;
+import com.bionic.edu.services.SecurityOfficerService;
 
 @Named("addCustomer")
 @Scope("request")

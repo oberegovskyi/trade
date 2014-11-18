@@ -10,14 +10,17 @@ import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
-import com.bionic.edu.CustomerService;
-import com.bionic.edu.FishItem;
-import com.rits.cloning.Cloner;
+import com.bionic.edu.entities.FishItem;
+import com.bionic.edu.methods.Cloner;
+import com.bionic.edu.services.CustomerService;
 
-@SuppressWarnings("serial")
 @Named("orderBean")
 @Scope("session")
 public class OrderBean implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<FishItem> availableList;
 	private List<FishItem> orderList = new ArrayList<FishItem>();
 	private double totalWeight;
@@ -82,13 +85,14 @@ public class OrderBean implements Serializable {
 		this.weight = weight;
 	}
 
-	public String addFishItemToList(double ww) {
-		temp.setWeight(ww);
-
-		orderList.add(temp);
+	public String addFishItemToList() {
+		FishItem  tt = new FishItem();
+		Cloner cloner = new Cloner();
+		tt = (FishItem) cloner.deepCopy(temp);
+		tt.setWeight(weight);
+		orderList.add(tt);
 		temp = null;
-		System.out.println(availableList);
-		System.out.println(orderList);
+		weight=0;
 		return "fishView";
 	}
 }

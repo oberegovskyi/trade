@@ -58,7 +58,7 @@
 
 					</p:panelGrid>
 					<p:commandButton value="Додати"
-						action="#{orderBean.addFishItemToList(orderBean.weight)}"
+						action="#{orderBean.addFishItemToList()}"
 						oncomplete="PF('fishDialog').hide();" update="dataOrder">
 					</p:commandButton>
 					<p:message for="errorWeight" display="text" />

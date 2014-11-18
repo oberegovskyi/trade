@@ -141,11 +141,6 @@ This project is a minimal jar utility with Spring configuration.
 			<artifactId>commons-codec</artifactId>
 			<version>1.9</version>
 		</dependency>
-		<dependency>
-			<groupId>uk.com.robust-it</groupId>
-			<artifactId>cloning</artifactId>
-			<version>1.9.1</version>
-		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

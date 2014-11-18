@@ -9,8 +9,8 @@ import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
-import com.bionic.edu.CustomerService;
-import com.bionic.edu.FishItem;
+import com.bionic.edu.entities.FishItem;
+import com.bionic.edu.services.CustomerService;
 
 
 @SuppressWarnings("serial")

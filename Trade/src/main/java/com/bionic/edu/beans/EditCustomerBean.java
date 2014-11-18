@@ -9,8 +9,8 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.bionic.edu.Customer;
-import com.bionic.edu.SecurityOfficerService;
+import com.bionic.edu.entities.Customer;
+import com.bionic.edu.services.SecurityOfficerService;
 
 @SuppressWarnings("serial")
 @Named("editCustomer")
