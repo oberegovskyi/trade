@@ -41,4 +41,8 @@ public class CustomerServiceImpl implements CustomerService {
 	public double getPriceOfParcel(OutParcel temp) {
 		return customerDAO.getPriceOfParcel(temp);
 	}
+	
+	public List <InParcel> getAllInParcels () {
+		return customerDAO.getAllInParcels();
+	}
 }

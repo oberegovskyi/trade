@@ -116,4 +116,15 @@ public class CustomerDAOImpl implements CustomerDAO{
 
 		return result;
 	}
+	
+	public List <InParcel> getAllInParcels () {
+		TypedQuery<InParcel> query = em.createQuery("SELECT i FROM InParcel as i",
+						InParcel.class);
+		List<InParcel> listI = null;
+
+		listI = query.getResultList();
+
+		return listI;
+	}
+
 }

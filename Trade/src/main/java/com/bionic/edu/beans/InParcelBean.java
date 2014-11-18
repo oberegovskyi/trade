@@ -3,10 +3,13 @@ package com.bionic.edu.beans;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
+import com.bionic.edu.CustomerService;
 import com.bionic.edu.FishItem;
 import com.bionic.edu.InParcel;
 @SuppressWarnings("serial")
@@ -16,6 +19,9 @@ public class InParcelBean implements Serializable{
 	private List <InParcel> list ;
 	
 	private FishItem selected;
+	
+	@Inject
+	private CustomerService customerService;
 
 	public List<InParcel> getList() {
 		return list;
@@ -33,4 +39,9 @@ public class InParcelBean implements Serializable{
 		this.selected = selected;
 	}
 
+	
+	@PostConstruct
+	public void init () {
+		list=customerService.getAllInParcels();
+	}
 }

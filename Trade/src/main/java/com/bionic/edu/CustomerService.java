@@ -16,4 +16,6 @@ public interface CustomerService {
 	public double getAllWeightOfParcel(OutParcelItem temp);
 
 	public double getPriceOfParcel(OutParcel temp);
+	
+	public List <InParcel> getAllInParcels ();
 }

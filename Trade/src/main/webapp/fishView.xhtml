@@ -10,7 +10,7 @@
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
 		<h:form id="form">
-			<p:dataTable id="data" value="#{fishItem.list}" var="fish"
+			<p:dataTable id="data" value="#{orderBean.availableList}" var="fish"
 				styleClass="fishItemTable">
 				<p:column headerText="Назва">
 					<p:outputLabel value="#{fish.fishName}" />
@@ -29,7 +29,7 @@
 						oncomplete="PF('fishDialog').show()" icon="ui-icon-plus"
 						title="View">
 						<f:setPropertyActionListener value="#{fish}"
-							target="#{fishItem.selectedFish}" />
+							target="#{orderBean.temp}" />
 					</p:commandButton>
 
 				</p:column>
@@ -41,27 +41,25 @@
 				showEffect="explode" hideEffect="explode" resizable="false">
 				<p:outputPanel id="fishDetail" style="text-align:center;">
 					<p:panelGrid columns="2"
-						rendered="#{not empty fishItem.selectedFish}"
+						rendered="#{not empty orderBean.temp}"
 						columnClasses="label,value">
 
 						<h:outputText value="Назва:" />
-						<h:outputText value="#{fishItem.selectedFish.fishName}" />
+						<h:outputText value="#{orderBean.temp.fishName}" />
 
 						<h:outputText value="Ціна:" />
-						<h:outputText value="#{fishItem.selectedFish.sellPrice}" />
+						<h:outputText value="#{orderBean.temp.sellPrice}" />
 
 						<h:outputText value="Вага замовлення" />
 						<p:inputText id="errorWeight"
-							value="#{fishItem.selectedFish.weight}" required="true"
+							value="#{orderBean.weight}" required="true"
 							requiredMessage="Введіть вагу">
 						</p:inputText>
 
 					</p:panelGrid>
 					<p:commandButton value="Додати"
-						action="#{orderBean.addFishItemToList()}"
+						action="#{orderBean.addFishItemToList(orderBean.weight)}"
 						oncomplete="PF('fishDialog').hide();" update="dataOrder">
-						<f:setPropertyActionListener value="#{fishItem.selectedFish}"
-							target="#{orderBean.temp}" />
 					</p:commandButton>
 					<p:message for="errorWeight" display="text" />
 				</p:outputPanel>
@@ -70,7 +68,7 @@
 
 			<p:separator />
 
-			<p:dataTable id="dataOrder" value="#{orderBean.list}" var="item"
+			<p:dataTable id="dataOrder" value="#{orderBean.orderList}" var="item"
 				styleClass="fishItemTable">
 				<p:column headerText="Назва">
 					<p:outputLabel value="#{item.fishName}" />
