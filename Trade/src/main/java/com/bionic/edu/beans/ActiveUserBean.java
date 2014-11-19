@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.primefaces.context.RequestContext;
 import org.springframework.context.annotation.Scope;
 
 import com.bionic.edu.entities.Customer;
@@ -45,7 +46,7 @@ public class ActiveUserBean implements Serializable{
 	}
 	public String logOut() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage("Успішно",login+" ,ви вийшли з системи"));
+		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Успішно",login+" ,ви вийшли з системи"));
 		setLogged(false);
 		customer=null;
 		return "index";
@@ -57,14 +58,16 @@ public class ActiveUserBean implements Serializable{
 		FacesContext context = FacesContext.getCurrentInstance();
 		if (customer == null) {
 			setLogged(false);
-			context.addMessage(null, new FacesMessage("Помилка","Введений логін або пароль невірні"));
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Помилка","Введений логін або пароль невірні"));
 		} else {
 			if (customer.getBlocked()==0) {
 				setLogged(true);
-				context.addMessage(null, new FacesMessage("Успішно", "Ласкаво просимо, "+customer.getLogin()));
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Успішно", "Ласкаво просимо, "+customer.getLogin()));
+				RequestContext.getCurrentInstance().execute("PF('userDialog').hide();");
+				
 			}else {
 				setLogged(false);
-				context.addMessage(null, new FacesMessage("Увага", "Користувач "+customer.getLogin()+ " заблокований!"));
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,"Увага", "Користувач "+customer.getLogin()+ " заблокований!"));
 			}
 			
 		}
@@ -73,6 +76,14 @@ public class ActiveUserBean implements Serializable{
 
 	public void setLogged(boolean logged) {
 		this.logged = logged;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 	
 }

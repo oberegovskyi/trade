@@ -1,6 +1,7 @@
 package com.bionic.edu.beans;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,9 +11,13 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.context.RequestContext;
 import org.springframework.context.annotation.Scope;
 
+import com.bionic.edu.entities.Customer;
 import com.bionic.edu.entities.FishItem;
+import com.bionic.edu.entities.OutParcel;
+import com.bionic.edu.entities.OutParcelItem;
 import com.bionic.edu.methods.Cloner;
 import com.bionic.edu.services.CustomerService;
 
@@ -31,8 +36,8 @@ public class OrderBean implements Serializable {
 
 	private FishItem temp;
 	private FishItem tempWork;
-	
-	private ActiveUserBean activeUser;
+
+	private Customer activeUser;
 
 	@Inject
 	private CustomerService customerService;
@@ -45,11 +50,11 @@ public class OrderBean implements Serializable {
 		this.temp = temp;
 		Cloner cloner = new Cloner();
 		tempWork = (FishItem) cloner.deepCopy(temp);
-		total=0;
-		totalWeight=0;
+		total = 0;
+		totalWeight = 0;
 		for (FishItem in : orderList) {
-			totalWeight+=in.getWeight();
-			total+=in.getWeight()*in.getSellPrice();
+			totalWeight += in.getWeight();
+			total += in.getWeight() * in.getSellPrice();
 		}
 	}
 
@@ -98,42 +103,65 @@ public class OrderBean implements Serializable {
 		this.weight = weight;
 	}
 
+	public Customer getActiveUser() {
+		return activeUser;
+	}
+
+	public void setActiveUser(Customer activeUser) {
+		this.activeUser = activeUser;
+	}
+
 	public String addFishItemToList() {
-		
+
 		tempWork.setWeight(weight);
 		orderList.add(tempWork);
-		
+
 		temp = null;
-		weight=0;
-		total=0;
-		totalWeight=0;
+		weight = 0;
+		total = 0;
+		totalWeight = 0;
 		for (FishItem in : orderList) {
-			totalWeight+=in.getWeight();
-			total+=in.getWeight()*in.getSellPrice();
+			totalWeight += in.getWeight();
+			total += in.getWeight() * in.getSellPrice();
 		}
 		return "fishView";
 	}
-	
-	public void deleteFishItem (FishItem ff) {
+
+	public void deleteFishItem(FishItem ff) {
 		orderList.remove(ff);
-		total=0;
-		totalWeight=0;
+		total = 0;
+		totalWeight = 0;
 		for (FishItem in : orderList) {
-			totalWeight+=in.getWeight();
-			total+=in.getWeight()*in.getSellPrice();
+			totalWeight += in.getWeight();
+			total += in.getWeight() * in.getSellPrice();
 		}
 	}
-	
+
 	public double countPrice(FishItem fish) {
-		return fish.getSellPrice()*fish.getWeight();
+		return fish.getSellPrice() * fish.getWeight();
 	}
-	
-	public String preSubmitOrder () {
-		System.out.println(activeUser);
-		if (activeUser==null ) {
-			return "addCustomer";
+
+	public void preSubmitOrder() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		
+		if (!orderList.isEmpty()) {
+			if (activeUser == null) {
+				RequestContext.getCurrentInstance().execute("PF('userDialog').show();");
+			} else {
+
+				java.util.Calendar cal = java.util.Calendar.getInstance();
+				java.util.Date utilDate = cal.getTime();
+				java.sql.Date sqlDate = new Date(utilDate.getTime());
+				OutParcel out = new OutParcel(sqlDate, activeUser, 0, 0, 1);
+				List<OutParcelItem> oo = new ArrayList<OutParcelItem>();
+				for (FishItem ff : orderList) {
+					oo.add(new OutParcelItem(out, ff, ff.getWeight()));
+				}
+				customerService.addOutParcelWithItems(out, oo);
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Успішно","Додана нова партія риби"));
+			}
 		} else {
-			return "fishView";
+			context.addMessage(null, new FacesMessage("Успішно","Партія не була додана"));
 		}
 	}
 }

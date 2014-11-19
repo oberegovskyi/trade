@@ -7,7 +7,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import org.ietf.jgss.Oid;
 import org.springframework.stereotype.Repository;
 
 import com.bionic.edu.DAO.CustomerDAO;

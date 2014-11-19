@@ -57,14 +57,15 @@
 					</p:panelGrid>
 					<p:commandButton value="Додати"
 						action="#{orderBean.addFishItemToList()}"
-						oncomplete="PF('fishDialog').hide();" update=":formFishView:dataOrder">
+						oncomplete="PF('fishDialog').hide();"
+						update=":formFishView:dataOrder">
 					</p:commandButton>
 					<p:message for="errorWeight" display="text" />
 				</p:outputPanel>
 			</p:dialog>
 
 
-			<h1 style="text-align:center;">Корзина</h1>
+			<h1 style="text-align: center;">Корзина</h1>
 
 			<p:dataTable id="dataOrder" value="#{orderBean.orderList}" var="item"
 				styleClass="fishItemTable">
@@ -87,7 +88,8 @@
 					</p:commandButton>
 
 					<p:commandButton icon="ui-icon-close" title="View"
-						action="#{orderBean.deleteFishItem(item)}" update=":formFishView:dataOrder">
+						action="#{orderBean.deleteFishItem(item)}"
+						update=":formFishView:dataOrder">
 					</p:commandButton>
 				</p:column>
 				<p:columnGroup type="footer">
@@ -119,15 +121,39 @@
 
 					</p:panelGrid>
 					<p:commandButton value="OK" action="fishView"
-						oncomplete="PF('fishDialogEdit').hide();" update=":formFishView:dataOrder">
+						oncomplete="PF('fishDialogEdit').hide();"
+						update=":formFishView:dataOrder">
 						<f:setPropertyActionListener value="#{orderBean.temp}"
 							target="#{orderBean.temp}" />
 					</p:commandButton>
 					<p:message for="errorEdit" display="text" />
 				</p:outputPanel>
 			</p:dialog>
+
+			<p:dialog header="Що робити?" widgetVar="userDialog" modal="true"
+				showEffect="explode" hideEffect="explode" resizable="false">
+				<p:outputPanel id="userDi" style="text-align:center;">
+				<p:outputLabel value="Ви не ввійшли в систему"/>
+					<p:panelGrid columns="2">
+						<p:commandButton value="Реєстрація" action="addCustomer">
+						</p:commandButton>
+						<p:commandButton value="Ввійти в систему" action="fishView" oncomplete="PF('enterDialog').show()" title="View"
+						update=":formNavigator:enter" rendered="#{not userBean.logged}"> 
+						</p:commandButton>
+
+					</p:panelGrid>
+
+
+				</p:outputPanel>
+			</p:dialog>
+			<p:commandButton value="Прийняти" id="submit"
+			action="#{orderBean.preSubmitOrder()}">
+			<f:setPropertyActionListener value="#{userBean.customer}"
+				target="#{orderBean.activeUser}"></f:setPropertyActionListener>
+		</p:commandButton>
+		
 		</h:form>
-		<p:commandButton value="Прийняти" id="submit" action="#{orderBean.preSubmitOrder()}"/>
+		
 	</ui:define>
 </ui:composition>
 </html>

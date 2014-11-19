@@ -13,6 +13,7 @@
 		<h:form id="formEditCustomer">
 			<p:growl id="growl" showDetail="true" sticky="true" />
 			 <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
+			 
         <p:columnToggler datasource="editCustomer" trigger="toggler" />
 			<p:dataTable id="editCustomer" value="#{editCustomer.list}"
 				var="cust" styleClass="fishItemTable" rows="10" paginator="true"

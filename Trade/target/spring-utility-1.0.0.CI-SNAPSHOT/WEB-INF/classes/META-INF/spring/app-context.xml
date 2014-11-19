@@ -15,7 +15,6 @@
 		<property name="username" value="root" />
 		<property name="password" value="" />
 	</bean>
-	<bean id="cloner" class="com.rits.cloning.Cloner"/>
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="packagesToScan" value="com.bionic.edu" />
