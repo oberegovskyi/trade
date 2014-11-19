@@ -29,6 +29,7 @@ public class EditCustomerBean implements Serializable {
 
 	
 	public List<Customer> getList() {
+		init();
 		return list;
 	}
 

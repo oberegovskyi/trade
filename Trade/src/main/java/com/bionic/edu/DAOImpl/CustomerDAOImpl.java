@@ -3,9 +3,11 @@ package com.bionic.edu.DAOImpl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.ietf.jgss.Oid;
 import org.springframework.stereotype.Repository;
 
 import com.bionic.edu.DAO.CustomerDAO;
@@ -45,9 +47,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 	 */
 	public void addFishToParcelItem(OutParcelItem temp) {
 
-		em.getTransaction().begin();
 		em.persist(temp);
-		em.getTransaction().commit();
 
 	}
 
@@ -56,11 +56,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 	 * додає нового клієнта
 	 */
 	public void addCustomer(Customer temp) {
-
-		em.getTransaction().begin();
 		em.persist(temp);
-		em.getTransaction().commit();
-
 	}
 
 	/**
@@ -70,10 +66,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 	public void deleteFishItem(OutParcelItem temp) {
 
 		temp.setIsDeleted(1);
-		em.getTransaction().begin();
 		em.merge(temp);
-		em.getTransaction().commit();
-
 	}
 
 	/**
@@ -81,12 +74,9 @@ public class CustomerDAOImpl implements CustomerDAO{
 	 * зберігає OutParcelItem
 	 */
 	public void saveOutParcelItem(OutParcelItem temp) {
-
-		em.getTransaction().begin();
-		em.merge(temp);
-		em.getTransaction().commit();
-
+			em.merge(temp);
 	}
+	
 
 	/**
 	 * 
@@ -132,6 +122,30 @@ public class CustomerDAOImpl implements CustomerDAO{
 		listI = query.getResultList();
 
 		return listI;
+	}
+	
+	public Customer checkLoginPassword (String login, String password) {
+		Customer cust=null;
+		try {
+		TypedQuery<Customer> query =  em.createQuery("SELECT c FROM Customer as c WHERE c.login=:log AND c.password=:pas",Customer.class);
+		query.setParameter("log", login);
+		query.setParameter("pas", password);
+		cust= query.getSingleResult();
+		}
+		catch (NoResultException e) {
+			return cust;
+		}
+		
+		return cust;
+	}
+	/**
+	 * додає нову партію
+	 */
+	public void addOutParcelWithItems(OutParcel temp, List<OutParcelItem> items) {
+		em.persist(temp);
+		for (OutParcelItem in: items) {
+			em.persist(in);
+		}
 	}
 
 }

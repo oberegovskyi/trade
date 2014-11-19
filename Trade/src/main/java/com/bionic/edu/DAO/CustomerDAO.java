@@ -24,4 +24,8 @@ public interface CustomerDAO {
 	public double getPriceOfParcel(OutParcel temp);
 	
 	public List<InParcel> getAllInParcels ();
+	
+	public Customer checkLoginPassword (String login, String password);
+
+	public void addOutParcelWithItems(OutParcel temp, List<OutParcelItem> items);
 }

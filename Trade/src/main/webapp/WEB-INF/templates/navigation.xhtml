@@ -8,23 +8,22 @@
 <body>
 	<ui:composition>
 		<h:form id="formNavigator">
-			<p:growl id="growl" showDetail="true" sticky="true" />  
+			<p:growl id="growl" showDetail="true" sticky="true" />
 			<p:toolbar>
 				<f:facet name="left">
 					<p:outputLabel id="welcome"
-						value="Ласкаво просимо, #{userBean.login}" />
+						value="Ви зайшли як #{userBean.login}"
+						rendered="#{userBean.logged}" />
 				</f:facet>
 
 				<f:facet name="right">
-					<p:commandButton value="Реєстрація"
-						icon="ui-icon-arrowthickstop-1-s" oncomplete="PF('regDialog').show()" title="View" />
 
-					<p:commandButton value="Ввійти" icon="ui-icon-person"
+					<p:commandButton value="Ввійти" id="enterButton" icon="ui-icon-person"
 						oncomplete="PF('enterDialog').show()" title="View"
-						update=":formNavigator:enter" />
+						update=":formNavigator:enter" rendered="#{not userBean.logged}" />
 
-					<p:commandButton value="Вихід" icon="ui-icon-arrowthickstop-1-s"
-						actionListener="#{userBean.logOut()}" />
+					<p:commandButton value="Вихід" id="exitButton" icon="ui-icon-arrowthickstop-1-s"
+						action="#{userBean.logOut()}" rendered="#{userBean.logged}" update=":formNavigator"/>
 
 					<p:dialog header="Увійти" widgetVar="enterDialog" modal="true"
 						showEffect="explode" hideEffect="explode" resizable="false">
@@ -38,79 +37,18 @@
 
 								<p:outputLabel for="password" value="Пароль:" />
 								<p:password id="password" value="#{userBean.password}"
-									required="true" />
+									/>
 
 
 							</p:panelGrid>
 							<p:commandButton value="Увійти"
-								oncomplete="PF('enterDialog').hide();" update=":formNavigator" action="index">
+								oncomplete="PF('enterDialog').hide();" update=":formNavigator"
+								action="#{userBean.check()}">
 							</p:commandButton>
 							<p:messages display="text" />
 						</p:outputPanel>
 					</p:dialog>
 
-					<p:dialog header="Реєстрація" widgetVar="regDialog" modal="true"
-						showEffect="explode" hideEffect="explode" resizable="false">
-						<p:panelGrid columns="3" cellpadding="5">
-							<p:outputLabel for="login1" value="Логін:" />
-							<p:inputText id="login1" value="#{customer.login}" required="true"
-								requiredMessage="#{addCustomerMessagesBean.loginReq}"
-								validatorMessage="#{addCustomerMessagesBean.loginVal}">
-								<f:validateRegex pattern="^[a-zA-Z[0-9]+]{3,20}$" />
-							</p:inputText>
-							<p:message for="login1" display="text" />
-
-							<p:outputLabel for="pwd1" value="Введіть пароль:" />
-							<p:password id="pwd1" value="#{customer.password}"
-								required="true"
-								requiredMessage="#{addCustomerMessagesBean.passwordReq}"
-								validatorMessage="#{addCustomerMessagesBean.passwordVal}">
-								<f:validateRegex pattern="^[a-zA-Z[0-9]+]{3,20}$" />
-							</p:password>
-							<p:message for="pwd1" display="text" />
-
-							<p:outputLabel for="pwd2" value="Повторіть пароль:" />
-							<p:password id="pwd2" value="#{customer.password}"
-								label="Password 2" required="true"
-								requiredMessage="#{addCustomerMessagesBean.passwordReq}"
-								validatorMessage="#{addCustomerMessagesBean.passwordVal}">
-								<f:validateRegex pattern="^[a-zA-Z[0-9]+]{3,20}$" />
-							</p:password>
-							<p:message for="pwd2" display="text" />
-
-
-							<p:outputLabel for="fName" value="Ім'я:" />
-							<p:inputText id="fName" value="#{customer.fName}" required="true"
-								requiredMessage="#{addCustomerMessagesBean.fNameReq}"
-								validatorMessage="#{addCustomerMessagesBean.fNameVal}">
-								<f:validateRegex pattern="^[А-ЯЇІа-яії]+{2,20}$" />
-							</p:inputText>
-							<p:message for="fName" display="text" />
-
-
-							<p:outputLabel for="sName" value="Прізвище:" />
-							<p:inputText id="sName" value="#{customer.sName}" required="true"
-								requiredMessage="#{addCustomerMessagesBean.sNameReq}"
-								validatorMessage="#{addCustomerMessagesBean.sNameVal}">
-								<f:validateRegex pattern="^[А-ЯЇІа-яії]+{2,20}$" />
-							</p:inputText>
-							<p:message for="sName" display="text" />
-
-							<p:outputLabel for="email" value="E-mail:" />
-							<p:inputText id="email" value="#{customer.email}" required="true"
-								requiredMessage="#{addCustomerMessagesBean.emailReq}"
-								validatorMessage="#{addCustomerMessagesBean.emailVal}">
-								<f:validateRegex
-									pattern="^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$" />
-
-							</p:inputText>
-							<p:message for="email" display="text" />
-
-						</p:panelGrid>
-						<p:commandButton value="Увійти"
-								oncomplete="PF('regDialog').hide();" update=":formNavigator">
-							</p:commandButton>
-					</p:dialog>
 
 				</f:facet>
 			</p:toolbar>

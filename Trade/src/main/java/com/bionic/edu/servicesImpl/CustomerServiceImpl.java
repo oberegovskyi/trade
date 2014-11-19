@@ -5,6 +5,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.bionic.edu.DAO.CustomerDAO;
 import com.bionic.edu.entities.Customer;
 import com.bionic.edu.entities.FishItem;
@@ -26,18 +28,22 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerDAO.getAllAvailableFishItems();
 	}
 
+	@Transactional
 	public void addFishToParcelItem(OutParcelItem temp) {
 		customerDAO.addFishToParcelItem(temp);
 	}
 
+	@Transactional
 	public void addCustomer(Customer temp) {
 		customerDAO.addCustomer(temp);
 	}
 
+	@Transactional
 	public void deleteFishItem(OutParcelItem temp) {
 		customerDAO.deleteFishItem(temp);
 	}
 
+	@Transactional
 	public void saveOutParcelItem(OutParcelItem temp) {
 		customerDAO.saveOutParcelItem(temp);
 	}
@@ -52,5 +58,14 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	public List <InParcel> getAllInParcels () {
 		return customerDAO.getAllInParcels();
+	}
+	
+	public Customer checkLoginPassword (String login, String password) {
+		return customerDAO.checkLoginPassword(login, password);
+	}
+	
+	@Transactional
+	public void addOutParcelWithItems(OutParcel temp, List<OutParcelItem> items) {
+		customerDAO.addOutParcelWithItems(temp, items);
 	}
 }

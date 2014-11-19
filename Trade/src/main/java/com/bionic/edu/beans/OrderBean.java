@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -28,6 +30,9 @@ public class OrderBean implements Serializable {
 	private double weight;
 
 	private FishItem temp;
+	private FishItem tempWork;
+	
+	private ActiveUserBean activeUser;
 
 	@Inject
 	private CustomerService customerService;
@@ -38,6 +43,14 @@ public class OrderBean implements Serializable {
 
 	public void setTemp(FishItem temp) {
 		this.temp = temp;
+		Cloner cloner = new Cloner();
+		tempWork = (FishItem) cloner.deepCopy(temp);
+		total=0;
+		totalWeight=0;
+		for (FishItem in : orderList) {
+			totalWeight+=in.getWeight();
+			total+=in.getWeight()*in.getSellPrice();
+		}
 	}
 
 	public List<FishItem> getAvailableList() {
@@ -86,13 +99,41 @@ public class OrderBean implements Serializable {
 	}
 
 	public String addFishItemToList() {
-		FishItem  tt = new FishItem();
-		Cloner cloner = new Cloner();
-		tt = (FishItem) cloner.deepCopy(temp);
-		tt.setWeight(weight);
-		orderList.add(tt);
+		
+		tempWork.setWeight(weight);
+		orderList.add(tempWork);
+		
 		temp = null;
 		weight=0;
+		total=0;
+		totalWeight=0;
+		for (FishItem in : orderList) {
+			totalWeight+=in.getWeight();
+			total+=in.getWeight()*in.getSellPrice();
+		}
 		return "fishView";
+	}
+	
+	public void deleteFishItem (FishItem ff) {
+		orderList.remove(ff);
+		total=0;
+		totalWeight=0;
+		for (FishItem in : orderList) {
+			totalWeight+=in.getWeight();
+			total+=in.getWeight()*in.getSellPrice();
+		}
+	}
+	
+	public double countPrice(FishItem fish) {
+		return fish.getSellPrice()*fish.getWeight();
+	}
+	
+	public String preSubmitOrder () {
+		System.out.println(activeUser);
+		if (activeUser==null ) {
+			return "addCustomer";
+		} else {
+			return "fishView";
+		}
 	}
 }

@@ -9,7 +9,7 @@
 
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
-		<h:form id="form">
+		<h:form id="formFishView">
 			<p:dataTable id="data" value="#{orderBean.availableList}" var="fish"
 				styleClass="fishItemTable">
 				<p:column headerText="Назва">
@@ -25,7 +25,7 @@
 					<p:outputLabel value="#{fish.sellPrice}" />
 				</p:column>
 				<p:column>
-					<p:commandButton update=":form:fishDetail"
+					<p:commandButton update=":formFishView:fishDetail"
 						oncomplete="PF('fishDialog').show()" icon="ui-icon-plus"
 						title="View">
 						<f:setPropertyActionListener value="#{fish}"
@@ -40,8 +40,7 @@
 			<p:dialog header="Деталі" widgetVar="fishDialog" modal="true"
 				showEffect="explode" hideEffect="explode" resizable="false">
 				<p:outputPanel id="fishDetail" style="text-align:center;">
-					<p:panelGrid columns="2"
-						rendered="#{not empty orderBean.temp}"
+					<p:panelGrid columns="2" rendered="#{not empty orderBean.temp}"
 						columnClasses="label,value">
 
 						<h:outputText value="Назва:" />
@@ -51,22 +50,21 @@
 						<h:outputText value="#{orderBean.temp.sellPrice}" />
 
 						<h:outputText value="Вага замовлення" />
-						<p:inputText id="errorWeight"
-							value="#{orderBean.weight}" required="true"
-							requiredMessage="Введіть вагу">
+						<p:inputText id="errorWeight" value="#{orderBean.weight}"
+							required="true" requiredMessage="Введіть вагу">
 						</p:inputText>
 
 					</p:panelGrid>
 					<p:commandButton value="Додати"
 						action="#{orderBean.addFishItemToList()}"
-						oncomplete="PF('fishDialog').hide();" update="dataOrder">
+						oncomplete="PF('fishDialog').hide();" update=":formFishView:dataOrder">
 					</p:commandButton>
 					<p:message for="errorWeight" display="text" />
 				</p:outputPanel>
 			</p:dialog>
 
 
-			<p:separator />
+			<h1 style="text-align:center;">Корзина</h1>
 
 			<p:dataTable id="dataOrder" value="#{orderBean.orderList}" var="item"
 				styleClass="fishItemTable">
@@ -77,11 +75,11 @@
 					<p:outputLabel value="#{item.weight}" />
 				</p:column>
 				<p:column headerText="Вартість">
-					<p:outputLabel value="#{item.sellPrice}" />
+					<p:outputLabel value="#{orderBean.countPrice(item)}" />
 				</p:column>
 
 				<p:column>
-					<p:commandButton update=":form:fishEdit"
+					<p:commandButton update=":formFishView:fishEdit"
 						oncomplete="PF('fishDialogEdit').show()" icon="ui-icon-pencil"
 						title="View">
 						<f:setPropertyActionListener value="#{item}"
@@ -89,7 +87,7 @@
 					</p:commandButton>
 
 					<p:commandButton icon="ui-icon-close" title="View"
-						action="#{orderBean.deleteFishItem(item)}" update="dataOrder">
+						action="#{orderBean.deleteFishItem(item)}" update=":formFishView:dataOrder">
 					</p:commandButton>
 				</p:column>
 				<p:columnGroup type="footer">
@@ -121,7 +119,7 @@
 
 					</p:panelGrid>
 					<p:commandButton value="OK" action="fishView"
-						oncomplete="PF('fishDialogEdit').hide();" update="dataOrder">
+						oncomplete="PF('fishDialogEdit').hide();" update=":formFishView:dataOrder">
 						<f:setPropertyActionListener value="#{orderBean.temp}"
 							target="#{orderBean.temp}" />
 					</p:commandButton>
@@ -129,7 +127,7 @@
 				</p:outputPanel>
 			</p:dialog>
 		</h:form>
-		<p:commandButton value="Прийняти" id="submit" action="resultFish" />
+		<p:commandButton value="Прийняти" id="submit" action="#{orderBean.preSubmitOrder()}"/>
 	</ui:define>
 </ui:composition>
 </html>
