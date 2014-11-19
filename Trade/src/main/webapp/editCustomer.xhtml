@@ -11,15 +11,16 @@
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
 		<h:form id="formEditCustomer">
-			<p:growl id="growl" showDetail="true" sticky="true" />
-			 <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
-			 
-        <p:columnToggler datasource="editCustomer" trigger="toggler" />
+			<p:growl id="growl" showDetail="true" sticky="false" />
+			
 			<p:dataTable id="editCustomer" value="#{editCustomer.list}"
-				var="cust" styleClass="fishItemTable" rows="10" paginator="true"
+				var="cust" styleClass="fishItemTable" rows="50" paginator="true"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="10,20,50">
- 				
+ 				<p:column headerText="Статус" style="width:35px;">
+					<p:graphicImage name="img/icons/ok.jpg" rendered="#{cust.blocked == 0}"/>
+					<p:graphicImage name="img/icons/notok.png" rendered="#{cust.blocked == 1}"/>
+				</p:column>
 				<p:column headerText="Логін">
 					<p:outputLabel value="#{cust.login}" />
 				</p:column>
@@ -32,14 +33,10 @@
 				<p:column headerText="Email">
 					<p:outputLabel value="#{cust.email}" />
 				</p:column>
-				<p:column headerText="Перед.">
+				<p:column headerText="Перед." style="width:60px;">
 					<p:outputLabel value="#{cust.payment}" />
 				</p:column>
-
-				<p:column headerText="Блок.">
-					<p:outputLabel value="#{cust.blocked}" />
-				</p:column>
-				<p:column headerText="Дії">
+				<p:column headerText="Дії" style="width:75px;">
 					<p:commandButton update=":formEditCustomer:custDetail"
 						oncomplete="PF('custDialog').show()" icon="ui-icon-pencil"
 						title="Редагувати">
@@ -49,7 +46,12 @@
 
 					<p:commandButton icon="ui-icon-circle-minus" title="Блокувати"
 						action="#{editCustomer.blockCustomer(cust)}"
-						update=":formEditCustomer">
+						update=":formEditCustomer" rendered="#{cust.blocked == 0}">
+					</p:commandButton>
+					
+					<p:commandButton icon="ui-icon-circle-plus" title="Розблокувати"
+						action="#{editCustomer.unBlockCustomer(cust)}"
+						update=":formEditCustomer" rendered="#{cust.blocked == 1}">
 					</p:commandButton>
 
 				</p:column>

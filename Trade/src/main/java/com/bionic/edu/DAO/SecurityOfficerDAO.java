@@ -17,6 +17,7 @@ public interface SecurityOfficerDAO {
 	public void saveCustomer(Customer customer);
 
 	public void blockCustomer(Customer customer);
+	public void unBlockCustomer(Customer customer);
 	
 	public List<Customer> getAllCustomers();
 }

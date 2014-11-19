@@ -64,6 +64,14 @@ public class SecurityOfficerDAOImpl implements SecurityOfficerDAO {
 		customer.setBlocked(1);
 		em.merge(customer);
 	}
+	
+	/**
+	 * розблокує клієнта
+	 */
+	public void unBlockCustomer(Customer customer) {
+		customer.setBlocked(0);
+		em.merge(customer);
+	}
 
 
 	public List<Customer> getAllCustomers() {

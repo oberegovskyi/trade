@@ -49,6 +49,11 @@ public class SecurityOfficerServiceImpl implements SecurityOfficerService {
 		securityOfficerDAO.blockCustomer(customer);
 	}
 	
+	@Transactional
+	public void unBlockCustomer(Customer customer) {
+		securityOfficerDAO.unBlockCustomer(customer);
+	}
+	
 	public List<Customer> getAllCustomers() {
 		return securityOfficerDAO.getAllCustomers();
 	}

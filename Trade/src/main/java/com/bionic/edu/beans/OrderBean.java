@@ -142,8 +142,7 @@ public class OrderBean implements Serializable {
 	}
 
 	public void preSubmitOrder() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		
+	
 		if (!orderList.isEmpty()) {
 			if (activeUser == null) {
 				RequestContext.getCurrentInstance().execute("PF('userDialog').show();");
@@ -158,10 +157,8 @@ public class OrderBean implements Serializable {
 					oo.add(new OutParcelItem(out, ff, ff.getWeight()));
 				}
 				customerService.addOutParcelWithItems(out, oo);
-				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Успішно","Додана нова партія риби"));
 			}
 		} else {
-			context.addMessage(null, new FacesMessage("Успішно","Партія не була додана"));
 		}
 	}
 }

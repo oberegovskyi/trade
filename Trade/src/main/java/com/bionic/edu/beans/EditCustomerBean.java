@@ -64,5 +64,12 @@ public class EditCustomerBean implements Serializable {
 		context.addMessage(null, new FacesMessage("Успішно", "Клієнт "+ tempBlock.getLogin()+" заблокований."));
 		return "editCustomer";
 	}
+	
+	public String unBlockCustomer (Customer tempBlock) {
+		securityOfficerService.unBlockCustomer(tempBlock);
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage("Успішно", "Клієнт "+ tempBlock.getLogin()+" розблокований."));
+		return "editCustomer";
+	}
 
 }
