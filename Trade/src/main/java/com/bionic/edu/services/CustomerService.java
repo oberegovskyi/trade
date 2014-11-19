@@ -28,4 +28,8 @@ public interface CustomerService {
 	public Customer checkLoginPassword (String login, String password);
 	
 	public void addOutParcelWithItems(OutParcel temp, List<OutParcelItem> items);
+	
+	public List<OutParcel> getOutParcels(Customer customer);
+	
+	public List<OutParcelItem> getOutParcelItems (OutParcel outParcel);
 }

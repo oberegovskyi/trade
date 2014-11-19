@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+		<h:form id="myRoomForm" rendered="#{(not empty userBean.customer) and (userBean.role eq 'customer')}">
+			<p:outputLabel value="Особистий кабінет" style="align:center;" />
+			<p:panelGrid columns="2" style="margin:auto;"
+				columnClasses="label,value">
+
+				<h:outputText value="Логін:" />
+				<p:outputLabel value="#{userBean.customer.login}" />
+
+				<h:outputText value="Пароль:" />
+				<p:outputLabel value="#{userBean.customer.password}" />
+
+				<h:outputText value="Ім'я:" />
+				<p:outputLabel value="#{userBean.customer.fName}" />
+
+				<h:outputText value="Прізвище:" />
+				<p:outputLabel value="#{userBean.customer.sName}" />
+
+				<h:outputText value="Email:" />
+				<p:outputLabel value="#{userBean.customer.email}" />
+
+				<h:outputText value="Перед.:" />
+				<p:outputLabel value="#{userBean.customer.payment}" />
+
+
+
+
+
+			</p:panelGrid>
+			<p:dataTable id="data" value="#{userBean.out}" var="o"
+				styleClass="fishItemTable">
+				<p:column headerText="Id">
+					<p:outputLabel value="#{o.outParcelId}" />
+				</p:column>
+				<p:column headerText="Дата">
+					<p:outputLabel value="#{o.outParcelDate}" />
+				</p:column>
+				<p:column headerText="Оплачено">
+					<p:outputLabel value="#{o.payed}" />
+				</p:column>
+				<p:column headerText="Забрано">
+					<p:outputLabel value="#{o.taken}" />
+				</p:column>
+				<p:column headerText="Доступно">
+					<p:outputLabel value="#{o.available}" />
+				</p:column>
+				<p:column >
+					<p:commandButton update=":myRoomForm:outParcelDet"
+						oncomplete="PF('outParcelItems').show()" icon="ui-icon-zoomin"
+						title="View">
+						<f:setPropertyActionListener value="#{o}"
+							target="#{userBean.tempParcel}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			
+			<p:dialog header="Детально" widgetVar="outParcelItems" modal="true"
+				showEffect="explode" hideEffect="explode" resizable="false">
+				<p:dataTable id="outParcelDet" value="#{userBean.outItemsList}" var="oi"
+				styleClass="fishItemTable">
+				<p:column headerText="Риба">
+					<p:outputLabel value="#{oi.fishItem.fishName}" />
+				</p:column>
+				<p:column headerText="Вага">
+					<p:outputLabel value="#{oi.weight}" />
+				</p:column>
+				<p:column headerText="Видалена">
+					<p:outputLabel value="#{oi.isDeleted}" />
+				</p:column>
+			</p:dataTable>
+				
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -68,4 +68,12 @@ public class CustomerServiceImpl implements CustomerService {
 	public void addOutParcelWithItems(OutParcel temp, List<OutParcelItem> items) {
 		customerDAO.addOutParcelWithItems(temp, items);
 	}
+	
+	public List<OutParcel> getOutParcels(Customer customer) {
+		return customerDAO.getOutParcels(customer);
+	}
+	
+	public List<OutParcelItem> getOutParcelItems (OutParcel outParcel) {
+		return customerDAO.getOutParcelItems(outParcel);
+	}
 }

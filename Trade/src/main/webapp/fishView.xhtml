@@ -9,7 +9,13 @@
 
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
-		<h:form id="formFishView">
+	<p:growl id="growl" showDetail="true" sticky="false" />
+		<h:form id="formFishView" rendered="#{(not empty userBean.customer) and (userBean.role eq 'customer')}">
+			
+			
+			<p:outputPanel deferred="true">
+				<h1 style="text-align: center;">Уся доступна риба</h1>
+			</p:outputPanel>
 			<p:dataTable id="data" value="#{orderBean.availableList}" var="fish"
 				styleClass="fishItemTable">
 				<p:column headerText="Назва">
@@ -25,9 +31,9 @@
 					<p:outputLabel value="#{fish.sellPrice}" />
 				</p:column>
 				<p:column>
-					<p:commandButton update=":formFishView:fishDetail"
+					<p:commandButton update=":formFishView"
 						oncomplete="PF('fishDialog').show()" icon="ui-icon-plus"
-						title="View">
+						title="Додати">
 						<f:setPropertyActionListener value="#{fish}"
 							target="#{orderBean.temp}" />
 					</p:commandButton>
@@ -52,23 +58,33 @@
 						<h:outputText value="Вага замовлення" />
 						<p:inputText id="errorWeight" value="#{orderBean.weight}"
 							required="true" requiredMessage="Введіть вагу">
+							<f:validateDoubleRange minimum="0.1"/>
 						</p:inputText>
 
 					</p:panelGrid>
 					<p:commandButton value="Додати"
 						action="#{orderBean.addFishItemToList()}"
-						oncomplete="PF('fishDialog').hide();"
-						update=":formFishView:dataOrder">
+						oncomplete="PF('fishDialog').hide();" update=":formFishView">
 					</p:commandButton>
 					<p:message for="errorWeight" display="text" />
 				</p:outputPanel>
 			</p:dialog>
 
+			<p:outputPanel deferred="true" rendered="#{not empty orderBean.orderList}">
+				<h1 style="text-align: center;">Корзина</h1>
+			</p:outputPanel>
 
-			<h1 style="text-align: center;">Корзина</h1>
+			<p:commandButton id="buttonDeleteAll" icon="ui-icon-close"
+				title="Видалити всі елементи корзини"
+				action="#{orderBean.deleteAllFishItems()}" update=":formFishView"
+				style="float:right;" value="Очистити всю корзину"
+				rendered="#{not empty orderBean.orderList}">
+			</p:commandButton>
+
 
 			<p:dataTable id="dataOrder" value="#{orderBean.orderList}" var="item"
-				styleClass="fishItemTable">
+				styleClass="fishItemTable"
+				rendered="#{not empty orderBean.orderList}">
 				<p:column headerText="Назва">
 					<p:outputLabel value="#{item.fishName}" />
 				</p:column>
@@ -80,16 +96,15 @@
 				</p:column>
 
 				<p:column>
-					<p:commandButton update=":formFishView:fishEdit"
+					<p:commandButton update=":formFishView"
 						oncomplete="PF('fishDialogEdit').show()" icon="ui-icon-pencil"
-						title="View">
+						title="Редагувати">
 						<f:setPropertyActionListener value="#{item}"
 							target="#{orderBean.temp}" />
 					</p:commandButton>
 
-					<p:commandButton icon="ui-icon-close" title="View"
-						action="#{orderBean.deleteFishItem(item)}"
-						update=":formFishView:dataOrder">
+					<p:commandButton icon="ui-icon-close" title="Видалити"
+						action="#{orderBean.deleteFishItem(item)}" update=":formFishView">
 					</p:commandButton>
 				</p:column>
 				<p:columnGroup type="footer">
@@ -98,7 +113,9 @@
 						<p:column footerText="#{orderBean.totalWeight}" />
 						<p:column footerText="#{orderBean.total}" />
 						<p:column />
+
 					</p:row>
+
 				</p:columnGroup>
 			</p:dataTable>
 
@@ -117,12 +134,12 @@
 						<h:outputText value="Вага замовлення" />
 						<p:inputText id="errorEdit" value="#{orderBean.temp.weight}"
 							required="true" requiredMessage="Введіть вагу">
+							<f:validateDoubleRange minimum="0.1"/>
 						</p:inputText>
 
 					</p:panelGrid>
 					<p:commandButton value="OK" action="fishView"
-						oncomplete="PF('fishDialogEdit').hide();"
-						update=":formFishView:dataOrder">
+						oncomplete="PF('fishDialogEdit').hide();" update=":formFishView">
 						<f:setPropertyActionListener value="#{orderBean.temp}"
 							target="#{orderBean.temp}" />
 					</p:commandButton>
@@ -133,12 +150,13 @@
 			<p:dialog header="Що робити?" widgetVar="userDialog" modal="true"
 				showEffect="explode" hideEffect="explode" resizable="false">
 				<p:outputPanel id="userDi" style="text-align:center;">
-				<p:outputLabel value="Ви не ввійшли в систему"/>
+					<p:outputLabel value="Ви не ввійшли в систему" />
 					<p:panelGrid columns="2">
 						<p:commandButton value="Реєстрація" action="addCustomer">
 						</p:commandButton>
-						<p:commandButton value="Ввійти в систему" action="fishView" oncomplete="PF('enterDialog').show()" title="View"
-						update=":formNavigator:enter" rendered="#{not userBean.logged}"> 
+						<p:commandButton value="Ввійти в систему" action="fishView"
+							oncomplete="PF('enterDialog').show()" title="View"
+							update=":formNavigator:enter" rendered="#{not userBean.logged}">
 						</p:commandButton>
 
 					</p:panelGrid>
@@ -147,13 +165,14 @@
 				</p:outputPanel>
 			</p:dialog>
 			<p:commandButton value="Прийняти" id="submit"
-			action="#{orderBean.preSubmitOrder()}">
-			<f:setPropertyActionListener value="#{userBean.customer}"
-				target="#{orderBean.activeUser}"></f:setPropertyActionListener>
-		</p:commandButton>
-		
+				action="#{orderBean.preSubmitOrder()}"
+				rendered="#{not empty orderBean.orderList}">
+				<f:setPropertyActionListener value="#{userBean.customer}"
+					target="#{orderBean.activeUser}"></f:setPropertyActionListener>
+			</p:commandButton>
+
 		</h:form>
-		
+
 	</ui:define>
 </ui:composition>
 </html>

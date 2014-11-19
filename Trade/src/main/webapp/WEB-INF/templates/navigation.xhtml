@@ -17,13 +17,17 @@
 				</f:facet>
 
 				<f:facet name="right">
-
-					<p:commandButton value="Ввійти" id="enterButton" icon="ui-icon-person"
+					
+					<p:commandButton value="Реєстарція" id="registerButton" icon="ui-icon-person"
+						title="Зараєструватись"
+						action="addCustomer" rendered="#{not userBean.logged}" />
+						
+					<p:commandButton value="Ввійти" id="enterButton" icon="ui-icon-key"
 						oncomplete="PF('enterDialog').show()" title="View"
 						update=":formNavigator:enter" rendered="#{not userBean.logged}" />
 
 					<p:commandButton value="Вихід" id="exitButton" icon="ui-icon-arrowthickstop-1-s"
-						action="#{userBean.logOut()}" rendered="#{userBean.logged}" update=":formNavigator"/>
+						action="#{userBean.logOut()}" rendered="#{userBean.logged}" update=":formNavigator,:totalMenu"/>
 
 					<p:dialog header="Увійти" widgetVar="enterDialog" modal="true"
 						showEffect="explode" hideEffect="explode" resizable="false">
@@ -42,7 +46,7 @@
 
 							</p:panelGrid>
 							<p:commandButton value="Увійти"
-								oncomplete="PF('enterDialog').hide();" update=":formNavigator"
+								oncomplete="PF('enterDialog').hide();" update=":formNavigator,:totalMenu"
 								action="#{userBean.check()}">
 							</p:commandButton>
 							<p:messages display="text" />

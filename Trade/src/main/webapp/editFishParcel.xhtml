@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+		<h:form id="formAddFishParcel">
+			<p:growl id="growl" showDetail="true" sticky="false" />
+			<p:dataTable id="tableAddFishParcel" var="in"
+				value="#{inParcel.list}">
+				<p:column headerText="Id партії">
+					<h:outputText value="#{in.inParcelId}" />
+				</p:column>
+				<p:column headerText="Очікувана дата прибуття">
+					<h:outputText value="#{in.dateIncome}" />
+				</p:column>
+
+				<p:column headerText="Реальна дата прибуття">
+					<h:outputText value="#{in.realDate}" />
+				</p:column>
+				<p:column headerText="Дії" style="width:75px;">
+					<p:commandButton icon="ui-icon-circle-zoomin"
+						title="Редагувати склад партії"
+						action="#{editFishParcel.getFishItems()}">
+						<f:setPropertyActionListener value="#{in}"
+							target="#{editFishParcel.inParcelTemp}" />
+					</p:commandButton>
+					
+				</p:column>
+
+			</p:dataTable>
+			
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

@@ -28,9 +28,8 @@ public class GeneralManagerDAOImpl implements GeneralManagerDAO {
 	 */
 	public void addNewInParcel(InParcel inParcel) {
 
-		em.getTransaction().begin();
 		em.persist(inParcel);
-		em.getTransaction().commit();
+
 	}
 
 	/**
@@ -38,9 +37,7 @@ public class GeneralManagerDAOImpl implements GeneralManagerDAO {
 	 */
 	public void addNewFishItem(FishItem fishItem) {
 
-		em.getTransaction().begin();
 		em.persist(fishItem);
-		em.getTransaction().commit();
 	}
 
 	/**
@@ -48,9 +45,7 @@ public class GeneralManagerDAOImpl implements GeneralManagerDAO {
 	 */
 	public void saveFishItem(FishItem fishItem) {
 
-		em.getTransaction().begin();
 		em.merge(fishItem);
-		em.getTransaction().commit();
 	}
 
 	/**
@@ -60,19 +55,14 @@ public class GeneralManagerDAOImpl implements GeneralManagerDAO {
 	public void setFishUnsaled(FishItem fishItem) {
 
 		fishItem.setStatus(3);
-		em.getTransaction().begin();
 		em.merge(fishItem);
-		em.getTransaction().commit();
 	}
 
 	/**
 	 * додає нову рибну одиницю
 	 */
 	public void saveCustomer(Customer customer) {
-
-		em.getTransaction().begin();
 		em.merge(customer);
-		em.getTransaction().commit();
 	}
 
 	/**
@@ -125,6 +115,17 @@ public class GeneralManagerDAOImpl implements GeneralManagerDAO {
 			sum += oo.getWeight();
 		}
 		return sum;
+	}
+	
+	public List <FishItem> getAllFishItemsInParcel (InParcel inParcel){
+		TypedQuery<FishItem> query = em.createQuery("SELECT f FROM FishItem f WHERE f.inParcel=:in",FishItem.class);
+		query.setParameter("in", inParcel);
+		List<FishItem> result = query.getResultList();
+		return result;
+	}
+	
+	public void saveInParcel (InParcel inParcel) {
+		em.merge(inParcel);	
 	}
 
 }

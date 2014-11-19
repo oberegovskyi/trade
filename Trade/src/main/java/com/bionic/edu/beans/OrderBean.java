@@ -32,7 +32,7 @@ public class OrderBean implements Serializable {
 	private List<FishItem> orderList = new ArrayList<FishItem>();
 	private double totalWeight;
 	private double total;
-	private double weight;
+	private double weight=0.1;
 
 	private FishItem temp;
 	private FishItem tempWork;
@@ -117,7 +117,7 @@ public class OrderBean implements Serializable {
 		orderList.add(tempWork);
 
 		temp = null;
-		weight = 0;
+		weight = 0.1;
 		total = 0;
 		totalWeight = 0;
 		for (FishItem in : orderList) {
@@ -136,13 +136,20 @@ public class OrderBean implements Serializable {
 			total += in.getWeight() * in.getSellPrice();
 		}
 	}
+	
+	public void deleteAllFishItems() {
+		orderList.clear();
+		total = 0;
+		totalWeight = 0;
+	}
 
 	public double countPrice(FishItem fish) {
 		return fish.getSellPrice() * fish.getWeight();
 	}
 
 	public void preSubmitOrder() {
-	
+		FacesContext context = FacesContext.getCurrentInstance();
+		
 		if (!orderList.isEmpty()) {
 			if (activeUser == null) {
 				RequestContext.getCurrentInstance().execute("PF('userDialog').show();");
@@ -157,6 +164,8 @@ public class OrderBean implements Serializable {
 					oo.add(new OutParcelItem(out, ff, ff.getWeight()));
 				}
 				customerService.addOutParcelWithItems(out, oo);
+				context.addMessage(":formFishView:growl", new FacesMessage(FacesMessage.SEVERITY_INFO,"Успішно","Риба додана до корзини"));
+				
 			}
 		} else {
 		}

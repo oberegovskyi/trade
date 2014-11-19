@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+		<h:form id="formEditFishParcel">
+			<p:growl id="growl" showDetail="true" sticky="false" />
+			<p:dataTable id="tableEditFishParcel" var="cur"
+				value="#{editFishParcel.listFish}">
+				<p:column headerText="Назва">
+					<h:outputText value="#{cur.fishName}" />
+				</p:column>
+				<p:column headerText="Опис">
+					<h:outputText value="#{cur.description}" />
+				</p:column>
+
+				<p:column headerText="Статус">
+					<h:outputText value="#{cur.status}" />
+				</p:column>
+				<p:column headerText="Вага">
+					<h:outputText value="#{cur.weight}" />
+				</p:column>
+
+				<p:column headerText="Ціна купівлі">
+					<h:outputText value="#{cur.buyPrice}" />
+				</p:column>
+
+				<p:column headerText="Ціна продажу">
+					<h:outputText value="#{cur.sellPrice}" />
+				</p:column>
+
+				<p:column headerText="Id партії">
+					<h:outputText value="#{cur.inParcel.inParcelId}" />
+				</p:column>
+
+				<p:column headerText="Реальна вага">
+					<h:outputText value="#{cur.cameWeight}" />
+				</p:column>
+				<p:column headerText="Дії" style="width:35px;">
+					<p:commandButton icon="ui-icon-pencil" title="Редагувати"
+						oncomplete="PF('fishDialogEdit').show()"
+						update=":formEditFishParcel:fishEdit">
+						<f:setPropertyActionListener value="#{cur}"
+							target="#{editFishParcel.selectedFish}" />
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+			<p:commandButton value="Назад" action="editFishParcel" />
+			<p:dialog header="Редагувати" widgetVar="fishDialogEdit" modal="true"
+				showEffect="explode" hideEffect="explode" resizable="false">
+				<p:outputPanel id="fishEdit" style="text-align:center;">
+					<p:panelGrid columns="2"
+						rendered="#{not empty editFishParcel.selectedFish}"
+						columnClasses="label,value">
+
+						<h:outputText for="errorEdit1" value="Назва:" />
+						<p:inputText id="errorEdit1"
+							value="#{editFishParcel.selectedFish.fishName}" required="true"
+							requiredMessage="Введіть" />
+
+						<h:outputText value="Опис:" />
+						<p:inputTextarea rows="6" cols="25" id="errorEdit2"
+							value="#{editFishParcel.selectedFish.description}"
+							required="true" requiredMessage="Введіть" />
+
+						<h:outputText value="Статус:" />
+						<p:inputText id="errorEdit3"
+							value="#{editFishParcel.selectedFish.status}" required="true"
+							requiredMessage="Введіть вагу" />
+
+						<h:outputText value="Вага:" />
+						<p:inputText id="errorEdit4"
+							value="#{editFishParcel.selectedFish.weight}" required="true"
+							requiredMessage="Введіть" />
+
+						<h:outputText value="Ціна купівлі:" />
+						<p:inputText id="errorEdit5"
+							value="#{editFishParcel.selectedFish.buyPrice}" required="true"
+							requiredMessage="Введіть" />
+
+						<h:outputText value="Ціна продажу:" />
+						<p:inputText id="errorEdit6"
+							value="#{editFishParcel.selectedFish.sellPrice}" required="true"
+							requiredMessage="Введіть" />
+
+						<h:outputText value="Id партії:" />
+						<p:inputText id="errorEdit7"
+							value="#{editFishParcel.selectedFish.inParcel.inParcelId}"
+							required="true" requiredMessage="Введіть" />
+
+						<h:outputText value="Реальна вага:" />
+						<p:inputText id="errorEdit8"
+							value="#{editFishParcel.selectedFish.cameWeight}" required="true"
+							requiredMessage="Введіть" />
+
+
+					</p:panelGrid>
+					<p:commandButton value="OK"
+						action="#{editFishParcel.saveFishItem()}"
+						oncomplete="PF('fishDialogEdit').hide();"
+						update=":formEditFishParcel">
+					</p:commandButton>
+					<p:messages type="text"></p:messages>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

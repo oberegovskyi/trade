@@ -17,12 +17,12 @@ import com.bionic.edu.entities.OutParcel;
 import com.bionic.edu.entities.OutParcelItem;
 
 @Repository
-public class CustomerDAOImpl implements CustomerDAO{
+public class CustomerDAOImpl implements CustomerDAO {
 	@PersistenceContext
 	private EntityManager em;
-	
-	public CustomerDAOImpl () {
-		
+
+	public CustomerDAOImpl() {
+
 	}
 
 	/**
@@ -73,9 +73,8 @@ public class CustomerDAOImpl implements CustomerDAO{
 	 * зберігає OutParcelItem
 	 */
 	public void saveOutParcelItem(OutParcelItem temp) {
-			em.merge(temp);
+		em.merge(temp);
 	}
-	
 
 	/**
 	 * 
@@ -112,39 +111,61 @@ public class CustomerDAOImpl implements CustomerDAO{
 
 		return result;
 	}
-	
-	public List <InParcel> getAllInParcels () {
-		TypedQuery<InParcel> query = em.createQuery("SELECT i FROM InParcel as i",
-						InParcel.class);
+
+	public List<InParcel> getAllInParcels() {
+		TypedQuery<InParcel> query = em.createQuery(
+				"SELECT i FROM InParcel as i", InParcel.class);
 		List<InParcel> listI = null;
 
 		listI = query.getResultList();
 
 		return listI;
 	}
-	
-	public Customer checkLoginPassword (String login, String password) {
-		Customer cust=null;
+
+	public Customer checkLoginPassword(String login, String password) {
+		Customer cust = null;
 		try {
-		TypedQuery<Customer> query =  em.createQuery("SELECT c FROM Customer as c WHERE c.login=:log AND c.password=:pas",Customer.class);
-		query.setParameter("log", login);
-		query.setParameter("pas", password);
-		cust= query.getSingleResult();
-		}
-		catch (NoResultException e) {
+			TypedQuery<Customer> query = em
+					.createQuery(
+							"SELECT c FROM Customer as c WHERE c.login=:log AND c.password=:pas",
+							Customer.class);
+			query.setParameter("log", login);
+			query.setParameter("pas", password);
+			cust = query.getSingleResult();
+		} catch (NoResultException e) {
 			return cust;
 		}
-		
+
 		return cust;
 	}
+
 	/**
 	 * додає нову партію
 	 */
 	public void addOutParcelWithItems(OutParcel temp, List<OutParcelItem> items) {
 		em.persist(temp);
-		for (OutParcelItem in: items) {
+		for (OutParcelItem in : items) {
 			em.persist(in);
 		}
 	}
 
+	public List<OutParcel> getOutParcels(Customer customer) {
+		TypedQuery<OutParcel> query = em.createQuery(
+				"SELECT o FROM OutParcel as o WHERE o.customer=:cust", OutParcel.class);
+		List<OutParcel> listI = null;
+		query.setParameter("cust", customer);
+		listI = query.getResultList();
+
+		return listI;
+	}
+	
+	public List<OutParcelItem> getOutParcelItems (OutParcel outParcel)  {
+		TypedQuery<OutParcelItem> query = em.createQuery(
+				"SELECT o FROM OutParcelItem as o WHERE o.outParcel=:out", OutParcelItem.class);
+		List<OutParcelItem> listI = null;
+		query.setParameter("out", outParcel);
+		listI = query.getResultList();
+
+		return listI;
+	}
 }
