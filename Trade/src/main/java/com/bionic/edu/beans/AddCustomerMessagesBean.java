@@ -1,12 +1,18 @@
 package com.bionic.edu.beans;
 
+import java.io.Serializable;
+
 import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
 @Named
 @Scope("request")
-public class AddCustomerMessagesBean {
+public class AddCustomerMessagesBean implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String loginReq ="¬вед≥ть лог≥н";
 	private String loginVal ="Ћише латиниц€ та цифри в≥д 3 до 20 символ≥в";
 	private String passwordReq = "¬вед≥ть пароль";

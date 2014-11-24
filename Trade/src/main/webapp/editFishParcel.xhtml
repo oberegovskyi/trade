@@ -12,17 +12,26 @@
 	<ui:define name="content">
 		<h:form id="formAddFishParcel">
 			<p:growl id="growl" showDetail="true" sticky="false" />
+
+			<p:commandButton value="Додати нову партію" action="addNewInParcel"
+				icon="ui-icon-plus">
+
+			</p:commandButton>
 			<p:dataTable id="tableAddFishParcel" var="in"
 				value="#{inParcel.list}">
 				<p:column headerText="Id партії">
 					<h:outputText value="#{in.inParcelId}" />
 				</p:column>
 				<p:column headerText="Очікувана дата прибуття">
-					<h:outputText value="#{in.dateIncome}" />
+					<h:outputText value="#{in.dateIncome}">
+						
+					</h:outputText>
 				</p:column>
 
 				<p:column headerText="Реальна дата прибуття">
-					<h:outputText value="#{in.realDate}" />
+					<h:outputText value="#{in.realDate}">
+						
+					</h:outputText>
 				</p:column>
 				<p:column headerText="Дії" style="width:75px;">
 					<p:commandButton icon="ui-icon-circle-zoomin"
@@ -31,13 +40,37 @@
 						<f:setPropertyActionListener value="#{in}"
 							target="#{editFishParcel.inParcelTemp}" />
 					</p:commandButton>
-					
-				</p:column>
 
+					<p:commandButton update=":inEdit"
+						oncomplete="PF('inDialogEdit').show()" icon="ui-icon-pencil"
+						title="Редагувати рибну партію">
+						<f:setPropertyActionListener value="#{in}"
+							target="#{editFishParcel.inParcelTempEdit}" />
+					</p:commandButton>
+				</p:column>
 			</p:dataTable>
-			
 		</h:form>
 
+		<p:dialog header="Редагувати" widgetVar="inDialogEdit" modal="true"
+			showEffect="explode" hideEffect="explode" resizable="false">
+			<p:outputPanel id="inEdit" style="text-align:center;">
+				<p:panelGrid columns="2"
+					rendered="#{not (editFishParcel.inParcelTempEdit eq null)}"
+					columnClasses="label,value">
+
+					<h:outputText value="Дата прибуття:" />
+					<p:calendar value="#{editFishParcel.inParcelTempEdit.dateIncome}" />
+
+					<h:outputText value="Реальна дата прибуття:" />
+					<p:calendar value="#{editFishParcel.inParcelTempEdit.realDate}" />
+
+				</p:panelGrid>
+				<p:commandButton value="OK"
+					action="#{editFishParcel.changeInParcel()}"
+					oncomplete="PF('inDialogEdit').hide();" update=":formAddFishParcel">
+				</p:commandButton>
+			</p:outputPanel>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>

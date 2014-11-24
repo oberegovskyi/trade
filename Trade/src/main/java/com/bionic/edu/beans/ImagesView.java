@@ -1,5 +1,6 @@
 package com.bionic.edu.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,9 +9,13 @@ import javax.inject.Named;
 
 
 @Named("imagesView")
-public class ImagesView {
+public class ImagesView implements Serializable{
      
-    private List<String> images = new ArrayList<String>(Arrays.asList("for.jpg","okun.jpg","semga.jpg"));
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private List<String> images = new ArrayList<String>(Arrays.asList("for.jpg","okun.jpg","semga.jpg"));
     private List<String> imagesName = new ArrayList<String>(Arrays.asList("форель","окунь","семга"));
      
     public List<String> getImages() {

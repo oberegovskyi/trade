@@ -44,7 +44,9 @@
 					<p:outputLabel value="#{o.outParcelId}" />
 				</p:column>
 				<p:column headerText="Дата">
-					<p:outputLabel value="#{o.outParcelDate}" />
+					<p:outputLabel value="#{o.outParcelDate}" >
+					<f:convertDateTime pattern="dd.MM.yyyy" />
+					</p:outputLabel>
 				</p:column>
 				<p:column headerText="Оплачено">
 					<p:outputLabel value="#{o.payed}" />

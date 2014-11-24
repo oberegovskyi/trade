@@ -1,5 +1,6 @@
 package com.bionic.edu.DAOImpl;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -17,7 +18,11 @@ import com.bionic.edu.entities.OutParcel;
 import com.bionic.edu.entities.OutParcelItem;
 
 @Repository
-public class CustomerDAOImpl implements CustomerDAO {
+public class CustomerDAOImpl implements CustomerDAO, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@PersistenceContext
 	private EntityManager em;
 

@@ -27,7 +27,9 @@
 						update=":formNavigator:enter" rendered="#{not userBean.logged}" />
 
 					<p:commandButton value="Вихід" id="exitButton" icon="ui-icon-arrowthickstop-1-s"
-						action="#{userBean.logOut()}" rendered="#{userBean.logged}" update=":formNavigator,:totalMenu"/>
+						action="#{userBean.logOut()}" rendered="#{userBean.logged}" update=":formNavigator,:totalMenu">
+			
+						</p:commandButton>
 
 					<p:dialog header="Увійти" widgetVar="enterDialog" modal="true"
 						showEffect="explode" hideEffect="explode" resizable="false">

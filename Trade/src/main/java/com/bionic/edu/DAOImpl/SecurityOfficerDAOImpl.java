@@ -1,5 +1,6 @@
 package com.bionic.edu.DAOImpl;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -13,7 +14,11 @@ import com.bionic.edu.entities.Customer;
 import com.bionic.edu.entities.Employee;
 
 @Repository
-public class SecurityOfficerDAOImpl implements SecurityOfficerDAO {
+public class SecurityOfficerDAOImpl implements SecurityOfficerDAO, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@PersistenceContext
 	private EntityManager em;
 	

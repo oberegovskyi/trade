@@ -1,5 +1,6 @@
 package com.bionic.edu.DAOImpl;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -15,7 +16,11 @@ import com.bionic.edu.entities.InParcel;
 import com.bionic.edu.entities.OutParcelItem;
 
 @Repository
-public class GeneralManagerDAOImpl implements GeneralManagerDAO {
+public class GeneralManagerDAOImpl implements GeneralManagerDAO, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@PersistenceContext
 	private EntityManager em;
 	
@@ -26,10 +31,11 @@ public class GeneralManagerDAOImpl implements GeneralManagerDAO {
 	/**
 	 * додає нову партію риби з корабля
 	 */
-	public void addNewInParcel(InParcel inParcel) {
+	public int addNewInParcel(InParcel inParcel) {
 
 		em.persist(inParcel);
-
+		em.flush();
+		return inParcel.getInParcelId();
 	}
 
 	/**
@@ -128,4 +134,7 @@ public class GeneralManagerDAOImpl implements GeneralManagerDAO {
 		em.merge(inParcel);	
 	}
 
+	public InParcel getInParcel (int i) {
+		return em.find(InParcel.class,i);
+	}
 }

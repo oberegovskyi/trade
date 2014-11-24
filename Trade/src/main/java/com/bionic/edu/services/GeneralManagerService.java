@@ -8,7 +8,7 @@ import com.bionic.edu.entities.InParcel;
 
 
 public interface GeneralManagerService {
-	public void addNewInParcel (InParcel inParcel);
+	public int addNewInParcel (InParcel inParcel);
 	public void addNewFishItem (FishItem fishItem);
 	public void saveFishItem (FishItem fishItem);
 	public void setFishUnsaled (FishItem fishItem);
@@ -18,4 +18,5 @@ public interface GeneralManagerService {
 	public double getFishWeightReport (FishItem fishItem);
 	public List <FishItem> getAllFishItemsInParcel (InParcel inParcel);
 	public void saveInParcel (InParcel inParcel);
+	public InParcel getInParcel (int i);
 }

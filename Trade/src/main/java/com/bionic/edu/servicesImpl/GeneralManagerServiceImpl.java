@@ -28,8 +28,8 @@ public class GeneralManagerServiceImpl implements GeneralManagerService, Seriali
 	}
 
 	@Transactional
-	public void addNewInParcel(InParcel inParcel) {
-		generalManagerDAO.addNewInParcel(inParcel);
+	public int addNewInParcel(InParcel inParcel) {
+		return generalManagerDAO.addNewInParcel(inParcel);
 	}
 
 	@Transactional
@@ -70,5 +70,10 @@ public class GeneralManagerServiceImpl implements GeneralManagerService, Seriali
 	@Transactional
 	public void saveInParcel (InParcel inParcel) {
 		generalManagerDAO.saveInParcel(inParcel);
+	}
+	
+	@Transactional
+	public InParcel getInParcel (int i) {
+		return generalManagerDAO.getInParcel(i);
 	}
 }

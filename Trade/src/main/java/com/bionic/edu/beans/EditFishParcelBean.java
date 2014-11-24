@@ -19,6 +19,7 @@ import com.bionic.edu.services.GeneralManagerService;
 @Scope("session")
 public class EditFishParcelBean implements Serializable{
 	private InParcel inParcelTemp;
+	private InParcel inParcelTempEdit;
 	private List <FishItem> listFish= null;
 	private FishItem selectedFish;
 	@Inject
@@ -30,7 +31,6 @@ public class EditFishParcelBean implements Serializable{
 
 	public void setInParcelTemp(InParcel inParcelTemp) {
 		this.inParcelTemp = inParcelTemp;
-		System.out.println(this.inParcelTemp);
 	}
 
 	
@@ -43,6 +43,14 @@ public class EditFishParcelBean implements Serializable{
 	}
 	
 
+	public InParcel getInParcelTempEdit() {
+		return inParcelTempEdit;
+	}
+
+	public void setInParcelTempEdit(InParcel inParcelTempEdit) {
+		this.inParcelTempEdit = inParcelTempEdit;
+	}
+
 
 	public FishItem getSelectedFish() {
 		return selectedFish;
@@ -51,6 +59,11 @@ public class EditFishParcelBean implements Serializable{
 	public void setSelectedFish(FishItem selectedFish) {
 		this.selectedFish = selectedFish;
 	}
+	
+
+	public java.sql.Date getSqlDate(java.util.Date calendarDate) {
+		  return new java.sql.Date(calendarDate.getTime());
+		}
 
 	public String getFishItems () {
 		listFish = generalManagerService.getAllFishItemsInParcel(inParcelTemp);
@@ -61,14 +74,19 @@ public class EditFishParcelBean implements Serializable{
 		generalManagerService.saveFishItem(selectedFish);
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(":formEditFishParcel:growl", new FacesMessage(FacesMessage.SEVERITY_INFO,"Успішно",selectedFish.getFishName()+" вдало відредагована"));
+		inParcelTemp=null;
 		selectedFish=null;
 		return "editCurFishParcel";
 	}
 	
-	public void saveInParcel () {
-		generalManagerService.saveInParcel(inParcelTemp);
-		System.out.println(inParcelTemp);
-		inParcelTemp=null;
+	
+	public String changeInParcel () {
+		System.out.println(inParcelTempEdit);
+		generalManagerService.saveInParcel(inParcelTempEdit);
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(":formAddFishParcel:growl", new FacesMessage(FacesMessage.SEVERITY_INFO,"Успішно","Партія вдало відредагована"));
+		inParcelTempEdit=null;
+		return "editFishParcel";
 	}
 
 }

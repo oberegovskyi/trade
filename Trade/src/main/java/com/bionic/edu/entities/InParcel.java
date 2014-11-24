@@ -28,6 +28,11 @@ public class InParcel implements  Serializable{
 		
 	}
 
+	public InParcel(Date dateIncome, Date realDate) {
+		this.dateIncome = dateIncome;
+		this.realDate = realDate;
+	}
+
 	public InParcel(Date dateIncome) {
 		this.dateIncome = dateIncome;
 	}

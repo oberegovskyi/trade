@@ -1,5 +1,6 @@
 package com.bionic.edu.servicesImpl;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -16,7 +17,8 @@ import com.bionic.edu.entities.OutParcelItem;
 import com.bionic.edu.services.CustomerService;
 
 @Named
-public class CustomerServiceImpl implements CustomerService {
+public class CustomerServiceImpl implements CustomerService, Serializable {
+	private static final long serialVersionUID = 1L;
 	@Inject
 	private CustomerDAO customerDAO;
 	
