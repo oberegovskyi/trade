@@ -173,4 +173,8 @@ public class CustomerDAOImpl implements CustomerDAO, Serializable{
 
 		return listI;
 	}
+	
+	public void updateCustomer  (Customer customer)  {
+		em.merge(customer);
+	}
 }

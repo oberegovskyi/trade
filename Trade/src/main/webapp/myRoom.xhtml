@@ -10,42 +10,70 @@
 
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
-		<h:form id="myRoomForm" rendered="#{(not empty userBean.customer) and (userBean.role eq 'customer')}">
+		<h:form id="myRoomForm"
+			rendered="#{(not empty userBean.customer) and (userBean.role eq 'customer')}">
+			<p:growl id="growlMyRoom" showDetail="true" sticky="false" />
 			<p:outputLabel value="Особистий кабінет" style="align:center;" />
-			<p:panelGrid columns="2" style="margin:auto;"
-				columnClasses="label,value">
+			<p:outputPanel id="myRoomInfo">
+				<p:panelGrid columns="2" style="margin:auto;"
+					columnClasses="label,value">
 
-				<h:outputText value="Логін:" />
-				<p:outputLabel value="#{userBean.customer.login}" />
+					<h:outputText for="login" value="Логін:" />
+					<p:outputLabel id="login" value="#{userBean.customer.login}" />
 
-				<h:outputText value="Пароль:" />
-				<p:outputLabel value="#{userBean.customer.password}" />
+					<h:outputText value="Пароль:" />
+					<p:commandLink value="Змінити" action="changePassword"/>
+					
+					<h:outputText for="name" value="Ім'я:" />
+					<p:inplace id="name" editor="true">
+						<p:ajax event="save" listener="#{userBean.updateUser()}"
+							update=":myRoomForm" />
+						<p:inputText value="#{userBean.customer.fName}" required="true"
+							label="text"
+							requiredMessage="#{addCustomerMessagesBean.fNameReq}"
+							validatorMessage="#{addCustomerMessagesBean.fNameVal}">
+							<f:validateRegex pattern="^[А-ЯЇІа-яії]+{2,20}$" />
+						</p:inputText>
+					</p:inplace>
 
-				<h:outputText value="Ім'я:" />
-				<p:outputLabel value="#{userBean.customer.fName}" />
+					<h:outputText for="soname" value="Прізвище:" />
+					<p:inplace id="soname" editor="true">
+						<p:ajax event="save" listener="#{userBean.updateUser()}"
+							update=":myRoomForm" />
+						<p:inputText value="#{userBean.customer.sName}" required="true"
+							label="text"
+							requiredMessage="#{addCustomerMessagesBean.sNameReq}"
+							validatorMessage="#{addCustomerMessagesBean.sNameVal}">
+							<f:validateRegex pattern="^[А-ЯЇІа-яії]+{2,20}$" />
+						</p:inputText>
+					</p:inplace>
 
-				<h:outputText value="Прізвище:" />
-				<p:outputLabel value="#{userBean.customer.sName}" />
+					<h:outputText for="email" value="Email:" />
+					<p:inplace id="email" editor="true">
+						<p:ajax event="save" listener="#{userBean.updateUser()}"
+							update=":myRoomForm" />
+						<p:inputText value="#{userBean.customer.email}" required="true"
+							label="text"
+							requiredMessage="#{addCustomerMessagesBean.emailReq}"
+							validatorMessage="#{addCustomerMessagesBean.emailVal}">
+							<f:validateRegex
+								pattern="^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$" />
+						</p:inputText>
+					</p:inplace>
 
-				<h:outputText value="Email:" />
-				<p:outputLabel value="#{userBean.customer.email}" />
+					<h:outputText value="Перед.:" />
+					<p:outputLabel value="#{userBean.customer.payment}" />
+				</p:panelGrid>
 
-				<h:outputText value="Перед.:" />
-				<p:outputLabel value="#{userBean.customer.payment}" />
-
-
-
-
-
-			</p:panelGrid>
+			</p:outputPanel>
 			<p:dataTable id="data" value="#{userBean.out}" var="o"
 				styleClass="fishItemTable">
 				<p:column headerText="Id">
 					<p:outputLabel value="#{o.outParcelId}" />
 				</p:column>
 				<p:column headerText="Дата">
-					<p:outputLabel value="#{o.outParcelDate}" >
-					<f:convertDateTime pattern="dd.MM.yyyy" />
+					<p:outputLabel value="#{o.outParcelDate}">
+						<f:convertDateTime pattern="dd.MM.yyyy" />
 					</p:outputLabel>
 				</p:column>
 				<p:column headerText="Оплачено">
@@ -57,7 +85,7 @@
 				<p:column headerText="Доступно">
 					<p:outputLabel value="#{o.available}" />
 				</p:column>
-				<p:column >
+				<p:column>
 					<p:commandButton update=":myRoomForm:outParcelDet"
 						oncomplete="PF('outParcelItems').show()" icon="ui-icon-zoomin"
 						title="View">
@@ -66,22 +94,22 @@
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>
-			
+
 			<p:dialog header="Детально" widgetVar="outParcelItems" modal="true"
 				showEffect="explode" hideEffect="explode" resizable="false">
-				<p:dataTable id="outParcelDet" value="#{userBean.outItemsList}" var="oi"
-				styleClass="fishItemTable">
-				<p:column headerText="Риба">
-					<p:outputLabel value="#{oi.fishItem.fishName}" />
-				</p:column>
-				<p:column headerText="Вага">
-					<p:outputLabel value="#{oi.weight}" />
-				</p:column>
-				<p:column headerText="Видалена">
-					<p:outputLabel value="#{oi.isDeleted}" />
-				</p:column>
-			</p:dataTable>
-				
+				<p:dataTable id="outParcelDet" value="#{userBean.outItemsList}"
+					var="oi" styleClass="fishItemTable">
+					<p:column headerText="Риба">
+						<p:outputLabel value="#{oi.fishItem.fishName}" />
+					</p:column>
+					<p:column headerText="Вага">
+						<p:outputLabel value="#{oi.weight}" />
+					</p:column>
+					<p:column headerText="Видалена">
+						<p:outputLabel value="#{oi.isDeleted}" />
+					</p:column>
+				</p:dataTable>
+
 			</p:dialog>
 		</h:form>
 	</ui:define>

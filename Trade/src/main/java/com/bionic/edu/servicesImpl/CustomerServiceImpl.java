@@ -78,4 +78,8 @@ public class CustomerServiceImpl implements CustomerService, Serializable {
 	public List<OutParcelItem> getOutParcelItems (OutParcel outParcel) {
 		return customerDAO.getOutParcelItems(outParcel);
 	}
+	@Transactional
+	public void updateCustomer  (Customer customer)  {
+		customerDAO.updateCustomer(customer);
+	}
 }

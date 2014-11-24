@@ -20,17 +20,20 @@ import com.bionic.edu.services.CustomerService;
 @SuppressWarnings("serial")
 @Named("userBean")
 @Scope("session")
-public class ActiveUserBean implements Serializable{
-	private String login="login";
+public class ActiveUserBean implements Serializable {
+	private String login = "login";
 	private String password;
+	private String passwordNew;
+	private String password1;
+	private String password2;
 	private boolean logged;
-	private Customer customer =null;
-	
-	private List <OutParcel> out;
+	private Customer customer = null;
+
+	private List<OutParcel> out;
 	private OutParcel tempParcel;
-	
+
 	private List<OutParcelItem> outItemsList;
-	
+
 	private String role;
 	@Inject
 	private CustomerService customerService;
@@ -52,23 +55,22 @@ public class ActiveUserBean implements Serializable{
 	}
 
 	public boolean isLogged() {
-			return logged;
+		return logged;
 	}
-	
+
 	public void setLogged(boolean logged) {
 		this.logged = logged;
 	}
 
 	public Customer getCustomer() {
-		out =  customerService.getOutParcels(customer);
+		out = customerService.getOutParcels(customer);
 		return customer;
 	}
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-	
-	
+
 	public List<OutParcel> getOut() {
 		return out;
 	}
@@ -76,9 +78,6 @@ public class ActiveUserBean implements Serializable{
 	public void setOut(List<OutParcel> out) {
 		this.out = out;
 	}
-	
-	
-	
 
 	public String getRole() {
 		return role;
@@ -94,7 +93,7 @@ public class ActiveUserBean implements Serializable{
 
 	public void setTempParcel(OutParcel tempParcel) {
 		this.tempParcel = tempParcel;
-		outItemsList=customerService.getOutParcelItems(tempParcel);
+		outItemsList = customerService.getOutParcelItems(tempParcel);
 	}
 
 	public List<OutParcelItem> getOutItemsList() {
@@ -105,41 +104,105 @@ public class ActiveUserBean implements Serializable{
 		this.outItemsList = outItemsList;
 	}
 
+	public String getPasswordNew() {
+		return passwordNew;
+	}
+
+	public void setPasswordNew(String passwordNew) {
+		this.passwordNew = passwordNew;
+	}
+
+	public String getPassword1() {
+		return password1;
+	}
+
+	public void setPassword1(String password1) {
+		this.password1 = password1;
+	}
+
+	public String getPassword2() {
+		return password2;
+	}
+
+	public void setPassword2(String password2) {
+		this.password2 = password2;
+	}
+
 	public String logOut() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Успішно",login+" ,ви вийшли з системи"));
+		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Успішно", login + " ,ви вийшли з системи"));
 		setLogged(false);
-		customer=null;
+		customer = null;
 		setRole(null);
 		return "index";
 	}
-	
-	public String check () {
-		password=DigestUtils.md5Hex(password);
+
+	public String check() {
+		password = DigestUtils.md5Hex(password);
 		customer = customerService.checkLoginPassword(login, password);
 		FacesContext context = FacesContext.getCurrentInstance();
 		if (customer == null) {
 			setLogged(false);
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Помилка","Введений логін або пароль невірні"));
+			context.addMessage(":formNavigator:growl", new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Помилка",
+					"Введений логін або пароль невірні"));
 		} else {
-			if (customer.getBlocked()==0) {
+			if (customer.getBlocked() == 0) {
 				setLogged(true);
-				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Успішно", "Ласкаво просимо, "+customer.getLogin()));
-				RequestContext.getCurrentInstance().execute("PF('userDialog').hide();");
-				out= customerService.getOutParcels(customer);
+				context.addMessage(":formNavigator:growl", new FacesMessage(
+						FacesMessage.SEVERITY_INFO, "Успішно",
+						"Ласкаво просимо, " + customer.getLogin()));
+				RequestContext.getCurrentInstance().execute(
+						"PF('userDialog').hide();");
+				out = customerService.getOutParcels(customer);
 				setRole("customer");
 				return "myRoom";
-				
-				
-			}else {
+
+			} else {
 				setLogged(false);
-				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,"Увага", "Користувач "+customer.getLogin()+ " заблокований!"));
+				context.addMessage(":formNavigator:growl", new FacesMessage(
+						FacesMessage.SEVERITY_FATAL, "Увага", "Користувач "
+								+ customer.getLogin() + " заблокований!"));
 				return "index";
-			}			
+			}
 		}
-		password=null;
+		password = null;
 		return "index";
 	}
 
-		
+	public String updateUser() {
+		customerService.updateCustomer(customer);
+		System.out.println(customer);
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(":myRoomForm:growlMyRoom",
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Увага",
+						"Користувач " + customer.getLogin()
+								+ " успішно редагований!"));
+		return "myRoom";
+	}
+
+	public String changePassword() {
+		if (DigestUtils.md5Hex(passwordNew).equals(password)) {
+			String newpass = DigestUtils.md5Hex(password1);
+			customer.setPassword(newpass);
+			customerService.updateCustomer(customer);
+			setLogged(false);
+			customer = null;
+			setRole(null);
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(":changePasswordForm:changegrowl",
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Увага",
+							"Пароль успішно змінено. Виконайте вхід в систему"));
+			password=null;
+			return "index";
+		} else {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(":changePasswordForm:changegrowl",
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Увага",
+							"Старий пароль введено невірно"));
+			return "changePassword";
+		}
+
+	}
 }
