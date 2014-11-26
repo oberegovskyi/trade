@@ -10,7 +10,7 @@
 
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
-		<h:form id="formEditCustomer">
+		<h:form id="formEditCustomer" rendered="#{(not empty secretBean.employee) and (secretBean.role eq 'general')}">
 			<p:growl id="growl" showDetail="true" sticky="false" />
 			
 			<p:dataTable id="editCustomer" value="#{editCustomer.list}"

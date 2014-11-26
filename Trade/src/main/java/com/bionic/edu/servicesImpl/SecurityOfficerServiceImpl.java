@@ -1,5 +1,6 @@
 package com.bionic.edu.servicesImpl;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -13,7 +14,11 @@ import com.bionic.edu.entities.Employee;
 import com.bionic.edu.services.SecurityOfficerService;
 
 @Named
-public class SecurityOfficerServiceImpl implements SecurityOfficerService {
+public class SecurityOfficerServiceImpl implements SecurityOfficerService, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Inject
 	private SecurityOfficerDAO securityOfficerDAO;
 	
@@ -56,5 +61,9 @@ public class SecurityOfficerServiceImpl implements SecurityOfficerService {
 	
 	public List<Customer> getAllCustomers() {
 		return securityOfficerDAO.getAllCustomers();
+	}
+	
+	public Employee checkLoginPassword(String login, String password) {
+		return securityOfficerDAO.checkLoginPassword(login, password);
 	}
 }

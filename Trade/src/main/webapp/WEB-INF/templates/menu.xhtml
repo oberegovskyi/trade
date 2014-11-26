@@ -10,7 +10,7 @@
 			<h:form id="formMenuСustomer"
 				rendered="#{userBean.role eq 'customer'}">
 				<p:menu>
-					<p:submenu label="Меню">
+					<p:submenu label="Меню клієнта">
 						<p:menuitem value="На головну" outcome="index" icon="ui-icon-home" />
 						<p:menuitem value="Мій кабінет" outcome="myRoom"
 							icon="ui-icon-contact" />
@@ -20,9 +20,21 @@
 				</p:menu>
 			</h:form>
 
-			<h:form id="formMenuAdmin" rendered="#{userBean.role eq null}">
+			<h:form id="formMenuAdmin" rendered="#{secretBean.role eq 'general'}">
 				<p:menu>
-					<p:submenu label="Меню">
+					<p:submenu label="Меню головного менеджера">
+						<p:menuitem value="На головну" outcome="index" icon="ui-icon-home" />
+						<p:menuitem value="Редагувати рибну партію"
+							outcome="editFishParcel" />
+						<p:menuitem value="Додати клієнта" outcome="addCustomer" />
+						<p:menuitem value="Редагувати клієнта" outcome="editCustomer" />
+					</p:submenu>
+				</p:menu>
+			</h:form>
+
+			<h:form id="formMenuAcc" rendered="#{secretBean.role eq 'acc'}">
+				<p:menu>
+					<p:submenu label="Меню бухгалтера">
 						<p:menuitem value="На головну" outcome="index" icon="ui-icon-home" />
 						<p:menuitem value="Редагувати рибну партію"
 							outcome="editFishParcel" />
@@ -36,6 +48,49 @@
 					</p:submenu>
 				</p:menu>
 			</h:form>
+
+			<h:form id="formMenuCold" rendered="#{secretBean.role eq 'cold'}">
+				<p:menu>
+					<p:submenu label="Меню менеджера холодильника">
+						<p:menuitem value="На головну" outcome="index" icon="ui-icon-home" />
+						<p:menuitem value="Вхідні партії" outcome="editParcelCold" />
+						<p:menuitem value="Вихідні посилки" outcome="outParcelsCold" />
+						<p:menuitem value="Списати рибу" outcome="fishItemsCold" />
+					</p:submenu>
+				</p:menu>
+			</h:form>
+
+
+			<h:form id="formMenuSecurity"
+				rendered="#{secretBean.role eq 'security'}">
+				<p:menu>
+					<p:submenu label="Меню офіцера безпеки">
+						<p:menuitem value="На головну" outcome="index" icon="ui-icon-home" />
+						<p:menuitem value="Редагувати рибну партію"
+							outcome="editFishParcel" />
+						<p:menuitem value="Додати клієнта" outcome="addCustomer" />
+						<p:menuitem value="Редагувати клієнта" outcome="editCustomer" />
+						<p:menuitem value="Всі рибні партії" outcome="fishView"
+							icon="ui-icon-cart" />
+						<p:menuitem value="Холодний менеджер" outcome="editParcelCold" />
+						<p:menuitem value="Вихідні посилки" outcome="outParcelsCold" />
+						<p:menuitem value="Списати рибу" outcome="fishItemsCold" />
+					</p:submenu>
+				</p:menu>
+			</h:form>
+
+			<h:form id="formMenuGuest"
+				rendered="#{(secretBean.role eq null) and (userBean.role eq null)}">
+				<p:menu>
+					<p:submenu label="Меню гостя">
+						<p:menuitem value="На головну" outcome="index" icon="ui-icon-home" />
+						<p:menuitem value="Новий клієнт" outcome="addCustomer" />
+						<p:menuitem value="Всі рибні партії" outcome="fishView"
+							icon="ui-icon-cart" />
+					</p:submenu>
+				</p:menu>
+			</h:form>
+
 		</h:form>
 	</ui:composition>
 </body>

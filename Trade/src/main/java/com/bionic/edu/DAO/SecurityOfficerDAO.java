@@ -20,4 +20,6 @@ public interface SecurityOfficerDAO {
 	public void unBlockCustomer(Customer customer);
 	
 	public List<Customer> getAllCustomers();
+	
+	public Employee checkLoginPassword (String login, String password);
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -85,5 +86,22 @@ public class SecurityOfficerDAOImpl implements SecurityOfficerDAO, Serializable 
 
 		listI = query.getResultList();
 		return listI;
+	}
+	
+	public Employee checkLoginPassword(String login, String password) {
+		Employee cust = null;
+		try {
+			TypedQuery<Employee> query = em
+					.createQuery(
+							"SELECT e FROM Employee as e WHERE e.login=:log AND e.password=:pas",
+							Employee.class);
+			query.setParameter("log", login);
+			query.setParameter("pas", password);
+			cust = query.getSingleResult();
+		} catch (NoResultException e) {
+			return cust;
+		}
+
+		return cust;
 	}
 }

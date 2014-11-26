@@ -11,25 +11,37 @@
 			<p:growl id="growl" showDetail="true" sticky="false" />
 			<p:toolbar>
 				<f:facet name="left">
-					<p:outputLabel id="welcome"
-						value="Ви зайшли як #{userBean.login}"
+
+
+
+					<p:outputLabel id="welcome" value="Ви зайшли як #{userBean.login}"
 						rendered="#{userBean.logged}" />
+					<p:outputLabel id="welcomeAdm"
+						value="Ви зайшли як #{secretBean.login}"
+						rendered="#{secretBean.logged}" />
 				</f:facet>
 
 				<f:facet name="right">
-					
-					<p:commandButton value="Реєстарція" id="registerButton" icon="ui-icon-person"
-						title="Зараєструватись"
-						action="addCustomer" rendered="#{not userBean.logged}" />
-						
+
+
+					<p:commandButton value="Реєстарція" id="registerButton"
+						icon="ui-icon-person" title="Зараєструватись" action="addCustomer"
+						rendered="#{(not userBean.logged) and ( not secretBean.logged)}" />
+
 					<p:commandButton value="Ввійти" id="enterButton" icon="ui-icon-key"
 						oncomplete="PF('enterDialog').show()" title="View"
-						update=":formNavigator:enter" rendered="#{not userBean.logged}" />
+						update=":formNavigator:enter"
+						rendered="#{(not userBean.logged) and (not secretBean.logged) }" />
 
-					<p:commandButton value="Вихід" id="exitButton" icon="ui-icon-arrowthickstop-1-s"
-						action="#{userBean.logOut()}" rendered="#{userBean.logged}" update=":formNavigator,:totalMenu">
-			
-						</p:commandButton>
+					<p:commandButton value="Вихід" id="exitButton"
+						icon="ui-icon-arrowthickstop-1-s" action="#{userBean.logOut()}"
+						rendered="#{(userBean.logged) and ( not secretBean.logged)}"
+						update=":formNavigator,:totalMenu" />
+
+					<p:commandButton value="Вихід.Адм" id="exitButtonAdm"
+						icon="ui-icon-arrowthickstop-1-s" action="#{secretBean.logOut()}"
+						rendered="#{secretBean.logged}" update=":formNavigator,:totalMenu" />
+
 
 					<p:dialog header="Увійти" widgetVar="enterDialog" modal="true"
 						showEffect="explode" hideEffect="explode" resizable="false">
@@ -42,14 +54,13 @@
 
 
 								<p:outputLabel for="password" value="Пароль:" />
-								<p:password id="password" value="#{userBean.password}"
-									/>
+								<p:password id="password" value="#{userBean.password}" />
 
 
 							</p:panelGrid>
 							<p:commandButton value="Увійти"
-								oncomplete="PF('enterDialog').hide();" update=":formNavigator,:totalMenu"
-								action="#{userBean.check()}">
+								oncomplete="PF('enterDialog').hide();"
+								update=":formNavigator,:totalMenu" action="#{userBean.check()}">
 							</p:commandButton>
 							<p:messages display="text" />
 						</p:outputPanel>
