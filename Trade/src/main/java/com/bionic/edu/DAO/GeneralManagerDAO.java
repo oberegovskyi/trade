@@ -5,6 +5,7 @@ import java.util.List;
 import com.bionic.edu.entities.Customer;
 import com.bionic.edu.entities.FishItem;
 import com.bionic.edu.entities.InParcel;
+import com.bionic.edu.entities.OutParcel;
 
 
 public interface GeneralManagerDAO {
@@ -19,4 +20,5 @@ public interface GeneralManagerDAO {
 	public List <FishItem> getAllFishItemsInParcel (InParcel inParcel);
 	public void saveInParcel (InParcel inParcel) ;
 	public InParcel getInParcel (int i) ;
+	public List<OutParcel> getAllOutAvParcels () ;
 }

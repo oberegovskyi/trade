@@ -1,11 +1,15 @@
 package com.bionic.edu.DAO;
 
 import com.bionic.edu.entities.FishItem;
+import com.bionic.edu.entities.InParcel;
 import com.bionic.edu.entities.OutParcel;
 
-
 public interface ColdManagerDAO {
-	public void saveCameWeightDate (FishItem fishItem);
-	public void setTaken (OutParcel outParcel);
-	public void setWriteOffFishItem (FishItem fishItem);
+	public void saveCameWeightDate(FishItem fishItem);
+
+	public void updateOutParcel(OutParcel outParcel);
+
+	public void setWriteOffFishItem(FishItem fishItem);
+
+	public void updateInParcel(InParcel inParcel);
 }

@@ -34,4 +34,6 @@ public interface CustomerService {
 	public List<OutParcelItem> getOutParcelItems (OutParcel outParcel);
 	
 	public void updateCustomer  (Customer customer) ;
+	
+	public void updateFishItem (FishItem fishItem);
 }

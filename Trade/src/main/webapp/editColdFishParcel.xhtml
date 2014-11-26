@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+		<h:form id="formColdFishParcel">
+			<p:growl id="growl" showDetail="true" sticky="false" />
+			<p:dataTable id="editCurFish" var="cur"
+				value="#{editFishParcel.listFish}" styleClass="fishItemTable">
+				<p:column headerText="Назва">
+					<h:outputText value="#{cur.fishName}" />
+				</p:column>
+				<p:column headerText="Опис">
+					<h:outputText value="#{cur.description}" />
+				</p:column>
+
+				<p:column headerText="Статус">
+					<h:outputText value="#{cur.status}" />
+				</p:column>
+				<p:column headerText="Вага">
+					<h:outputText value="#{cur.weight}" />
+				</p:column>
+
+				<p:column headerText="Ціна купівлі">
+					<h:outputText value="#{cur.buyPrice}" />
+				</p:column>
+
+				<p:column headerText="Ціна продажу">
+					<h:outputText value="#{cur.sellPrice}" />
+				</p:column>
+
+				<p:column headerText="Id партії">
+					<h:outputText value="#{cur.inParcel.inParcelId}" />
+				</p:column>
+
+				<p:column headerText="Реальна вага">
+					<h:outputText value="#{cur.cameWeight}" />
+				</p:column>
+				<p:column headerText="Дії" style="width:35px;">
+					<p:commandButton  update=":formColdFishParcel:fishCold"
+						oncomplete="PF('fishColdEdit').show();" title="Редагувати рибу"
+						icon="ui-icon-pencil" action="editColdFishParcel">
+						<f:setPropertyActionListener value="#{cur}"
+							target="#{editFishParcel.selectedFish}" />
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+			<p:commandButton value="Назад" action="editParcelCold" />
+
+	<p:dialog header="Редагувати" widgetVar="fishColdEdit" modal="true"
+			showEffect="explode" hideEffect="explode" resizable="false">
+			<p:outputPanel id="fishCold" style="text-align:center;">
+				<p:panelGrid columns="2" columnClasses="label,value" rendered="#{not empty editFishParcel.selectedFish}">
+
+					<h:outputText value="Назва:" />
+					<p:outputLabel value="#{editFishParcel.selectedFish.fishName}" />
+
+					<h:outputText value="Реальна вага:" />
+					<p:inputText value="#{editFishParcel.selectedFish.cameWeight}"
+						required="true" requiredMessage="Введіть" />
+
+
+				</p:panelGrid>
+				<p:commandButton value="OK"
+					action="#{editFishParcel.saveFishItem()}"
+					oncomplete="PF('fishDialogEdit').hide();"
+					update=":formColdFishParcel">
+				</p:commandButton>
+			</p:outputPanel>
+		</p:dialog>
+		</h:form>
+	
+	</ui:define>
+</ui:composition>
+</html>

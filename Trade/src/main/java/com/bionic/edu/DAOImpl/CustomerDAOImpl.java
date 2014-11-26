@@ -151,6 +151,10 @@ public class CustomerDAOImpl implements CustomerDAO, Serializable{
 		em.persist(temp);
 		for (OutParcelItem in : items) {
 			em.persist(in);
+			FishItem tempF =  em.find(FishItem.class, in.getFishItem().getFishItemId());
+			double we = tempF.getWeight();
+			tempF.setWeight(we-in.getWeight());
+			em.merge(tempF);
 		}
 	}
 
@@ -176,5 +180,9 @@ public class CustomerDAOImpl implements CustomerDAO, Serializable{
 	
 	public void updateCustomer  (Customer customer)  {
 		em.merge(customer);
+	}
+	
+	public void updateFishItem (FishItem fishItem) {
+		em.merge(fishItem);
 	}
 }

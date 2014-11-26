@@ -9,6 +9,7 @@ import javax.inject.Named;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bionic.edu.DAO.CustomerDAO;
+import com.bionic.edu.DAO.GeneralManagerDAO;
 import com.bionic.edu.entities.Customer;
 import com.bionic.edu.entities.FishItem;
 import com.bionic.edu.entities.InParcel;
@@ -81,5 +82,9 @@ public class CustomerServiceImpl implements CustomerService, Serializable {
 	@Transactional
 	public void updateCustomer  (Customer customer)  {
 		customerDAO.updateCustomer(customer);
+	}
+	@Transactional
+	public void updateFishItem (FishItem fishItem) {
+		customerDAO.updateFishItem(fishItem);
 	}
 }

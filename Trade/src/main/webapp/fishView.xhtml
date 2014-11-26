@@ -9,9 +9,9 @@
 
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
-		<p:growl id="growl" showDetail="true" sticky="false" />
-		<h:form id="formFishView">
 
+		<h:form id="formFishView">
+			<p:growl id="growl" showDetail="true" sticky="false" />
 
 			<p:outputPanel deferred="true">
 				<h1 style="text-align: center;">Сьогодні ми продаємо</h1>
@@ -57,8 +57,10 @@
 
 						<h:outputText value="Вага замовлення" />
 						<p:inputText id="errorWeight" value="#{orderBean.weight}"
-							required="true" requiredMessage="Введіть вагу">
-							<f:validateDoubleRange minimum="0.1" />
+							required="true" requiredMessage="Введіть вагу"
+							validatorMessage="Введена вага знаходиться поза діапазоном можливого">
+							<f:validateDoubleRange minimum="0.1"
+								maximum="#{orderBean.temp.weight}" />
 						</p:inputText>
 
 					</p:panelGrid>
@@ -137,8 +139,10 @@
 
 						<h:outputText value="Вага замовлення" />
 						<p:inputText id="errorEdit" value="#{orderBean.temp.weight}"
-							required="true" requiredMessage="Введіть вагу">
-							<f:validateDoubleRange minimum="0.1" />
+							required="true" requiredMessage="Введіть вагу"
+							validatorMessage="Введена вага знаходиться поза діапазоном можливого">
+							<f:validateDoubleRange minimum="0.1"
+								maximum="#{orderBean.temp.weight}" />
 						</p:inputText>
 
 					</p:panelGrid>
@@ -147,7 +151,6 @@
 						<f:setPropertyActionListener value="#{orderBean.temp}"
 							target="#{orderBean.temp}" />
 					</p:commandButton>
-					<p:message for="errorEdit" display="text" />
 				</p:outputPanel>
 			</p:dialog>
 

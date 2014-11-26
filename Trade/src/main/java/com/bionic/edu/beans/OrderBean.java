@@ -19,6 +19,7 @@ import com.bionic.edu.entities.FishItem;
 import com.bionic.edu.entities.OutParcel;
 import com.bionic.edu.entities.OutParcelItem;
 import com.bionic.edu.methods.Cloner;
+import com.bionic.edu.services.ColdManagerService;
 import com.bionic.edu.services.CustomerService;
 
 @Named("orderBean")
@@ -41,6 +42,8 @@ public class OrderBean implements Serializable {
 
 	@Inject
 	private CustomerService customerService;
+	@Inject
+	private ColdManagerService coldManagerService;
 
 	public FishItem getTemp() {
 		return temp;
@@ -59,6 +62,7 @@ public class OrderBean implements Serializable {
 	}
 
 	public List<FishItem> getAvailableList() {
+		init();
 		return availableList;
 	}
 
@@ -124,6 +128,8 @@ public class OrderBean implements Serializable {
 			totalWeight += in.getWeight();
 			total += in.getWeight() * in.getSellPrice();
 		}
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Успішно","Риба додана до партії"));
 		return "fishView";
 	}
 
@@ -135,12 +141,16 @@ public class OrderBean implements Serializable {
 			totalWeight += in.getWeight();
 			total += in.getWeight() * in.getSellPrice();
 		}
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Успішно","Риба видалена з корзини"));
 	}
 	
 	public void deleteAllFishItems() {
 		orderList.clear();
 		total = 0;
 		totalWeight = 0;
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Успішно","Корзина очищена"));
 	}
 
 	public double countPrice(FishItem fish) {
@@ -164,11 +174,19 @@ public class OrderBean implements Serializable {
 					oo.add(new OutParcelItem(out, ff, ff.getWeight()));
 				}
 				customerService.addOutParcelWithItems(out, oo);
-				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Успішно","Риба додана до корзини"));
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Успішно","Сформована нова партія"));
 				orderList.clear();
 				
 			}
 		} else {
 		}
+	}
+	
+	public String setWriteOff () {
+		coldManagerService.setWriteOffFishItem(temp);
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Успішно","Риба "+temp.getFishName()+" успішно списана"));
+		temp=null;
+		return "fishItemsCold";
 	}
 }

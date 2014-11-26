@@ -10,12 +10,14 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.event.CellEditEvent;
 import org.springframework.context.annotation.Scope;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bionic.edu.entities.FishItem;
 import com.bionic.edu.entities.InParcel;
 import com.bionic.edu.methods.Cloner;
+import com.bionic.edu.services.ColdManagerService;
 import com.bionic.edu.services.CustomerService;
 import com.bionic.edu.services.GeneralManagerService;
 
@@ -37,6 +39,7 @@ public class InParcelBean implements Serializable{
 	private InParcel tempInParcel = new InParcel();
 	
 	private List<FishItem> tempFishItems =  new ArrayList<>();
+	private InParcel coldTemp = new InParcel();
 	
 	private java.util.Date date;
 	
@@ -45,6 +48,8 @@ public class InParcelBean implements Serializable{
 	
 	@Inject
 	private GeneralManagerService generalManagerService;
+	@Inject
+	private ColdManagerService coldManagerService;
 
 	public List<InParcel> getList() {
 		init();
@@ -96,6 +101,14 @@ public class InParcelBean implements Serializable{
 		this.selectedForEdit = selectedForEdit;
 	}
 
+	public InParcel getColdTemp() {
+		return coldTemp;
+	}
+
+	public void setColdTemp(InParcel coldTemp) {
+		this.coldTemp = coldTemp;
+	}
+
 	@PostConstruct
 	public void init () {
 		list=customerService.getAllInParcels();
@@ -118,6 +131,7 @@ public class InParcelBean implements Serializable{
 		
 		for (FishItem in: tempFishItems) {
 			tempInParcel.setDateIncome(getSqlDate(date));
+			tempInParcel.setRealDate(getSqlDate(new java.util.Date(0)));
 			int id = generalManagerService.addNewInParcel(tempInParcel);
 			in.setInParcel(generalManagerService.getInParcel(id));
 			generalManagerService.addNewFishItem(in);
@@ -132,4 +146,13 @@ public class InParcelBean implements Serializable{
 		this.date=null;
 		this.tempFishItems.clear();
 	}
+	
+	public void updateInParcel () {
+		System.out.println(coldTemp.getClass());
+		FacesContext context = FacesContext.getCurrentInstance();
+		//coldManagerService.updateInParcel(coldTemp);
+		context.addMessage(":coldParcelForm:growl", new FacesMessage("Успішно","ральна дата приходу змінена"));
+		coldTemp=null;
+	}
+	
 }

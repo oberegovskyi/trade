@@ -34,4 +34,6 @@ public interface CustomerDAO {
 	public List<OutParcelItem> getOutParcelItems (OutParcel outParcel) ;
 	
 	public void updateCustomer  (Customer customer) ;
+	
+	public void updateFishItem (FishItem fishItem);
 }

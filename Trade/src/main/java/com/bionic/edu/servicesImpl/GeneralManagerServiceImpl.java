@@ -12,6 +12,7 @@ import com.bionic.edu.DAO.GeneralManagerDAO;
 import com.bionic.edu.entities.Customer;
 import com.bionic.edu.entities.FishItem;
 import com.bionic.edu.entities.InParcel;
+import com.bionic.edu.entities.OutParcel;
 import com.bionic.edu.services.GeneralManagerService;
 
 @Named
@@ -75,5 +76,9 @@ public class GeneralManagerServiceImpl implements GeneralManagerService, Seriali
 	@Transactional
 	public InParcel getInParcel (int i) {
 		return generalManagerDAO.getInParcel(i);
+	}
+	
+	public List<OutParcel> getAllOutAvParcels () {
+		return generalManagerDAO.getAllOutAvParcels();
 	}
 }

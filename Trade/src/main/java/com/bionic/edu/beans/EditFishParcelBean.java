@@ -79,6 +79,10 @@ public class EditFishParcelBean implements Serializable{
 		return "editCurFishParcel";
 	}
 	
+	public String getFishItemsCold () {
+		listFish = generalManagerService.getAllFishItemsInParcel(inParcelTemp);
+		return "editColdFishParcel";
+	}
 	
 	public String changeInParcel () {
 		System.out.println(inParcelTempEdit);

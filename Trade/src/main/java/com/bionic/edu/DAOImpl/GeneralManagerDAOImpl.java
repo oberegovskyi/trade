@@ -13,6 +13,7 @@ import com.bionic.edu.DAO.GeneralManagerDAO;
 import com.bionic.edu.entities.Customer;
 import com.bionic.edu.entities.FishItem;
 import com.bionic.edu.entities.InParcel;
+import com.bionic.edu.entities.OutParcel;
 import com.bionic.edu.entities.OutParcelItem;
 
 @Repository
@@ -136,5 +137,11 @@ public class GeneralManagerDAOImpl implements GeneralManagerDAO, Serializable {
 
 	public InParcel getInParcel (int i) {
 		return em.find(InParcel.class,i);
+	}
+	
+	public List<OutParcel> getAllOutAvParcels () {
+		TypedQuery<OutParcel> query = em.createQuery("SELECT o FROM OutParcel o WHERE o.available=1 AND o.taken=0" ,OutParcel.class);
+		List<OutParcel> result = query.getResultList();
+		return result;
 	}
 }
