@@ -55,56 +55,62 @@
 			</p:dataTable>
 			<p:commandButton value="Назад" action="editFishParcel" />
 
-	<p:dialog header="Редагувати" widgetVar="fishDialogEdit" modal="true"
-			showEffect="explode" hideEffect="explode" resizable="false">
-			<p:outputPanel id="fishEdit" style="text-align:center;">
-				<p:panelGrid columns="2" columnClasses="label,value" rendered="#{not empty editFishParcel.selectedFish}">
+			<p:dialog header="Редагувати" widgetVar="fishDialogEdit" modal="true"
+				showEffect="explode" hideEffect="explode" resizable="false">
+				<p:outputPanel id="fishEdit" style="text-align:center;">
+					<p:panelGrid columns="2" columnClasses="label,value"
+						rendered="#{not empty editFishParcel.selectedFish}">
 
-					<h:outputText value="Назва:" />
-					<p:inputText value="#{editFishParcel.selectedFish.fishName}"
-						required="true" requiredMessage="Введіть" />
+						<h:outputText value="Назва:" />
+						<p:inputText value="#{editFishParcel.selectedFish.fishName}"
+							required="true" requiredMessage="Введіть" />
 
-					<h:outputText value="Опис:" />
-					<p:inputTextarea rows="6" cols="25"
-						value="#{editFishParcel.selectedFish.description}" required="true"
-						requiredMessage="Введіть" />
+						<h:outputText value="Опис:" />
+						<p:inputTextarea rows="6" cols="25"
+							value="#{editFishParcel.selectedFish.description}"
+							required="true" requiredMessage="Введіть" />
 
-					<h:outputText value="Статус:" />
-					<p:inputText value="#{editFishParcel.selectedFish.status}"
-						required="true" requiredMessage="Введіть вагу" />
-
-					<h:outputText value="Вага:" />
-					<p:inputText value="#{editFishParcel.selectedFish.weight}"
-						required="true" requiredMessage="Введіть" />
-
-					<h:outputText value="Ціна купівлі:" />
-					<p:inputText value="#{editFishParcel.selectedFish.buyPrice}"
-						required="true" requiredMessage="Введіть" />
-
-					<h:outputText value="Ціна продажу:" />
-					<p:inputText value="#{editFishParcel.selectedFish.sellPrice}"
-						required="true" requiredMessage="Введіть" />
-
-					<h:outputText value="Id партії:" />
-					<p:inputText
-						value="#{editFishParcel.selectedFish.inParcel.inParcelId}"
-						required="true" requiredMessage="Введіть" />
-
-					<h:outputText value="Реальна вага:" />
-					<p:inputText value="#{editFishParcel.selectedFish.cameWeight}"
-						required="true" requiredMessage="Введіть" />
+						<h:outputText value="Статус:" />
+						
+						<p:selectOneMenu value="#{editFishParcel.selectedFish.status}">
+							<f:selectItem itemValue="0" itemLabel="Не прибула" />
+							<f:selectItem itemValue="1" itemLabel="Прибула" />
+							<f:selectItem itemValue="2" itemLabel="Поставлена на  списання" />
+						</p:selectOneMenu>
 
 
-				</p:panelGrid>
-				<p:commandButton value="OK"
-					action="#{editFishParcel.saveFishItem()}"
-					oncomplete="PF('fishDialogEdit').hide();"
-					update=":formEditFishParcel">
-				</p:commandButton>
-			</p:outputPanel>
-		</p:dialog>
+						<h:outputText value="Вага:" />
+						<p:inputText value="#{editFishParcel.selectedFish.weight}"
+							required="true" requiredMessage="Введіть" />
+
+						<h:outputText value="Ціна купівлі:" />
+						<p:inputText value="#{editFishParcel.selectedFish.buyPrice}"
+							required="true" requiredMessage="Введіть" />
+
+						<h:outputText value="Ціна продажу:" />
+						<p:inputText value="#{editFishParcel.selectedFish.sellPrice}"
+							required="true" requiredMessage="Введіть" />
+
+						<h:outputText value="Id партії:" />
+						<p:inputText
+							value="#{editFishParcel.selectedFish.inParcel.inParcelId}"
+							required="true" requiredMessage="Введіть" />
+
+						<h:outputText value="Реальна вага:" />
+						<p:inputText value="#{editFishParcel.selectedFish.cameWeight}"
+							required="true" requiredMessage="Введіть" />
+
+
+					</p:panelGrid>
+					<p:commandButton value="OK"
+						action="#{editFishParcel.saveFishItem()}"
+						oncomplete="PF('fishDialogEdit').hide();"
+						update=":formEditFishParcel">
+					</p:commandButton>
+				</p:outputPanel>
+			</p:dialog>
 		</h:form>
-	
+
 	</ui:define>
 </ui:composition>
 </html>

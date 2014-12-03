@@ -29,11 +29,12 @@ public class OrderBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private List<FishItem> coldList;
 	private List<FishItem> availableList;
 	private List<FishItem> orderList = new ArrayList<FishItem>();
 	private double totalWeight;
 	private double total;
-	private double weight=0.1;
+	private double weight=1;
 
 	private FishItem temp;
 	private FishItem tempWork;
@@ -66,6 +67,14 @@ public class OrderBean implements Serializable {
 		return availableList;
 	}
 
+	public List<FishItem> getColdList() {
+		return coldList;
+	}
+
+	public void setColdList(List<FishItem> coldList) {
+		this.coldList = coldList;
+	}
+
 	public void setAvailableList(List<FishItem> availableList) {
 		this.availableList = availableList;
 	}
@@ -81,6 +90,7 @@ public class OrderBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		availableList = customerService.getAllAvailableFishItems();
+		coldList = coldManagerService.getSettedFishItems();
 	}
 
 	public double getTotalWeight() {
@@ -168,7 +178,7 @@ public class OrderBean implements Serializable {
 				java.util.Calendar cal = java.util.Calendar.getInstance();
 				java.util.Date utilDate = cal.getTime();
 				java.sql.Date sqlDate = new Date(utilDate.getTime());
-				OutParcel out = new OutParcel(sqlDate, activeUser, 0, 0, 1);
+				OutParcel out = new OutParcel(sqlDate, activeUser, 0, 0, 0);
 				List<OutParcelItem> oo = new ArrayList<OutParcelItem>();
 				for (FishItem ff : orderList) {
 					oo.add(new OutParcelItem(out, ff, ff.getWeight()));

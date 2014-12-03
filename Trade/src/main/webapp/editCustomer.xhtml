@@ -18,7 +18,7 @@
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="10,20,50">
  				<p:column headerText="Статус" style="width:35px;">
-					<p:graphicImage name="img/icons/ok.jpg" rendered="#{cust.blocked == 0}"/>
+					<p:graphicImage name="img/icons/ok.png" rendered="#{cust.blocked == 0}"/>
 					<p:graphicImage name="img/icons/notok.png" rendered="#{cust.blocked == 1}"/>
 				</p:column>
 				<p:column headerText="Логін">
@@ -66,16 +66,16 @@
 						columnClasses="label,value">
 
 						<h:outputText value="Логін:" />
-						<p:inputText value="#{editCustomer.temp.login}" />
+						<p:inputText value="#{editCustomer.temp.login}" required="true"/>
 
 						<h:outputText value="Ім'я:" />
-						<p:inputText value="#{editCustomer.temp.fName}" />
+						<p:inputText value="#{editCustomer.temp.fName}" required="true"/>
 
 						<h:outputText value="Прізвище:" />
-						<p:inputText value="#{editCustomer.temp.sName}" />
+						<p:inputText value="#{editCustomer.temp.sName}" required="true"/>
 
 						<h:outputText value="Email:" />
-						<p:inputText value="#{editCustomer.temp.email}" />
+						<p:inputText value="#{editCustomer.temp.email}" required="true"/>
 
 						<h:outputText value="Перед.:" />
 						<p:inputText value="#{editCustomer.temp.payment}" required="true" />

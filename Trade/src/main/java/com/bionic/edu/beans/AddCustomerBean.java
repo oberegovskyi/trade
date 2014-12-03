@@ -88,7 +88,7 @@ public class AddCustomerBean implements Serializable {
 			email = null;
 			return "addCustomer";
 		} else {
-			context.addMessage(null, new FacesMessage("Увага",
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Увага",
 					"Користувач " + login+"  уже існує"));
 			login = null;
 			password = null;

@@ -21,4 +21,5 @@ public interface GeneralManagerService {
 	public void saveInParcel (InParcel inParcel);
 	public InParcel getInParcel (int i);
 	public List<OutParcel> getAllOutAvParcels ();
+	public void addFullInParcel (List<FishItem> tempFishItems, InParcel tempInParcel,java.util.Date date);
 }

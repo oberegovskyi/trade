@@ -1,6 +1,7 @@
 package com.bionic.edu.servicesImpl;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -42,5 +43,8 @@ public class ColdManagerServiceImpl implements ColdManagerService,Serializable{
 	@Transactional
 	public void updateInParcel (InParcel inParcel) {
 		coldManagerDAO.updateInParcel(inParcel);
+	}
+	public List<FishItem> getSettedFishItems() {
+		return coldManagerDAO.getSettedFishItems();
 	}
 }

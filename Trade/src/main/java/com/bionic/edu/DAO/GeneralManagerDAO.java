@@ -21,4 +21,5 @@ public interface GeneralManagerDAO {
 	public void saveInParcel (InParcel inParcel) ;
 	public InParcel getInParcel (int i) ;
 	public List<OutParcel> getAllOutAvParcels () ;
+	
 }

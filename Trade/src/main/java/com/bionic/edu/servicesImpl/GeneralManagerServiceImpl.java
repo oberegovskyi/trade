@@ -1,6 +1,7 @@
 package com.bionic.edu.servicesImpl;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -80,5 +81,22 @@ public class GeneralManagerServiceImpl implements GeneralManagerService, Seriali
 	
 	public List<OutParcel> getAllOutAvParcels () {
 		return generalManagerDAO.getAllOutAvParcels();
+	}
+
+	public java.sql.Date getSqlDate(java.util.Date calendarDate) {
+		  return new java.sql.Date(calendarDate.getTime());
+		}
+
+	@Transactional
+	public void addFullInParcel(List<FishItem> tempFishItems,InParcel tempInParcel, Date date) {
+		for (FishItem in: tempFishItems) {
+			in.setStatus(0);
+			tempInParcel.setDateIncome(getSqlDate(date));
+			tempInParcel.setRealDate(getSqlDate(new java.util.Date(0)));
+			int id = addNewInParcel(tempInParcel);
+			in.setInParcel(getInParcel(id));
+			addNewFishItem(in);
+		}
+			
 	}
 }

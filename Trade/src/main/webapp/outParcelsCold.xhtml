@@ -22,7 +22,7 @@
 					<p:outputLabel value="#{out.outParcelDate}" />
 				</p:column>
 				<p:column headerText="Клієнт">
-					<p:outputLabel value="#{out.customer.customerId}" />
+					<p:outputLabel value="#{out.customer.login}" />
 				</p:column>
 				<p:column headerText="Дії">
 					<p:commandButton value="Відвантажити" action="#{outBean.setTaken()}" update=":formOutParcel">

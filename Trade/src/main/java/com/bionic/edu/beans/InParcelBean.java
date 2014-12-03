@@ -48,8 +48,7 @@ public class InParcelBean implements Serializable{
 	
 	@Inject
 	private GeneralManagerService generalManagerService;
-	@Inject
-	private ColdManagerService coldManagerService;
+
 
 	public List<InParcel> getList() {
 		init();
@@ -126,16 +125,8 @@ public class InParcelBean implements Serializable{
 		context.addMessage(":formAddNewInParcel:gro", new FacesMessage("Успішно",fishWork.getFishName() +" успішно додана в партію"));
 	}
 	
-	@Transactional
-	public void addNewInParcel () {
-		
-		for (FishItem in: tempFishItems) {
-			tempInParcel.setDateIncome(getSqlDate(date));
-			tempInParcel.setRealDate(getSqlDate(new java.util.Date(0)));
-			int id = generalManagerService.addNewInParcel(tempInParcel);
-			in.setInParcel(generalManagerService.getInParcel(id));
-			generalManagerService.addNewFishItem(in);
-		}
+	public void addNewInParcel () {	
+		generalManagerService.addFullInParcel(tempFishItems, tempInParcel, date);
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(":formAddNewInParcel:gro", new FacesMessage("Успішно","Нова партія успішно додана"));
 		tempFishItems=null;

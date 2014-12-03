@@ -5,8 +5,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
@@ -14,7 +13,10 @@
 		<p:growl id="growlAcc" showDetail="true" sticky="false" />
 			<p:dataTable value="#{outBean.listAcc}" var="out"
 				styleClass="fishItemTable">
-				
+				<p:column style="width:35px;">
+					<p:graphicImage name="img/icons/ok.png" rendered="#{out.payed &gt;= outBean.calcDesPaid(out)}"/>
+					<p:graphicImage name="img/icons/notok.png" rendered="#{not (out.payed &gt;= outBean.calcDesPaid(out))}"/>
+				</p:column>
 				<p:column headerText="Id">
 					<p:outputLabel value="#{out.outParcelId}" />
 				</p:column>
@@ -22,10 +24,13 @@
 					<p:outputLabel value="#{out.outParcelDate}" />
 				</p:column>
 				<p:column headerText="Клієнт">
-					<p:outputLabel value="#{out.customer.customerId}" />
+					<p:outputLabel value="#{out.customer.login}" />
 				</p:column>
 				<p:column headerText="Оплачено">
 					<p:outputLabel value="#{out.payed}" />
+				</p:column>
+				<p:column headerText="Необхідно оплатити">
+					<p:outputLabel value="#{outBean.calcDesPaid(out)}" />
 				</p:column>
 				<p:column headerText="Дії">
 					<p:commandButton value="Дозволити" action="#{outBean.setAvailable()}" update=":formAccParcel:accDetail">
@@ -54,9 +59,9 @@
 						<h:outputText value="#{outBean.tempOutParcel.outParcelDate}" />
 						
 						<h:outputText value="Клієнт:" />
-						<h:outputText value="#{outBean.tempOutParcel.customer.customerId}" />
+						<h:outputText value="#{outBean.tempOutParcel.customer.login}" />
 						
-						<h:outputText value="Мінімально оплачено:" />
+						<h:outputText value="Необхідно оплатити:" />
 						<h:outputText value="#{outBean.desPeyed}" />
 
 						<h:outputText value="Оплачено" />

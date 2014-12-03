@@ -144,4 +144,6 @@ public class GeneralManagerDAOImpl implements GeneralManagerDAO, Serializable {
 		List<OutParcel> result = query.getResultList();
 		return result;
 	}
+	
+
 }

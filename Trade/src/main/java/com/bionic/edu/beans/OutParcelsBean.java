@@ -29,7 +29,7 @@ public class OutParcelsBean implements Serializable {
 	private List<OutParcel> listAcc = null;
 	private OutParcel tempOutParcel;
 	private OutParcel tempAccParcel;
-	private double desPeyed;
+	private double desPeyed=0;
 
 	@Inject
 	private GeneralManagerService generalManagerService;
@@ -82,7 +82,7 @@ public class OutParcelsBean implements Serializable {
 
 	public void setTempOutParcel(OutParcel tempOutParcel) {
 		this.tempOutParcel = tempOutParcel;
-		desPeyed = Math.round((customerService.getPriceOfParcel(tempOutParcel)*(tempOutParcel.getCustomer().getPayment()/100.0))*100)/100.0;
+		desPeyed = calcDesPaid(tempOutParcel);
 	}
 
 	@PostConstruct
@@ -125,5 +125,9 @@ public class OutParcelsBean implements Serializable {
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Увага",
 						"Партія успішно збережена"));
 		return "outParcelsAcc";
+	}
+	
+	public double calcDesPaid (OutParcel dd) {
+		return Math.round((customerService.getPriceOfParcel(dd)*(dd.getCustomer().getPayment()/100.0))*100)/100.0;
 	}
 }

@@ -13,7 +13,7 @@
 		<h:form id="formFishCold" rendered="#{(not empty secretBean.employee) and (secretBean.role eq 'cold')}">
 		<p:outputLabel value="Списати рибу"/>
 			<p:growl id="growlOut" showDetail="true" sticky="false" />
-			<p:dataTable id="data" value="#{orderBean.availableList}" var="fish"
+			<p:dataTable id="data" value="#{orderBean.coldList}" var="fish"
 				styleClass="fishItemTable">
 				<p:column headerText="Назва">
 					<p:outputLabel value="#{fish.fishName}" />
@@ -26,9 +26,6 @@
 				</p:column>
 				<p:column headerText="Ціна">
 					<p:outputLabel value="#{fish.sellPrice}" />
-				</p:column>
-				<p:column headerText="Статус">
-					<p:outputLabel value="#{fish.status}" />
 				</p:column>
 				<p:column>
 					<p:commandButton update=":formFishCold" icon="ui-icon-circle-minus"

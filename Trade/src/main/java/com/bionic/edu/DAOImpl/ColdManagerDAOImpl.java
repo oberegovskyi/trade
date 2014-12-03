@@ -1,9 +1,11 @@
 package com.bionic.edu.DAOImpl;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
@@ -51,5 +53,16 @@ public class ColdManagerDAOImpl implements ColdManagerDAO, Serializable {
 	
 	public void updateInParcel (InParcel inParcel) {
 		em.merge(inParcel);
+	}
+	
+	public List<FishItem> getSettedFishItems() {
+		TypedQuery<FishItem> query = em
+				.createQuery("SELECT f FROM FishItem as f WHERE f.status=2",
+						FishItem.class);
+		List<FishItem> listI = null;
+
+		listI = query.getResultList();
+
+		return listI;
 	}
 }
