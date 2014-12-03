@@ -102,7 +102,7 @@ public class SecretEnterBean implements Serializable {
 		setLogged(false);
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(":formNavigator:growl", new FacesMessage(
-				FacesMessage.SEVERITY_INFO, "Увага", login+" Ви вийшли з системи"));
+				FacesMessage.SEVERITY_INFO, "Увага", login+", Ви вийшли з системи"));
 		employee=null;
 		setRole(null);
 		setLogin(null);

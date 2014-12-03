@@ -74,20 +74,30 @@ public class AddCustomerBean implements Serializable {
 	}
 
 	public String addCustomer() {
-		password=DigestUtils.md5Hex(password);
-		cust = new Customer(login, password, fName, sName, email, 100, 0);
-		securityOfficerService.addNewCustomer(cust);
-
 		FacesContext context = FacesContext.getCurrentInstance();
+		password = DigestUtils.md5Hex(password);
+		cust = new Customer(login, password, fName, sName, email, 100, 0);
+		if (securityOfficerService.checkUser(cust).equals(null)) {
+			securityOfficerService.addNewCustomer(cust);
+			context.addMessage(null, new FacesMessage("Успішно",
+					"Додано нового користувача:" + login));
+			login = null;
+			password = null;
+			fName = null;
+			sName = null;
+			email = null;
+			return "addCustomer";
+		} else {
+			context.addMessage(null, new FacesMessage("Увага",
+					"Користувач " + login+"  уже існує"));
+			login = null;
+			password = null;
+			fName = null;
+			sName = null;
+			email = null;
+			return "addCustomer";
+		}
 
-		context.addMessage(null, new FacesMessage("Успішно",
-				"Додано нового користувача:" + login));
-		login = null;
-		password = null;
-		fName = null;
-		sName = null;
-		email = null;
-		return "addCustomer";
 	}
 
 }

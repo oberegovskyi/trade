@@ -18,7 +18,7 @@ import com.bionic.edu.entities.OutParcel;
 import com.bionic.edu.entities.OutParcelItem;
 
 @Repository
-public class CustomerDAOImpl implements CustomerDAO, Serializable{
+public class CustomerDAOImpl implements CustomerDAO, Serializable {
 	/**
 	 * 
 	 */
@@ -109,11 +109,9 @@ public class CustomerDAOImpl implements CustomerDAO, Serializable{
 		List<OutParcelItem> weightPrice = null;
 		double result = 0;
 		weightPrice = query.getResultList();
-		System.out.println(weightPrice);
 		for (OutParcelItem in : weightPrice) {
 			result += in.getWeight() * in.getFishItem().getSellPrice();
 		}
-
 		return result;
 	}
 
@@ -151,38 +149,41 @@ public class CustomerDAOImpl implements CustomerDAO, Serializable{
 		em.persist(temp);
 		for (OutParcelItem in : items) {
 			em.persist(in);
-			FishItem tempF =  em.find(FishItem.class, in.getFishItem().getFishItemId());
+			FishItem tempF = em.find(FishItem.class, in.getFishItem()
+					.getFishItemId());
 			double we = tempF.getWeight();
-			tempF.setWeight(we-in.getWeight());
+			tempF.setWeight(we - in.getWeight());
 			em.merge(tempF);
 		}
 	}
 
 	public List<OutParcel> getOutParcels(Customer customer) {
 		TypedQuery<OutParcel> query = em.createQuery(
-				"SELECT o FROM OutParcel as o WHERE o.customer=:cust", OutParcel.class);
+				"SELECT o FROM OutParcel as o WHERE o.customer=:cust",
+				OutParcel.class);
 		List<OutParcel> listI = null;
 		query.setParameter("cust", customer);
 		listI = query.getResultList();
 
 		return listI;
 	}
-	
-	public List<OutParcelItem> getOutParcelItems (OutParcel outParcel)  {
+
+	public List<OutParcelItem> getOutParcelItems(OutParcel outParcel) {
 		TypedQuery<OutParcelItem> query = em.createQuery(
-				"SELECT o FROM OutParcelItem as o WHERE o.outParcel=:out", OutParcelItem.class);
+				"SELECT o FROM OutParcelItem as o WHERE o.outParcel=:out",
+				OutParcelItem.class);
 		List<OutParcelItem> listI = null;
 		query.setParameter("out", outParcel);
 		listI = query.getResultList();
 
 		return listI;
 	}
-	
-	public void updateCustomer  (Customer customer)  {
+
+	public void updateCustomer(Customer customer) {
 		em.merge(customer);
 	}
-	
-	public void updateFishItem (FishItem fishItem) {
+
+	public void updateFishItem(FishItem fishItem) {
 		em.merge(fishItem);
 	}
 }

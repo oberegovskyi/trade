@@ -10,71 +10,75 @@
 
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
+	<h:form >
+			<h1>Новий клієнт</h1>
+			
+				<h:panelGrid columns="3" cellpadding="5">
+					<p:outputLabel for="login" value="Логін:" />
+					<p:inputText id="login" value="#{addCustomer.login}"
+						required="true"
+						requiredMessage="#{addCustomerMessagesBean.loginReq}"
+						validatorMessage="#{addCustomerMessagesBean.loginVal}">
+						<f:validateRegex pattern="^[a-zA-Z[0-9]+]{3,20}$" />
+					</p:inputText>
+					<p:message for="login" display="text" />
 
-		<h1>Новий клієнт</h1>
-		<h:form>
-			<h:panelGrid columns="3" cellpadding="5">
-				<p:outputLabel for="login" value="Логін:" />
-				<p:inputText id="login" value="#{addCustomer.login}" required="true"
-					requiredMessage="#{addCustomerMessagesBean.loginReq}"
-					validatorMessage="#{addCustomerMessagesBean.loginVal}">
-					<f:validateRegex pattern="^[a-zA-Z[0-9]+]{3,20}$" />
-				</p:inputText>
-				<p:message for="login" display="text" />
+					<p:outputLabel for="pwd1" value="Введіть пароль:" />
+					<p:password id="pwd1" value="#{addCustomer.password}"
+						required="true"
+						requiredMessage="#{addCustomerMessagesBean.passwordReq}"
+						validatorMessage="#{addCustomerMessagesBean.passwordVal}">
+						<f:validateRegex pattern="^[a-zA-Z[0-9]+]{3,20}$" />
+					</p:password>
+					<p:message for="pwd1" display="text" />
 
-				<p:outputLabel for="pwd1" value="Введіть пароль:" />
-				<p:password id="pwd1" value="#{addCustomer.password}" required="true"
-					requiredMessage="#{addCustomerMessagesBean.passwordReq}"
-					validatorMessage="#{addCustomerMessagesBean.passwordVal}">
-					<f:validateRegex pattern="^[a-zA-Z[0-9]+]{3,20}$" />
-				</p:password>
-				<p:message for="pwd1" display="text" />
-
-				<p:outputLabel for="pwd2" value="Повторіть пароль:" />
-				<p:password id="pwd2" value="#{addCustomer.password}"
-					label="Password 2" required="true"
-					requiredMessage="#{addCustomerMessagesBean.passwordReq}"
-					validatorMessage="#{addCustomerMessagesBean.passwordVal}">
-					<f:validateRegex pattern="^[a-zA-Z[0-9]+]{3,20}$" />
-				</p:password>
-				<p:message for="pwd2" display="text" />
-
-
-				<p:outputLabel for="fName" value="Ім'я:" />
-				<p:inputText id="fName" value="#{addCustomer.fName}" required="true"
-					requiredMessage="#{addCustomerMessagesBean.fNameReq}"
-					validatorMessage="#{addCustomerMessagesBean.fNameVal}">
-					<f:validateRegex pattern="^[А-ЯЇІа-яії]+{2,20}$" />
-				</p:inputText>
-				<p:message for="fName" display="text" />
+					<p:outputLabel for="pwd2" value="Повторіть пароль:" />
+					<p:password id="pwd2" value="#{addCustomer.password}"
+						label="Password 2" required="true"
+						requiredMessage="#{addCustomerMessagesBean.passwordReq}"
+						validatorMessage="#{addCustomerMessagesBean.passwordVal}">
+						<f:validateRegex pattern="^[a-zA-Z[0-9]+]{3,20}$" />
+					</p:password>
+					<p:message for="pwd2" display="text" />
 
 
-				<p:outputLabel for="sName" value="Прізвище:" />
-				<p:inputText id="sName" value="#{addCustomer.sName}" required="true"
-					requiredMessage="#{addCustomerMessagesBean.sNameReq}"
-					validatorMessage="#{addCustomerMessagesBean.sNameVal}">
-					<f:validateRegex pattern="^[А-ЯЇІа-яії]+{2,20}$" />
-				</p:inputText>
-				<p:message for="sName" display="text" />
-
-				<p:outputLabel for="email" value="E-mail:" />
-				<p:inputText id="email" value="#{addCustomer.email}" required="true"
-					requiredMessage="#{addCustomerMessagesBean.emailReq}"
-					validatorMessage="#{addCustomerMessagesBean.emailVal}">
-					<f:validateRegex
-						pattern="^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$" />
-
-				</p:inputText>
-				<p:message for="email" display="text" />
-
-			</h:panelGrid>
-			<h:commandButton id="submit" value="ОК" action="#{addCustomer.addCustomer()}" />
-
-			<o:validateEqual components="pwd1 pwd2"
-				message="#{addCustomerMessagesBean.passwordNotEq}"
-				showMessageFor="pwd1" />
+					<p:outputLabel for="fName" value="Ім'я:" />
+					<p:inputText id="fName" value="#{addCustomer.fName}"
+						required="true"
+						requiredMessage="#{addCustomerMessagesBean.fNameReq}"
+						validatorMessage="#{addCustomerMessagesBean.fNameVal}">
+						<f:validateRegex pattern="^[А-ЯЇІа-яії]+{2,20}$" />
+					</p:inputText>
+					<p:message for="fName" display="text" />
 
 
+					<p:outputLabel for="sName" value="Прізвище:" />
+					<p:inputText id="sName" value="#{addCustomer.sName}"
+						required="true"
+						requiredMessage="#{addCustomerMessagesBean.sNameReq}"
+						validatorMessage="#{addCustomerMessagesBean.sNameVal}">
+						<f:validateRegex pattern="^[А-ЯЇІа-яії]+{2,20}$" />
+					</p:inputText>
+					<p:message for="sName" display="text" />
+
+					<p:outputLabel for="email" value="E-mail:" />
+					<p:inputText id="email" value="#{addCustomer.email}"
+						required="true"
+						requiredMessage="#{addCustomerMessagesBean.emailReq}"
+						validatorMessage="#{addCustomerMessagesBean.emailVal}">
+						<f:validateRegex
+							pattern="^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$" />
+
+					</p:inputText>
+					<p:message for="email" display="text" />
+
+				</h:panelGrid>
+				<h:commandButton id="submit" value="Реєстрація"
+					action="#{addCustomer.addCustomer()}" />
+
+				<o:validateEqual components="pwd1 pwd2"
+					message="#{addCustomerMessagesBean.passwordNotEq}"
+					showMessageFor="pwd1" />
 		</h:form>
 	</ui:define>
 </ui:composition>

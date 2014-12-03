@@ -1,59 +1,57 @@
-.fishItemTable{ 
+.fishItemTable {
 	width: 925px;
 	text-align: center;
 }
 
 body {
-            background: #f3f2f3;
-            color: #000000;
-            font-family: Trebuchet MS, Arial, Times New Roman;
-            font-size: 12px;
+	background: #f3f2f3;
+	color: #000000;
+	font-family: Trebuchet MS, Arial, Times New Roman;
+	font-size: 12px;
 }
- 
+
 #container {
-            background: #333333;
-            margin: 30px auto;
-            width: 1100px;
-            min-height: 870px;
-            overflow: hidden;
-           
+	background: #E2D5FF;
+	margin: 30px auto;
+	width: 1100px;
+	min-height: 870px;
+	overflow: hidden;
 }
- 
+
 #header {
-            background: #838283;
-            height: 200px;
-            width: 1100px;
+	height: 200px;
+	width: 1100px;
+	background-image: url("#{resource['img/header.jpg']}");
 }
- 
+
 #navigation {
-            background: #a2a2a2;
-            width: 1100px;
-            height: 35px;
+	background: #a2a2a2;
+	width: 1100px;
+	height: 35px;
 }
- 
+
 #menu {
-            float: left;
-            width: 175px;
-            min-height: 600px;
-            overflow:hidden;
+	float: left;
+	width: 175px;
+	min-height: 600px;
+	overflow: hidden;
 }
- 
+
 #content {
-            background: #d2d0d2;
-            float: right;
-  			overflow:hidden;
-            width: 925px;
-            min-height: 600px;
-           
+	background: #d2d0d2;
+	float: right;
+	overflow: hidden;
+	width: 925px;
+	min-height: 600px;
 }
- 
+
 #clear {
-            clear:both;
+	clear: both;
 }
- 
+
 #footer {
-            background: #838283;
-            height: 50px;
-            width: 1100px;
-            position: relative;
+	height: 50px;
+	width: 1100px;
+	position: relative;
+	background-image: url("#{resource['img/footer.jpg']}");
 }

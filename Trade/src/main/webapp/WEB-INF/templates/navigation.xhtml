@@ -9,16 +9,13 @@
 	<ui:composition>
 		<h:form id="formNavigator">
 			<p:growl id="growl" showDetail="true" sticky="false" />
-			<p:toolbar>
+			<p:toolbar id ="casualUser" rendered="#{ not secretBean.logged}">
 				<f:facet name="left">
 
 
 
 					<p:outputLabel id="welcome" value="Ви зайшли як #{userBean.login}"
 						rendered="#{userBean.logged}" />
-					<p:outputLabel id="welcomeAdm"
-						value="Ви зайшли як #{secretBean.login}"
-						rendered="#{secretBean.logged}" />
 				</f:facet>
 
 				<f:facet name="right">
@@ -26,21 +23,18 @@
 
 					<p:commandButton value="Реєстарція" id="registerButton"
 						icon="ui-icon-person" title="Зараєструватись" action="addCustomer"
-						rendered="#{(not userBean.logged) and ( not secretBean.logged)}" />
+						rendered="#{not userBean.logged}" />
 
 					<p:commandButton value="Ввійти" id="enterButton" icon="ui-icon-key"
 						oncomplete="PF('enterDialog').show()" title="View"
 						update=":formNavigator:enter"
-						rendered="#{(not userBean.logged) and (not secretBean.logged) }" />
+						rendered="#{not userBean.logged }" />
 
 					<p:commandButton value="Вихід" id="exitButton"
 						icon="ui-icon-arrowthickstop-1-s" action="#{userBean.logOut()}"
-						rendered="#{(userBean.logged) and ( not secretBean.logged)}"
+						rendered="#{userBean.logged}"
 						update=":formNavigator,:totalMenu" />
 
-					<p:commandButton value="Вихід.Адм" id="exitButtonAdm"
-						icon="ui-icon-arrowthickstop-1-s" action="#{secretBean.logOut()}"
-						rendered="#{secretBean.logged}" update=":formNavigator,:totalMenu" />
 
 
 					<p:dialog header="Увійти" widgetVar="enterDialog" modal="true"
@@ -65,6 +59,27 @@
 							<p:messages display="text" />
 						</p:outputPanel>
 					</p:dialog>
+
+
+				</f:facet>
+			</p:toolbar>
+			
+			<p:toolbar id ="uncasualUser" rendered="#{secretBean.logged}">
+				<f:facet name="left">
+
+
+
+					
+					<p:outputLabel id="welcomeAdm"
+						value="Ви зайшли як #{secretBean.login}"/>
+				</f:facet>
+
+				<f:facet name="right">
+
+					<p:commandButton value="Вихід.Адм" id="exitButtonAdm"
+						icon="ui-icon-arrowthickstop-1-s" action="#{secretBean.logOut()}"
+						 update=":formNavigator,:totalMenu" />
+
 
 
 				</f:facet>

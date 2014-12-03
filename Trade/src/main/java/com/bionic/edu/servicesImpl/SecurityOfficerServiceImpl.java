@@ -66,4 +66,17 @@ public class SecurityOfficerServiceImpl implements SecurityOfficerService, Seria
 	public Employee checkLoginPassword(String login, String password) {
 		return securityOfficerDAO.checkLoginPassword(login, password);
 	}
+	
+	public List<Employee> getAllEmployees() {
+		return securityOfficerDAO.getAllEmployees();
+	}
+	
+	@Transactional
+	public void unBlockEmployee (Employee employee) {
+		securityOfficerDAO.unBlockEmployee(employee);
+	}
+	
+	public List<Customer> checkUser (Customer customer){
+		return securityOfficerDAO.checkUser(customer);
+	}
 }

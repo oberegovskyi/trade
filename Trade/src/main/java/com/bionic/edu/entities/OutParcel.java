@@ -27,7 +27,7 @@ public class OutParcel implements Serializable
 	@ManyToOne
 	@JoinColumn(name="customerId")
 	private Customer customer;
-	private int payed;
+	private double payed;
 	private int taken;
 	private int available;
 	@ManyToMany()
@@ -73,11 +73,11 @@ public class OutParcel implements Serializable
 		this.customer = customer;
 	}
 
-	public int getPayed() {
+	public double getPayed() {
 		return payed;
 	}
 
-	public void setPayed(int payed) {
+	public void setPayed(double payed) {
 		this.payed = payed;
 	}
 

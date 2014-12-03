@@ -48,6 +48,11 @@ public class SecurityOfficerDAOImpl implements SecurityOfficerDAO, Serializable 
 		employee.setBlocked(1);
 		em.merge(employee);
 	}
+	
+	public void unBlockEmployee(Employee employee) {
+		employee.setBlocked(0);
+		em.merge(employee);
+	}
 
 	/**
 	 * додає нового клієнта
@@ -103,5 +108,22 @@ public class SecurityOfficerDAOImpl implements SecurityOfficerDAO, Serializable 
 		}
 
 		return cust;
+	}
+	
+	public List<Employee> getAllEmployees() {
+		TypedQuery<Employee> query = em.createQuery("SELECT e FROM Employee as e",Employee.class);
+		List<Employee> list = null;
+
+		list = query.getResultList();
+		return list;
+	}
+	
+	public List<Customer> checkUser (Customer customer) {
+		TypedQuery<Customer> query = em.createQuery("SELECT c FROM Customer as c WHERE c.login=:log",Customer.class);
+		query.setParameter("log", customer.getLogin());
+		List<Customer> list = null;
+
+		list = query.getResultList();
+		return list;
 	}
 }

@@ -17,9 +17,15 @@ public interface SecurityOfficerDAO {
 	public void saveCustomer(Customer customer);
 
 	public void blockCustomer(Customer customer);
+
 	public void unBlockCustomer(Customer customer);
-	
+
 	public List<Customer> getAllCustomers();
+
+	public Employee checkLoginPassword(String login, String password);
+
+	public List<Employee> getAllEmployees();
 	
-	public Employee checkLoginPassword (String login, String password);
+	public void unBlockEmployee(Employee employee);
+	public List<Customer> checkUser (Customer customer);
 }
