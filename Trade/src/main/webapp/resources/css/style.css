@@ -3,6 +3,31 @@
 	text-align: center;
 }
 
+#divIndex {
+	width: 200px;
+	height: 200px;
+	background: #FDEDFF;
+	float: left;
+	margin-right: 75px;
+	margin-top: 75px;
+	text-align: center;
+	border: 2px solid;
+	border-color: #323232;
+	border-radius: 5px;
+}
+
+#divReg {
+	background: #FDEDFF;
+	width:400px;
+	margin-left:200px;
+	margin-top: 10px;
+	text-align: center;
+	border: 2px solid;
+	border-color: #323232;
+	border-radius: 5px;
+	padding: 15px;
+}
+
 body {
 	background: #f3f2f3;
 	color: #000000;
@@ -38,7 +63,7 @@ body {
 }
 
 #content {
-	background: #d2d0d2;
+	background: #E2D5FF;
 	float: right;
 	overflow: hidden;
 	width: 925px;
@@ -50,8 +75,25 @@ body {
 }
 
 #footer {
-	height: 50px;
-	width: 1100px;
+	height: 20px; 
+	width : 1100px;
 	position: relative;
 	background-image: url("#{resource['img/footer.jpg']}");
+	width: 1100px;
+}
+
+div#footer {
+	text-align: center;
+}
+
+p#footerText {
+	color: white;
+}
+
+a#f {
+	color: #FDEDFF; /* ÷вет обычной ссылки */
+}
+
+a#f:visited {
+	color: #FDEDFF; /* ÷вет посещенной ссылки */
 }

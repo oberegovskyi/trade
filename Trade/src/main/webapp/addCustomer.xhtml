@@ -5,14 +5,14 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:o="http://omnifaces.org/ui">
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
 
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
-	<h:form >
-			<h1>Новий клієнт</h1>
-			
+		<h:form>
+			<div id="divReg">
+				<h1>Новий клієнт</h1>
+
 				<h:panelGrid columns="3" cellpadding="5">
 					<p:outputLabel for="login" value="Логін:" />
 					<p:inputText id="login" value="#{addCustomer.login}"
@@ -79,6 +79,7 @@
 				<o:validateEqual components="pwd1 pwd2"
 					message="#{addCustomerMessagesBean.passwordNotEq}"
 					showMessageFor="pwd1" />
+			</div>
 		</h:form>
 	</ui:define>
 </ui:composition>

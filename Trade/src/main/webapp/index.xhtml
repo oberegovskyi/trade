@@ -9,8 +9,127 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="menu" />
 	<ui:define name="content">
-				
+		<h:form id="totalMenu">
+			<h:form id="guestIndex"
+				rendered="#{(secretBean.role eq null) and (userBean.role eq null)}">
+
+				<div style="width: 100%; height: 1px; clear: both;"></div>
+				<div id="divIndex">
+					<p:graphicImage name="img/like.png" height="100" width="100"
+						style="margin-top:5px" />
+					<div>
+						<h1>Якість</h1>
+						<p>Риба найвищої якості</p>
+					</div>
+
+				</div>
+				<div id="divIndex">
+					<p:graphicImage name="img/vallet.png" height="100" width="100"
+						style="margin-top:5px" />
+					<div>
+						<h1>Економність</h1>
+						<p>Найнижча ціна</p>
+					</div>
+				</div>
+				<div id="divIndex">
+					<p:graphicImage name="img/people.png" height="100" width="100"
+						style="margin-top:5px" />
+					<div>
+						<h1>Партнерство</h1>
+						<p>Програма постійного партнерства</p>
+					</div>
+				</div>
+				<p:commandButton value="В магазин" action="fishView"
+					icon="ui-icon-cart"
+					style="margin-left:281px;margin-top:10px;width:200px" />
+				<div style="width: 100%; height: 1px; clear: both;"></div>
+
+			</h:form>
+
+			<h:form id="customerIndex" rendered="#{userBean.role eq 'customer'}">
+
+				<div style="width: 100%; height: 1px; clear: both;"></div>
+				<div id="divIndex">
+					<p:graphicImage name="img/like.png" height="100" width="100"
+						style="margin-top:5px" />
+					<div>
+						<h1>Якість</h1>
+						<p>Риба найвищої якості</p>
+					</div>
+
+				</div>
+				<div id="divIndex">
+					<p:graphicImage name="img/vallet.png" height="100" width="100"
+						style="margin-top:5px" />
+					<div>
+						<h1>Економність</h1>
+						<p>Найнижча ціна</p>
+					</div>
+				</div>
+				<div id="divIndex">
+					<p:graphicImage name="img/people.png" height="100" width="100"
+						style="margin-top:5px" />
+					<div>
+						<h1>Партнерство</h1>
+						<p>Програма постійного партнерства</p>
+					</div>
+				</div>
+					<p:commandButton value="В магазин" action="fishView"
+						icon="ui-icon-cart"
+						style="margin-left:141px;margin-top:10px;width:200px; float:left;"  />
+					<p:commandButton value="Мій кабінет" action="myRoom"
+						icon="ui-icon-contact"
+						style="margin-left:67px;margin-top:10px;width:200px; float:left;" />
+				<div style="width: 100%; height: 1px; clear: both;"></div>
+			</h:form>
+
+
+			<h:form id="adminIndex" rendered="#{secretBean.role eq 'general'}">
+				<p:menu>
+					<p:submenu label="Меню головного менеджера">
+						<p:menuitem value="На головну" outcome="index" icon="ui-icon-home" />
+						<p:menuitem value="Редагувати рибну партію"
+							outcome="editFishParcel" />
+						<p:menuitem value="Додати клієнта" outcome="addCustomer" />
+						<p:menuitem value="Редагувати клієнта" outcome="editCustomer" />
+					</p:submenu>
+				</p:menu>
+			</h:form>
+
+			<h:form id="accIndex" rendered="#{secretBean.role eq 'acc'}">
+				<p:menu>
+					<p:submenu label="Меню бухгалтера">
+						<p:menuitem value="На головну" outcome="index" icon="ui-icon-home" />
+						<p:menuitem value="Вихідні платежі" outcome="outParcelsAcc" />
+					</p:submenu>
+				</p:menu>
+			</h:form>
+
+			<h:form id="coldIndex" rendered="#{secretBean.role eq 'cold'}">
+				<p:menu>
+					<p:submenu label="Меню менеджера холодильника">
+						<p:menuitem value="На головну" outcome="index" icon="ui-icon-home" />
+						<p:menuitem value="Вхідні партії" outcome="editParcelCold" />
+						<p:menuitem value="Вихідні посилки" outcome="outParcelsCold" />
+						<p:menuitem value="Списати рибу" outcome="fishItemsCold" />
+					</p:submenu>
+				</p:menu>
+			</h:form>
+
+			<h:form id="securityIndex"
+				rendered="#{secretBean.role eq 'security'}">
+				<p:menu>
+					<p:submenu label="Меню офіцера безпеки">
+						<p:menuitem value="На головну" outcome="index" icon="ui-icon-home" />
+						<p:menuitem value="Редагувати працівника" outcome="editEmployee" />
+					</p:submenu>
+				</p:menu>
+			</h:form>
+
+		</h:form>
 	</ui:define>
+
 </ui:composition>
 </html>

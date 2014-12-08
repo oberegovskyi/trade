@@ -157,7 +157,7 @@ public class ActiveUserBean implements Serializable {
 						"PF('userDialog').hide();");
 				out = customerService.getOutParcels(customer);
 				setRole("customer");
-				return "myRoom";
+				return "index";
 
 			} else {
 				setLogged(false);
