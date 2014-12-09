@@ -24,4 +24,5 @@ public interface GeneralManagerService {
 	public InParcel getInParcel (int i);
 	public List<OutParcel> getAllOutAvParcels ();
 	public void addFullInParcel (List<FishItem> tempFishItems, InParcel tempInParcel,java.util.Date date);
+	public Map<String, Double> getTotalFishReport(java.sql.Date date1, java.sql.Date date2);
 }

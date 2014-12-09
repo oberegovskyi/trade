@@ -23,5 +23,6 @@ public interface GeneralManagerDAO {
 	public void saveInParcel (InParcel inParcel) ;
 	public InParcel getInParcel (int i) ;
 	public List<OutParcel> getAllOutAvParcels () ;
+	public Map<String, Double> getTotalFishReport(java.sql.Date date1, java.sql.Date date2);
 	
 }

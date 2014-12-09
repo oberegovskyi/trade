@@ -33,7 +33,7 @@
 					<p:outputLabel value="#{outBean.calcDesPaid(out)}" />
 				</p:column>
 				<p:column headerText="Дії">
-					<p:commandButton value="Дозволити" action="#{outBean.setAvailable()}" update=":formAccParcel:accDetail">
+					<p:commandButton value="Дозволити" action="#{outBean.setAvailable()}" update=":formAccParcel">
 						<f:setPropertyActionListener value="#{out}"
 							target="#{outBean.tempOutParcel}" />
 					</p:commandButton>

@@ -32,6 +32,7 @@ public class AccountantDAOImpl implements AccountantDAO, Serializable {
 	public void setAvailable(OutParcel outParcel) {
 		outParcel.setAvailable(1);
 		em.merge(outParcel);
+		System.out.println(outParcel);
 	}
 	
 	public List<OutParcel> getNotAv() {

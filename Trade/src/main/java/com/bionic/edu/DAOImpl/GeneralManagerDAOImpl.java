@@ -116,8 +116,6 @@ public class GeneralManagerDAOImpl implements GeneralManagerDAO, Serializable {
 	 */
 	public Map<java.sql.Date, Double> getFishWeightReport(FishItem fishItem,
 			java.sql.Date date1, java.sql.Date date2) {
-
-
 		TypedQuery<OutParcelItem> query = em
 				.createQuery(
 						"SELECT o FROM OutParcelItem as o WHERE o.fishItem=:fish  AND o.outParcel.outParcelDate>=:dt1 AND o.outParcel.outParcelDate<=:dt2",
@@ -129,7 +127,7 @@ public class GeneralManagerDAOImpl implements GeneralManagerDAO, Serializable {
 		Map<java.sql.Date, Double> map = new TreeMap<java.sql.Date, Double>();
 		for (OutParcelItem ii : result) {
 			if (map.containsKey(ii.getOutParcel().getOutParcelDate())) {
-				double we=0;
+				double we = 0;
 				we = map.get(ii.getOutParcel().getOutParcelDate())
 						+ ii.getWeight();
 				map.put(ii.getOutParcel().getOutParcelDate(), we);
@@ -140,6 +138,32 @@ public class GeneralManagerDAOImpl implements GeneralManagerDAO, Serializable {
 		return map;
 	}
 
+	
+	public Map<String, Double> getTotalFishReport(java.sql.Date date1, java.sql.Date date2) {
+		TypedQuery<OutParcelItem> query = em
+				.createQuery(
+						"SELECT o FROM OutParcelItem as o WHERE o.outParcel.outParcelDate>=:dt1 AND o.outParcel.outParcelDate<=:dt2",
+						OutParcelItem.class);
+		query.setParameter("dt1", date1);
+		query.setParameter("dt2", date2);
+		List<OutParcelItem> result = query.getResultList();
+		
+		Map<String, Double> map = new TreeMap<String, Double>();
+		
+		for (OutParcelItem ii : result) {
+			if (map.containsKey(ii.getFishItem().getFishName())) {
+				double we = 0;
+				we = map.get(ii.getFishItem().getFishName()) + ii.getWeight();
+				map.put(ii.getFishItem().getFishName(), we);
+			} else {
+				map.put(ii.getFishItem().getFishName(), ii.getWeight());
+			}
+		}
+		return map;
+	}
+	
+	
+	
 	public List<FishItem> getAllFishItemsInParcel(InParcel inParcel) {
 		TypedQuery<FishItem> query = em
 				.createQuery("SELECT f FROM FishItem f WHERE f.inParcel=:in",

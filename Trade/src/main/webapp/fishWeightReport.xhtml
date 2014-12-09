@@ -12,24 +12,29 @@
 	<ui:define name="content">
 		<h:form id="reportWeightForm">
 			<p:growl id="repGrowl" showDetail="true" sticky="false" />
-			<p:panelGrid columns="4" columnClasses="label,value">
+			<p:spacer />
+			<p:panelGrid columns="5" columnClasses="label,value">
 
 				<h:outputText value="Від:" />
-				<p:calendar id="cal1" value="#{reportBean.tempDate1}" required="true"
-					pattern="dd.MM.yyyy">
-					<p:ajax event="dateSelect" listener="#{reportBean.dateChange1}"	update=":reportWeightForm" />
+				<p:calendar id="cal1" value="#{reportBean.tempDate1}"
+					required="true" pattern="dd.MM.yyyy">
+					<p:ajax event="dateSelect" listener="#{reportBean.dateChange1}"
+						update=":reportWeightForm" />
 				</p:calendar>
 
 				<h:outputText value="До:" />
-				<p:calendar id="cal2" value="#{reportBean.tempDate2}" required="true"
-					pattern="dd.MM.yyyy">
-					<p:ajax event="dateSelect" listener="#{reportBean.dateChange2}"	update=":reportWeightForm" />
+				<p:calendar id="cal2" value="#{reportBean.tempDate2}"
+					required="true" pattern="dd.MM.yyyy">
+					<p:ajax event="dateSelect" listener="#{reportBean.dateChange2}"
+						update=":reportWeightForm" />
 				</p:calendar>
-
+				<p:commandButton value="Звіт по всім видам риби"
+					action="#{reportBean.getTotalReport()}"
+					update=":reportWeightForm,:reportWeightForm:chart1" />
 			</p:panelGrid>
-
+			<p:spacer />
 			<p:dataTable id="data" value="#{orderBean.availableList}" var="fish"
-				styleClass="fishItemTable" >
+				styleClass="fishItemTable">
 				<p:column headerText="Назва">
 					<p:outputLabel value="#{fish.fishName}" />
 				</p:column>
@@ -54,10 +59,13 @@
 
 			</p:dataTable>
 
-
+			<p:spacer />
 			<p:chart id="chart" type="bar" model="#{reportBean.barModel}"
 				style="height:300px" rendered="#{not empty reportBean.dd}" />
-				
+			<p:spacer />
+			<p:chart id="chart1" type="pie" model="#{reportBean.pieModel}"
+				style="height:500px" rendered="#{not empty reportBean.tt}" />
+
 		</h:form>
 	</ui:define>
 

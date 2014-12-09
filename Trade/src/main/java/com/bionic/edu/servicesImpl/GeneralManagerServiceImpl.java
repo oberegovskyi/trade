@@ -98,7 +98,11 @@ public class GeneralManagerServiceImpl implements GeneralManagerService, Seriali
 			int id = addNewInParcel(tempInParcel);
 			in.setInParcel(getInParcel(id));
 			addNewFishItem(in);
-		}
-			
+		}			
+	}
+	
+	@Transactional
+	public Map<String, Double> getTotalFishReport(java.sql.Date date1, java.sql.Date date2) {
+		return generalManagerDAO.getTotalFishReport(date1, date2);
 	}
 }

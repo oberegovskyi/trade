@@ -68,7 +68,7 @@ public class SecretEnterBean implements Serializable {
 	}
 	
 	
-	public void check() {
+	public String check() {
 		employee = securityOfficerService.checkLoginPassword(login, password);
 		FacesContext context = FacesContext.getCurrentInstance();
 		if (employee == null) {
@@ -76,6 +76,8 @@ public class SecretEnterBean implements Serializable {
 			context.addMessage(":secretEnterForm:growl", new FacesMessage(
 					FacesMessage.SEVERITY_ERROR, "Помилка",
 					"Введений логін або пароль невірні"));
+			return "secretEnter";
+			
 		} else {
 			if (employee.getBlocked() == 0) {
 				setLogged(true);
@@ -88,13 +90,17 @@ public class SecretEnterBean implements Serializable {
 				case 3: setRole("general");break;
 				case 4: setRole("security");break;
 				default: setRole(null);
+				return "index";
+				
 				}
 
 			} else {
 				setLogged(false);
 				context.addMessage(":secretEnterForm:growl", new FacesMessage(
 						FacesMessage.SEVERITY_FATAL, "Увага", employee.getLogin() + " заблокований!"));
+				return "secretEnter";
 			}
+			return "index";
 		}
 	}
 	

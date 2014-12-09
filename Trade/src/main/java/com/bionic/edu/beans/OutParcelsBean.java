@@ -108,11 +108,12 @@ public class OutParcelsBean implements Serializable {
 
 	public String setAvailable() {
 		accountantService.setAvailable(tempOutParcel);
-		tempOutParcel = null;
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(":formAccParcel:growlAcc", new FacesMessage(
 				FacesMessage.SEVERITY_INFO, "Увага",
-				"Партія успішно позначена як доступна для відвантаження"));
+				"Партія "+ tempOutParcel.getOutParcelId()+" успішно позначена як доступна для відвантаження"));
+		tempOutParcel = null;
 		return "outParcelsAcc";
 
 	}

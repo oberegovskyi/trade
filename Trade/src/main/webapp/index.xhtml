@@ -76,35 +76,96 @@
 						<p>Програма постійного партнерства</p>
 					</div>
 				</div>
-					<p:commandButton value="В магазин" action="fishView"
-						icon="ui-icon-cart"
-						style="margin-left:141px;margin-top:10px;width:200px; float:left;"  />
-					<p:commandButton value="Мій кабінет" action="myRoom"
-						icon="ui-icon-contact"
-						style="margin-left:67px;margin-top:10px;width:200px; float:left;" />
+				<p:commandButton value="В магазин" action="fishView"
+					icon="ui-icon-cart"
+					style="margin-left:141px;margin-top:10px;width:200px; float:left;" />
+					
+				<p:commandButton value="Мій кабінет" action="myRoom"
+					icon="ui-icon-contact"
+					style="margin-left:67px;margin-top:10px;width:200px; float:left;" />
 				<div style="width: 100%; height: 1px; clear: both;"></div>
 			</h:form>
 
 
 			<h:form id="adminIndex" rendered="#{secretBean.role eq 'general'}">
-				<p:menu>
-					<p:submenu label="Меню головного менеджера">
-						<p:menuitem value="На головну" outcome="index" icon="ui-icon-home" />
-						<p:menuitem value="Редагувати рибну партію"
-							outcome="editFishParcel" />
-						<p:menuitem value="Додати клієнта" outcome="addCustomer" />
-						<p:menuitem value="Редагувати клієнта" outcome="editCustomer" />
-					</p:submenu>
-				</p:menu>
+				<div style="width: 100%; height: 1px; clear: both;"></div>
+				<div id="divIndex">
+
+					<div>
+						<h1>Редагувати партію</h1>
+						<p>Редагування рибної партії, що повинна прийти, або прийшла
+							до холодильника</p>
+					</div>
+					<p:commandButton value="Редагувати партію" action="editFishParcel"
+						icon="ui-icon-cart"
+						style="width:180px; position: absolute; left:10px; bottom: 10px;" />
+
+
+
+				</div>
+
+				<div id="divIndex">
+
+
+					<div>
+						<h1>Додати клієнта</h1>
+						<p>Реєстрація нового клієнта компанії</p>
+					</div>
+					<p:commandButton value="Додати клієнта" action="addCustomer"
+						icon="ui-icon-contact"
+						style="width:180px; position: absolute; left:10px; bottom: 10px;" />
+
+
+				</div>
+
+				<div id="divIndex">
+
+					<div>
+						<h1>Редагувати клієнта</h1>
+						<p>Переглянути весь список клієнтів та вибірково редагувати</p>
+
+					</div>
+					<p:commandButton value="Редагувати клієнта" action="editCustomer"
+						icon="ui-icon-contact"
+						style="width:180px; position: absolute; left:10px; bottom: 10px;" />
+
+				</div>
+
+
+				<div id="divIndex">
+
+					<div>
+						<h1>Звіти</h1>
+						<p>Переглянути звіти</p>
+
+					</div>
+					<p:commandButton value="Звіти" action="fishWeightReport"
+						icon="ui-icon-contact"
+						style="width:180px; position: absolute; left:10px; bottom: 10px;" />
+
+				</div>
+
+				<div style="width: 100%; height: 1px; clear: both;"></div>
 			</h:form>
 
 			<h:form id="accIndex" rendered="#{secretBean.role eq 'acc'}">
-				<p:menu>
-					<p:submenu label="Меню бухгалтера">
-						<p:menuitem value="На головну" outcome="index" icon="ui-icon-home" />
-						<p:menuitem value="Вихідні платежі" outcome="outParcelsAcc" />
-					</p:submenu>
-				</p:menu>
+
+				<div style="width: 100%; height: 1px; clear: both;"></div>
+
+				<div id="divIndex">
+
+					<div>
+						<h1>Вихідні платежі</h1>
+						<p>Переглянути вихідні платежі</p>
+
+					</div>
+					<p:commandButton value="Платежі" action="outParcelsAcc"
+						icon="ui-icon-contact"
+						style="width:180px; position: absolute; left:10px; bottom: 10px;" />
+
+				</div>
+
+				<div style="width: 100%; height: 1px; clear: both;"></div>
 			</h:form>
 
 			<h:form id="coldIndex" rendered="#{secretBean.role eq 'cold'}">
