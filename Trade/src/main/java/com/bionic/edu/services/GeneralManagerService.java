@@ -1,11 +1,13 @@
 package com.bionic.edu.services;
 
 import java.util.List;
+import java.util.Map;
 
 import com.bionic.edu.entities.Customer;
 import com.bionic.edu.entities.FishItem;
 import com.bionic.edu.entities.InParcel;
 import com.bionic.edu.entities.OutParcel;
+import com.bionic.edu.entities.OutParcelItem;
 
 
 public interface GeneralManagerService {
@@ -16,7 +18,7 @@ public interface GeneralManagerService {
 	public void saveCustomer (Customer customer);
 	public double getFishIncomeReport (FishItem fishItem);
 	public double getFishSumReport (FishItem fishItem);
-	public double getFishWeightReport (FishItem fishItem);
+	public Map<java.sql.Date, Double> getFishWeightReport (FishItem fishItem, java.sql.Date date1, java.sql.Date date2);
 	public List <FishItem> getAllFishItemsInParcel (InParcel inParcel);
 	public void saveInParcel (InParcel inParcel);
 	public InParcel getInParcel (int i);

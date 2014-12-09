@@ -1,7 +1,11 @@
 package com.bionic.edu.DAOImpl;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,9 +28,9 @@ public class GeneralManagerDAOImpl implements GeneralManagerDAO, Serializable {
 	private static final long serialVersionUID = 1L;
 	@PersistenceContext
 	private EntityManager em;
-	
-	public GeneralManagerDAOImpl () {
-		
+
+	public GeneralManagerDAOImpl() {
+
 	}
 
 	/**
@@ -108,42 +112,57 @@ public class GeneralManagerDAOImpl implements GeneralManagerDAO, Serializable {
 	}
 
 	/**
-	 * повертає всю вагу даної риби, що продали
+	 * повертає всю вагу даної риби, що продали в цей день
 	 */
-	public double getFishWeightReport(FishItem fishItem) {
+	public Map<java.sql.Date, Double> getFishWeightReport(FishItem fishItem,
+			java.sql.Date date1, java.sql.Date date2) {
 
-		TypedQuery<OutParcelItem> query = em.createQuery(
-				"SELECT o FROM OutParcelItem o WHERE o.fishItem=:fish",
-				OutParcelItem.class);
+
+		TypedQuery<OutParcelItem> query = em
+				.createQuery(
+						"SELECT o FROM OutParcelItem as o WHERE o.fishItem=:fish  AND o.outParcel.outParcelDate>=:dt1 AND o.outParcel.outParcelDate<=:dt2",
+						OutParcelItem.class);
 		query.setParameter("fish", fishItem);
+		query.setParameter("dt1", date1);
+		query.setParameter("dt2", date2);
 		List<OutParcelItem> result = query.getResultList();
-		double sum = 0;
-		for (OutParcelItem oo : result) {
-			sum += oo.getWeight();
+		Map<java.sql.Date, Double> map = new TreeMap<java.sql.Date, Double>();
+		for (OutParcelItem ii : result) {
+			if (map.containsKey(ii.getOutParcel().getOutParcelDate())) {
+				double we=0;
+				we = map.get(ii.getOutParcel().getOutParcelDate())
+						+ ii.getWeight();
+				map.put(ii.getOutParcel().getOutParcelDate(), we);
+			} else {
+				map.put(ii.getOutParcel().getOutParcelDate(), ii.getWeight());
+			}
 		}
-		return sum;
+		return map;
 	}
-	
-	public List <FishItem> getAllFishItemsInParcel (InParcel inParcel){
-		TypedQuery<FishItem> query = em.createQuery("SELECT f FROM FishItem f WHERE f.inParcel=:in",FishItem.class);
+
+	public List<FishItem> getAllFishItemsInParcel(InParcel inParcel) {
+		TypedQuery<FishItem> query = em
+				.createQuery("SELECT f FROM FishItem f WHERE f.inParcel=:in",
+						FishItem.class);
 		query.setParameter("in", inParcel);
 		List<FishItem> result = query.getResultList();
 		return result;
 	}
-	
-	public void saveInParcel (InParcel inParcel) {
-		em.merge(inParcel);	
+
+	public void saveInParcel(InParcel inParcel) {
+		em.merge(inParcel);
 	}
 
-	public InParcel getInParcel (int i) {
-		return em.find(InParcel.class,i);
+	public InParcel getInParcel(int i) {
+		return em.find(InParcel.class, i);
 	}
-	
-	public List<OutParcel> getAllOutAvParcels () {
-		TypedQuery<OutParcel> query = em.createQuery("SELECT o FROM OutParcel o WHERE o.available=1 AND o.taken=0" ,OutParcel.class);
+
+	public List<OutParcel> getAllOutAvParcels() {
+		TypedQuery<OutParcel> query = em.createQuery(
+				"SELECT o FROM OutParcel o WHERE o.available=1 AND o.taken=0",
+				OutParcel.class);
 		List<OutParcel> result = query.getResultList();
 		return result;
 	}
-	
 
 }
