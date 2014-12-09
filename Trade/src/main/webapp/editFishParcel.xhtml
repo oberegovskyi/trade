@@ -68,6 +68,10 @@
 				<p:commandButton value="OK"
 					action="#{editFishParcel.changeInParcel()}"
 					oncomplete="PF('inDialogEdit').hide();" update=":formAddFishParcel">
+					<f:setPropertyActionListener value="#{editFishParcel.inParcelTempEdit.dateIncome}"
+							target="#{editFishParcel.date1}" />
+							<f:setPropertyActionListener value="#{editFishParcel.inParcelTempEdit.realDate}"
+							target="#{editFishParcel.date2}" />
 				</p:commandButton>
 			</p:outputPanel>
 		</p:dialog>

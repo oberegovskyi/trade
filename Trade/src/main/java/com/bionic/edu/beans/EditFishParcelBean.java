@@ -22,6 +22,7 @@ public class EditFishParcelBean implements Serializable{
 	private InParcel inParcelTempEdit;
 	private List <FishItem> listFish= null;
 	private FishItem selectedFish;
+	
 	@Inject
 	private GeneralManagerService generalManagerService;
 
@@ -33,7 +34,7 @@ public class EditFishParcelBean implements Serializable{
 		this.inParcelTemp = inParcelTemp;
 	}
 
-	
+
 	public List<FishItem> getListFish() {
 		return listFish;
 	}
@@ -49,6 +50,7 @@ public class EditFishParcelBean implements Serializable{
 
 	public void setInParcelTempEdit(InParcel inParcelTempEdit) {
 		this.inParcelTempEdit = inParcelTempEdit;
+		System.out.println("set"+this.inParcelTempEdit);
 	}
 
 
