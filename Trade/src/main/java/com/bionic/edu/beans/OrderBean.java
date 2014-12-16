@@ -68,6 +68,7 @@ public class OrderBean implements Serializable {
 	}
 
 	public List<FishItem> getColdList() {
+		init();
 		return coldList;
 	}
 
@@ -139,7 +140,7 @@ public class OrderBean implements Serializable {
 			total += in.getWeight() * in.getSellPrice();
 		}
 		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Успішно","Риба додана до партії"));
+		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Успішно","Риба "+tempWork.getFishName()+" додана до партії"));
 		return "fishView";
 	}
 
@@ -152,7 +153,7 @@ public class OrderBean implements Serializable {
 			total += in.getWeight() * in.getSellPrice();
 		}
 		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Успішно","Риба видалена з корзини"));
+		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Успішно","Риба "+ff.getFishName()+" видалена з корзини"));
 	}
 	
 	public void deleteAllFishItems() {
@@ -193,11 +194,10 @@ public class OrderBean implements Serializable {
 		}
 	}
 	
-	public String setWriteOff () {
+	public void setWriteOff () {
 		coldManagerService.setWriteOffFishItem(temp);
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Успішно","Риба "+temp.getFishName()+" успішно списана"));
 		temp=null;
-		return "fishItemsCold";
 	}
 }

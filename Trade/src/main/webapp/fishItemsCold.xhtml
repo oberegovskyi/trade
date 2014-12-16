@@ -9,9 +9,9 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+<ui:define name="title">Списати рибу</ui:define>
 	<ui:define name="content">
 		<h:form id="formFishCold" rendered="#{(not empty secretBean.employee) and (secretBean.role eq 'cold')}">
-		<p:outputLabel value="Списати рибу"/>
 			<p:growl id="growlOut" showDetail="true" sticky="false" />
 			<p:dataTable id="data" value="#{orderBean.coldList}" var="fish"
 				styleClass="fishItemTable">

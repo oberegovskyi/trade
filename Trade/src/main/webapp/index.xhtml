@@ -9,13 +9,14 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <ui:composition template="WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="title">Головна сторінка</ui:define>
 	<ui:define name="menu" />
 	<ui:define name="content">
 		<h:form id="totalMenu">
 			<h:form id="guestIndex"
 				rendered="#{(secretBean.role eq null) and (userBean.role eq null)}">
 
-				<div style="width: 100%; height: 1px; clear: both;"></div>
+				<div style="width: 1000%; height: 1px; clear: both;"></div>
 				<div id="divIndex">
 					<p:graphicImage name="img/like.png" height="100" width="100"
 						style="margin-top:5px" />
@@ -79,7 +80,7 @@
 				<p:commandButton value="В магазин" action="fishView"
 					icon="ui-icon-cart"
 					style="margin-left:141px;margin-top:10px;width:200px; float:left;" />
-					
+
 				<p:commandButton value="Мій кабінет" action="myRoom"
 					icon="ui-icon-contact"
 					style="margin-left:67px;margin-top:10px;width:200px; float:left;" />
@@ -152,11 +153,11 @@
 
 				<div style="width: 100%; height: 1px; clear: both;"></div>
 
-				<div id="divIndex">
+				<div id="divIndex" style="margin-left:300px;">
 
 					<div>
-						<h1>Вихідні платежі</h1>
-						<p>Переглянути вихідні платежі</p>
+						<h1>Платежі</h1>
+						<p>Переглянути платежі</p>
 
 					</div>
 					<p:commandButton value="Платежі" action="outParcelsAcc"
@@ -169,24 +170,60 @@
 			</h:form>
 
 			<h:form id="coldIndex" rendered="#{secretBean.role eq 'cold'}">
-				<p:menu>
-					<p:submenu label="Меню менеджера холодильника">
-						<p:menuitem value="На головну" outcome="index" icon="ui-icon-home" />
-						<p:menuitem value="Вхідні партії" outcome="editParcelCold" />
-						<p:menuitem value="Вихідні посилки" outcome="outParcelsCold" />
-						<p:menuitem value="Списати рибу" outcome="fishItemsCold" />
-					</p:submenu>
-				</p:menu>
+			
+			<div style="width: 100%; height: 1px; clear: both;"></div>
+				<div id="divIndex">
+					<div>
+						<h1>Вхідні партії</h1>
+						<p>Переглянути список всієї риби, що прибула, або має прийти в холодильник</p>
+					</div>
+					<p:commandButton value="Вхідні партії" action="editParcelCold"
+						icon="ui-icon-contact"
+						style="width:180px; position: absolute; left:10px; bottom: 10px;" />
+				</div>
+				
+				<div id="divIndex">
+					<div>
+						<h1>Продані посилки</h1>
+						<p>Переглянути список всієх партій, що продані та дозволені для відвантаження</p>
+					</div>
+					<p:commandButton value="Продані посилки" action="outParcelsCold"
+						icon="ui-icon-contact"
+						style="width:180px; position: absolute; left:10px; bottom: 10px;" />
+				</div>
+				
+				<div id="divIndex">
+					<div>
+						<h1>Списати рибу</h1>
+						<p>Переглянути вихідні платежі</p>
+					</div>
+					<p:commandButton value="Списати рибу" action="fishItemsCold"
+						icon="ui-icon-contact"
+						style="width:180px; position: absolute; left:10px; bottom: 10px;" />
+				</div>
+				<div style="width: 100%; height: 1px; clear: both;"></div>
+				
 			</h:form>
 
 			<h:form id="securityIndex"
 				rendered="#{secretBean.role eq 'security'}">
-				<p:menu>
-					<p:submenu label="Меню офіцера безпеки">
-						<p:menuitem value="На головну" outcome="index" icon="ui-icon-home" />
-						<p:menuitem value="Редагувати працівника" outcome="editEmployee" />
-					</p:submenu>
-				</p:menu>
+				
+				<div style="width: 100%; height: 1px; clear: both;"></div>
+
+				<div id="divIndex" style="margin-left:300px;">
+
+					<div>
+						<h1>Редагувати</h1>
+						<p>Обрати та редагувати інформацію про працівника, або заблокувати його</p>
+
+					</div>
+					<p:commandButton value="Редагувати" action="editEmployee"
+						icon="ui-icon-contact"
+						style="width:180px; position: absolute; left:10px; bottom: 10px;" />
+
+				</div>
+
+				<div style="width: 100%; height: 1px; clear: both;"></div>
 			</h:form>
 
 		</h:form>

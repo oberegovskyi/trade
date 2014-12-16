@@ -50,7 +50,6 @@ public class EditFishParcelBean implements Serializable{
 
 	public void setInParcelTempEdit(InParcel inParcelTempEdit) {
 		this.inParcelTempEdit = inParcelTempEdit;
-		System.out.println("set"+this.inParcelTempEdit);
 	}
 
 
@@ -72,13 +71,12 @@ public class EditFishParcelBean implements Serializable{
 		return "editCurFishParcel";
 	}
 	
-	public String saveFishItem () {
+	public void saveFishItem () {
 		generalManagerService.saveFishItem(selectedFish);
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(":formEditFishParcel:growl", new FacesMessage(FacesMessage.SEVERITY_INFO,"Успішно",selectedFish.getFishName()+" вдало відредагована"));
 		inParcelTemp=null;
 		selectedFish=null;
-		return "editCurFishParcel";
 	}
 	
 	public String getFishItemsCold () {
@@ -87,12 +85,11 @@ public class EditFishParcelBean implements Serializable{
 	}
 	
 	public String changeInParcel () {
-		System.out.println(inParcelTempEdit);
 		generalManagerService.saveInParcel(inParcelTempEdit);
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(":formAddFishParcel:growl", new FacesMessage(FacesMessage.SEVERITY_INFO,"Успішно","Партія вдало відредагована"));
 		inParcelTempEdit=null;
-		return "editFishParcel";
+		return "editParcelCold";
 	}
 
 }
